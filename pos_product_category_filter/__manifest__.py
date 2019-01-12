@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #    Copyright (C) 2017-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author:Tintuk Tomin <odoo@cybrosys.com>
+#    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #    you can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
 #
@@ -21,21 +21,23 @@
 #
 ##############################################################################
 {
-    'name': "Odoo Debranding",
-    'version': "11.0.3.0",
-    'summary': """Debrand Odoo""",
-    'description': """Debrand Odoo""",
-    'author': "Cybrosys Techno Solutions",
-    'company': "Cybrosys Techno Solutions",
-    'website': "https://cybrosys.com/",
-    'category': 'Tools',
-    'depends': ['base', 'im_livechat', 'website'],
-    'data': [
-        'views/views.xml'],
-    'demo': [],
-    'qweb': ["static/src/xml/base.xml"],
-    'images': ['static/description/debranding_1.gif'],
-    'license': "LGPL-3",
+    'name': 'POS Product Category Filter',
+    'version': '11.0.1.0.0',
+    'category': 'Point of Sale',
+    'author': 'Cybrosys Techno Solutions',
+    'company': 'Cybrosys Techno Solutions',
+    'website': 'http://www.cybrosys.com',
+    'sequence': 6,
+    'summary': 'Show Only Specified Categories of Product in Point of Sale ',
+    'description': """
+
+=======================
+
+""",
+    'depends': ['point_of_sale'],
+    'images': ['static/description/banner.jpg'],
+    'data': ['views/category.xml',
+             'views/template.xml'],
     'installable': True,
-    'application': False
+    'auto_install': False,
 }
