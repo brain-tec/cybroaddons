@@ -2,7 +2,9 @@
 ##############################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2018-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
+#    Copyright (C) 2019-TODAY Cybrosys Technologies(<http://www.cybrosys.com>).
+#    Author: Cybrosys(<https://www.cybrosys.com>)
+
 #    This program is free software: you can modify
 #    it under the terms of the GNU Affero General Public License (AGPL) as
 #    published by the Free Software Foundation, either version 3 of the
@@ -17,23 +19,6 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
-{
-    'name': 'Customer Due Days',
-    'version': '12.0.1.0.0',
-    'summary': 'Customer Due Days.',
-    'description': """Customer Due Days.""",
-    'category': 'Sales',
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
-    'depends': ['base', 'base_report_xlsx', 'account'],
-    'website': 'https://www.cybrosys.com',
-    'data': [
-        'security/ir.model.access.csv',
-        'report/due_days.xml',
-    ],
-    'images': ['static/description/banner.jpg'],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-}
+
+from . import report
+from . import models
