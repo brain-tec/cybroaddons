@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-
 ##############################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #    Copyright (C) 2017-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Nikhil krishnan(<https://www.cybrosys.com>)
+#    Author: Niyas Raphy(v11)
+#	     Akshay Babu(v12)(<https://www.cybrosys.com>)
 #    you can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
 #
@@ -21,24 +21,31 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Make MRP orders from POS',
-    'version': '12.0.2.0.0',
-    'summary': """Launch Automatic MRP Orders After Selling Through POS.""",
-    'description': """Launch automatic MRP orders after selling through POS""",
+    'name': 'User Login Alert',
+    'summary': """Secure your Odoo account by alerts at right time. If any successful login to your
+                account happens, an alert mail will be send to you with the browser and IP details.""",
+    'version': '12.0.1.0.0',
+    'description': """Secure your Odoo account by alerts at right time. If any successful login to your
+                    account happens, an alert mail will be send to you with the browser and IP details.""",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
-    'website': 'http://www.cybrosys.com',
-    'category': 'Point of Sale',
-    'depends': ['point_of_sale', 'mrp', 'stock'],
-    'license': 'LGPL-3',
+    'website': 'https://www.cybrosys.com',
+    'category': 'Tools',
+    'depends': ['base', 'mail'],
+    'license': 'AGPL-3',
     'data': [
-        'security/ir.model.access.csv',
-        'views/product_view.xml',
-        'views/pos_template.xml',
+        'security/notification_group.xml',
+        'views/logged_details_view.xml',
     ],
-    'images': ['static/description/banner.png'],
+    'images': ['static/description/banner.jpg'],
+    'demo': [],
     'installable': True,
     'auto_install': False,
+    'external_dependencies': {
+        'python': ['httpagentparser'],
+    },
+
+
 }
+

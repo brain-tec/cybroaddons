@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-
 ##############################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2017-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Nikhil krishnan(<https://www.cybrosys.com>)
+#    Copyright (C) 2017-TODAY Cybrosys Technologies(<http://www.cybrosys.com>).
+#    Author: Nilmar Shereef(<http://www.cybrosys.com>)
 #    you can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
 #
@@ -21,24 +20,24 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Make MRP orders from POS',
-    'version': '12.0.2.0.0',
-    'summary': """Launch Automatic MRP Orders After Selling Through POS.""",
-    'description': """Launch automatic MRP orders after selling through POS""",
+    'name': 'Floor Wise Charge in Restaurant',
+    'version': '12.0.1.0.0',
+    'summary': """Product Price Change Based on Floor of POS Restaurant.""",
+    'description': """Module adds the facility charge of floor with each products in POS restaurant""",
     'author': 'Cybrosys Techno Solutions',
+    'website': "http://www.cybrosys.com",
     'company': 'Cybrosys Techno Solutions',
-    'website': 'http://www.cybrosys.com',
-    'category': 'Point of Sale',
-    'depends': ['point_of_sale', 'mrp', 'stock'],
-    'license': 'LGPL-3',
+    'category': 'Point Of Sale',
+    'depends': ['point_of_sale',
+                'pos_restaurant'],
     'data': [
         'security/ir.model.access.csv',
-        'views/product_view.xml',
-        'views/pos_template.xml',
-    ],
-    'images': ['static/description/banner.png'],
+        'views/pos_restaurant_extra_facility.xml',
+        'views/templates.xml',
+        ],
+    'images': ['static/description/banner.jpg'],
+    'license': 'LGPL-3',
     'installable': True,
     'auto_install': False,
 }
