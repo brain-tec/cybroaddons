@@ -3,8 +3,8 @@
 ##############################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2017-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Nikhil krishnan(<https://www.cybrosys.com>)
+#    Copyright (C) 2018-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Akhilesh N S & Faslu Rahman
 #    you can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
 #
@@ -21,24 +21,28 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Make MRP orders from POS',
-    'version': '11.0.2.0.0',
-    'summary': """Launch Automatic MRP Orders After Selling Through POS.""",
-    'description': """Launch automatic MRP orders after selling through POS""",
+    'name': 'Product Profit Report',
+    'version': '11.0.1.0.0',
+    'summary': 'Product wise profit reposrt',
+    'category': 'Accounting',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
-    'website': 'http://www.cybrosys.com',
-    'category': 'Point of Sale',
-    'depends': ['point_of_sale', 'mrp', 'stock'],
-    'license': 'LGPL-3',
-    'data': [
-        'security/ir.model.access.csv',
-        'views/product_view.xml',
-        'views/pos_template.xml',
+    'maintainer': 'Cybrosys Techno Solutions',
+    'website': 'https://www.cybrosys.com',
+    'depends': [
+        'sale_management', 'account_invoicing',
     ],
+    'data': [
+        'wizard/product_profit_report_wizard_view.xml',
+        'views/product_profit_report_pdf_report.xml',
+        'views/product_profit_report_report.xml',
+        'security/ir.model.access.csv',
+
+    ],
+    'license': 'AGPL-3',
     'images': ['static/description/banner.png'],
     'installable': True,
     'auto_install': False,
+    'application': False,
 }
