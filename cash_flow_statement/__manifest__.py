@@ -21,10 +21,10 @@
 #############################################################################
 
 {
-    'name': 'Print Cash Flow Statement',
+    'name': 'Cash Flow Statement In Odoo',
     'version': '12.0.1.0.0',
     'summary': """Print pdf reports of cash flow statements """,
-    'description': """Print pdf reports of cash flow statements """,
+    'description': """Print pdf reports of cash flow statements,Cashflow statement""",
     'author': "Cybrosys Techno Solutions",
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
