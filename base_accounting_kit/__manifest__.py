@@ -6,16 +6,16 @@
 #    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
-#    You can modify it under the terms of the GNU AFFERO
-#    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
+#    You can modify it under the terms of the GNU LESSER
+#    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU AFFERO GENERAL PUBLIC LICENSE (AGPL v3) for more details.
+#    GNU LESSER GENERAL PUBLIC LICENSE (LGPL v3) for more details.
 #
-#    You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
-#    (AGPL v3) along with this program.
+#    You should have received a copy of the GNU LESSER GENERAL PUBLIC LICENSE
+#    (LGPL v3) along with this program.
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
@@ -24,12 +24,14 @@
     'name': 'Odoo 13 Accounting',
     'version': '13.0.1.0.0',
     'category': 'Accounting',
-    'summary': """ Complete accounting kit for Odoo 13 """,
-    'description': "This Module will bring back the accounting features such "
-                   "as Account Reports, Asset Management, "
-                   "Customer Credit Limit, Recurring Payment, "
-                   "PDC Management, Customer Follow Up and "
-                   "Lock Dates into Odoo 13 Community Edition",
+    'summary': """ This Module will bring back the accounting features such  Asset Management, Accounting Reports, PDC Management,
+                    Account Lock dates, Customer Credit Limit and Follow Ups, Day book,
+                    Bank book and Cash book reports. """,
+    'description': """
+                    Odoo 13 Accounting,Accounting Reports,Odoo13 Accounting PDF Reports, Asset Management,
+                    Customer Credit Limit, Recurring Payment,
+                    PDC Management, Customer Follow-up,
+                    Lock Dates into Odoo 13 Community Edition, Odoo Accounting,Odoo 13 Accounting Reports,Odoo 13""",
     'author': ' Odoo SA,Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
     'company': 'Cybrosys Techno Solutions',
@@ -86,8 +88,8 @@
         'report/report.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
-    'license': 'AGPL-3',
-    'images': ['static/description/banner.png'],
+    'license': 'LGPL-3',
+    'images': ['static/description/banner.gif'],
     'installable': True,
     'auto_install': False,
     'application': False,
