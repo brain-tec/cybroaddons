@@ -3,14 +3,14 @@
 {
     'name': 'Odoo13 Payroll',
     'category': 'Generic Modules/Human Resources',
-    'version': '13.0.1.0.0',
+    'version': '13.0.1.0.1',
     'author': 'Odoo SA,Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
     'summary': 'Manage your employee payroll records',
     'images': ['static/description/banner.png'],
-    'description': "Odoo 13 Payroll, Payroll, Odoo 13,Odoo Payroll",
+    'description': "Odoo 13 Payroll, Payroll, Odoo 13,Odoo Payroll, Odoo Community Payroll",
     'depends': [
         'hr_contract',
         'hr_holidays',
