@@ -2,9 +2,8 @@
 ###################################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2018-TODAY Cybrosys Technologies(<http://www.cybrosys.com>).
-#    Author: cybrosys(<https://www.cybrosys.com>)
 #
+#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
 #    This program is free software: you can modify
 #    it under the terms of the GNU Affero General Public License (AGPL) as
 #    published by the Free Software Foundation, either version 3 of the
@@ -16,30 +15,33 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
-{
-    'name': 'Biometric Device Integration',
-    'version': '12.0.1.0.1',
-    'summary': """Integrating Biometric Device With HR Attendance (Face + Thumb)""",
-    'description': 'This module integrates Odoo with the biometric device(Model: ZKteco uFace 202)',
-    'category': 'Generic Modules/Human Resources',
-    'author': 'Cybrosys Techno Solutions, Mostafa Shokiel',
-    'company': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'depends': ['base_setup', 'hr_attendance'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/zk_machine_view.xml',
-        'views/zk_machine_attendance_view.xml',
-        'data/download_data.xml'
 
-    ],
+{
+    'name': 'Odoo Paytm Payment Gateway',
+    'version': '12.0.1.0.0',
+    'category': 'eCommerce',
+    'summary': 'Paytm Payment Gateway Integration for Odoo 12',
+    'description': 'Paytm Payment Gateway Integration, paytm, payment gateway,Payment Gateway Integration,paytm payment, odoo 12, odoo payment gateway',
+    'author': 'Cybrosys Techno Solutions',
+    'company': 'Cybrosys Techno Solutions',
+    'maintainer': 'Cybrosys Techno Solutions',
     'images': ['static/description/banner.gif'],
+    'website': 'https://www.cybrosys.com',
+    'depends': ['payment'],
+    'data': [
+        'views/views.xml',
+        'views/templates.xml',
+        'data/data.xml'
+    ],
     'license': 'AGPL-3',
-    'demo': [],
     'installable': True,
     'auto_install': False,
     'application': False,
+
 }
+
+
+
