@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+
 ###################################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2018-TODAY Cybrosys Technologies(<http://www.cybrosys.com>).
-#    Author: cybrosys(<https://www.cybrosys.com>)
 #
+#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
 #    This program is free software: you can modify
 #    it under the terms of the GNU Affero General Public License (AGPL) as
 #    published by the Free Software Foundation, either version 3 of the
@@ -16,30 +16,28 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
 {
-    'name': 'Biometric Device Integration',
-    'version': '13.0.1.0.2',
-    'summary': """Integrating Biometric Device (Model: ZKteco uFace 202) With HR Attendance (Face + Thumb)""",
-    'description': """This module integrates Odoo with the biometric device(Model: ZKteco uFace 202),odoo13,odd,hr,attendance""",
-    'category': 'Generic Modules/Human Resources',
-    'author': 'Cybrosys Techno Solutions, Mostafa Shokiel',
+    'name': 'Product Brand Invoicing',
+    'version': '13.0.1.0.0',
+    'category': 'Accounting',
+    'summary': 'Product Brand in Invoicing',
+    'description': 'Product Brand in Invoicing, brand, odoo 13',
+    'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'depends': ['base_setup', 'hr_attendance'],
+    'maintainer': 'Cybrosys Techno Solutions',
+    'images': ['static/description/banner.png'],
+    'website': 'https://www.cybrosys.com',
+    'depends': ['account',],
     'data': [
+        'views/brand_views.xml',
         'security/ir.model.access.csv',
-        'views/zk_machine_view.xml',
-        'views/zk_machine_attendance_view.xml',
-        'data/download_data.xml'
-
     ],
-    'images': ['static/description/banner.gif'],
     'license': 'AGPL-3',
-    'demo': [],
     'installable': True,
     'auto_install': False,
     'application': False,
+
 }
