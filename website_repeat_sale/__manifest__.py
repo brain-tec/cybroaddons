@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Cybrosys Technogies @cybrosys(odoo@cybrosys.com)
+#    Author: Cybrosys Techno Solutions (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -21,27 +21,21 @@
 #############################################################################
 
 {
-    'name': 'Fleet Rental Management',
-    'version': '13.0.1.1.0',
-    'summary': """This module will helps you to give the vehicles for Rent.""",
-    'description': "Module Helps You To Manage Rental Contracts, Odoo13, Odoo 13, Fleet, Rental, Rent, Vehicle management",
-    'category': "Industries",
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
+    'name': "Website Reorder",
+    'version': '13.0.1.0.0',
+    'summary': """Add products from sale history of customers to cart """,
+    'description': """Add products from sale history of customers to cart """,
+    'author': "Cybrosys Techno Solutions",
+    'company': "Cybrosys Techno Solutions",
+    'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'depends': ['base', 'account', 'fleet', 'mail'],
-    'data': ['security/rental_security.xml',
-             'security/ir.model.access.csv',
-             'views/car_rental_view.xml',
-             'views/checklist_view.xml',
-             'views/car_tools_view.xml',
-             'reports/rental_report.xml',
-             'data/fleet_rental_data.xml',
-             ],
-    'demo': [
-    ],
-    'images': ['static/description/banner.png'],
+    'category': 'eCommerce',
+    'depends': ['website_sale'],
     'license': 'AGPL-3',
+    'data': [
+        'views/view.xml',
+    ],
+    'images': ['static/description/banner.jpg'],
     'installable': True,
-    'application': True,
+    'auto_install': False,
 }
