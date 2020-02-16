@@ -3,8 +3,8 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author:Cybrosys Techno Solutions(odoo@cybrosys.com)
+#    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Sayooj A O(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -19,30 +19,28 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-
 {
-    'name': 'Export Product Stock in Excel',
-    'version': '13.0.1.1.2',
-    'summary': "Current Stock Report for all Products in each Warehouse",
-    'description': "Current Stock Report for all Products in each Warehouse, Odoo 13,Odoo13",
-    'category': 'Warehouse',
+    'name': "Invoice Multi level Approval",
+    'version': '13.0.1.0.0',
+    'summary': """This module add the multiple approval option for invoice,
+    			  bill,refund and credit notes.""",
+    'description': """This module add the multiple approval option for invoice,
+    bill,refund and credit notes.""",
+    'category': 'Accounting',
     'author': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
-    'website': 'https://www.cybrosys.com',
-    'depends': [
-                'base',
-                'stock',
-                'sale',
-                'purchase',
-                ],
+    'maintainer': 'Cybrosys Techno Solutions',
+    'website': "https://www.cybrosys.com",
+    'depends': ['account'],
     'data': [
-            'views/wizard_view.xml',
-            'views/action_manager.xml',
-            ],
+        'data/data.xml',
+        'security/groups.xml',
+        'security/ir.model.access.csv',
+        'views/invoice_approval_view.xml',
+        'views/account_move_inherited.xml',
+    ],
+    'license': "AGPL-3",
     'images': ['static/description/banner.png'],
-    'license': 'AGPL-3',
     'installable': True,
-    'auto_install': False,
-    'auto_install': False,
+    'application': True,
 }
