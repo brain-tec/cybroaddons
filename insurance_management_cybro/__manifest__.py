@@ -4,6 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Cybrosys Techno Solutions (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,30 +21,28 @@
 #############################################################################
 
 {
-    'name': "Employee Orientation & Training",
-    'version': '14.0.1.1.0',
-    'category': "Generic Modules/Human Resources",
-    'summary': """Employee Orientation/Training Program""",
-    'description':'Complete Employee Orientation/Training Program',
+    'name': 'Insurance Management',
+    'version': '14.0.1.0.0',
+    'summary': """Insurance Management & Operations""",
+    'description': """Insurance Management""",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
-    'depends': ['base', 'hr'],
+    'category': 'Industries',
+    'depends': ['base', 'account'],
+    'license': 'AGPL-3',
     'data': [
-        'views/orientation_checklist_line.xml',
-        'views/employee_orientation.xml',
-        'views/orientation_checklist.xml',
-        'views/orientation_checklists_request.xml',
-        'views/orientation_checklist_sequence.xml',
-        'views/orientation_request_mail_template.xml',
-        'views/print_pack_certificates_template.xml',
-        'views/report.xml',
-        'views/employee_training.xml',
+        'views/insurance_details.xml',
+        'views/claim_details.xml',
+        'views/employee_details.xml',
+        'views/policy_management.xml',
+        'views/insurance_sequence.xml',
+        'views/insurance_management.xml',
         'security/ir.model.access.csv',
     ],
     'images': ['static/description/banner.png'],
-    'license': 'AGPL-3',
     'installable': True,
+    'application': True,
     'auto_install': False,
-    'application': False,
 }
+

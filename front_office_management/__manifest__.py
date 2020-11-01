@@ -4,6 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Anusha P P (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,30 +21,29 @@
 #############################################################################
 
 {
-    'name': "Employee Orientation & Training",
-    'version': '14.0.1.1.0',
-    'category': "Generic Modules/Human Resources",
-    'summary': """Employee Orientation/Training Program""",
-    'description':'Complete Employee Orientation/Training Program',
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
-    'website': 'https://www.cybrosys.com',
+    'name': "Front Office Management",
+    'version': '14.0.1.0.0',
+    'summary': """Manage Front Office Operations:Visitors, Devices Carrying Register, Actions""",
+    'description': """Helps You To Manage Front Office Operations, Odoo14""",
+    'author': "Cybrosys Techno Solutions",
+    'maintainer': 'Cybrosys Techno Solutions',
+    'company': "Cybrosys Techno Solutions",
+    'website': "https://www.cybrosys.com",
+    'category': 'Industries',
     'depends': ['base', 'hr'],
     'data': [
-        'views/orientation_checklist_line.xml',
-        'views/employee_orientation.xml',
-        'views/orientation_checklist.xml',
-        'views/orientation_checklists_request.xml',
-        'views/orientation_checklist_sequence.xml',
-        'views/orientation_request_mail_template.xml',
-        'views/print_pack_certificates_template.xml',
-        'views/report.xml',
-        'views/employee_training.xml',
+        'views/fo_visit.xml',
+        'views/fo_visitor.xml',
+        'views/fo_property_counter.xml',
+        'report/report.xml',
+        'report/fo_property_label.xml',
+        'report/fo_visitor_label.xml',
+        'report/visitors_report.xml',
+        'security/fo_security.xml',
         'security/ir.model.access.csv',
     ],
     'images': ['static/description/banner.png'],
     'license': 'AGPL-3',
     'installable': True,
     'auto_install': False,
-    'application': False,
 }

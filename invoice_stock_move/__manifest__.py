@@ -4,6 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Saritha Sahadevan @cybrosys(odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -18,29 +19,17 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-
 {
-    'name': "Employee Orientation & Training",
-    'version': '14.0.1.1.0',
-    'category': "Generic Modules/Human Resources",
-    'summary': """Employee Orientation/Training Program""",
-    'description':'Complete Employee Orientation/Training Program',
-    'author': 'Cybrosys Techno Solutions',
+    'name': "Stock Picking From Invoice",
+    'version': '14.0.1.0.0',
+    'summary': """Stock Picking From Customer/Supplier Invoice""",
+    'description': """This Module Enables To Create Stocks Picking From Customer/Supplier Invoice""",
+    'author': "Cybrosys Techno Solutions",
     'company': 'Cybrosys Techno Solutions',
-    'website': 'https://www.cybrosys.com',
-    'depends': ['base', 'hr'],
-    'data': [
-        'views/orientation_checklist_line.xml',
-        'views/employee_orientation.xml',
-        'views/orientation_checklist.xml',
-        'views/orientation_checklists_request.xml',
-        'views/orientation_checklist_sequence.xml',
-        'views/orientation_request_mail_template.xml',
-        'views/print_pack_certificates_template.xml',
-        'views/report.xml',
-        'views/employee_training.xml',
-        'security/ir.model.access.csv',
-    ],
+    'website': "https://www.cybrosys.com",
+    'category': 'Accounting',
+    'depends': ['base', 'account', 'stock', 'payment'],
+    'data': ['views/invoice_stock_move_view.xml'],
     'images': ['static/description/banner.png'],
     'license': 'AGPL-3',
     'installable': True,

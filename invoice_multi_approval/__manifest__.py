@@ -4,6 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Sayooj A O(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -18,32 +19,28 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-
 {
-    'name': "Employee Orientation & Training",
-    'version': '14.0.1.1.0',
-    'category': "Generic Modules/Human Resources",
-    'summary': """Employee Orientation/Training Program""",
-    'description':'Complete Employee Orientation/Training Program',
+    'name': "Invoice Multi level Approval",
+    'version': '14.0.1.0.0',
+    'summary': """This module add the multiple approval option for invoice,
+    			  bill,refund and credit notes.""",
+    'description': """This module add the multiple approval option for invoice,
+    bill,refund and credit notes.""",
+    'category': 'Accounting',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
-    'website': 'https://www.cybrosys.com',
-    'depends': ['base', 'hr'],
+    'maintainer': 'Cybrosys Techno Solutions',
+    'website': "https://www.cybrosys.com",
+    'depends': ['account'],
     'data': [
-        'views/orientation_checklist_line.xml',
-        'views/employee_orientation.xml',
-        'views/orientation_checklist.xml',
-        'views/orientation_checklists_request.xml',
-        'views/orientation_checklist_sequence.xml',
-        'views/orientation_request_mail_template.xml',
-        'views/print_pack_certificates_template.xml',
-        'views/report.xml',
-        'views/employee_training.xml',
+        'data/data.xml',
+        'security/groups.xml',
         'security/ir.model.access.csv',
+        'views/invoice_approval_view.xml',
+        'views/account_move_inherited.xml',
     ],
+    'license': "AGPL-3",
     'images': ['static/description/banner.png'],
-    'license': 'AGPL-3',
     'installable': True,
-    'auto_install': False,
-    'application': False,
+    'application': True,
 }
