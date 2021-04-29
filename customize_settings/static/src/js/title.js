@@ -1,4 +1,4 @@
-odoo.define('odoo-debrand-14.title', function(require) {
+odoo.define('customize_settings.title', function(require) {
 "use strict";
 
 var core = require('web.core');

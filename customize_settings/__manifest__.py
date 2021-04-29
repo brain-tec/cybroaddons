@@ -20,10 +20,10 @@
 #############################################################################
 
 {
-    'name': "Odoo Debranding",
+    'name': "Customize Odoo",
     'version': "14.0.1.0.0",
-    'summary': """Odoo Debranding, odoo14""",
-    'description': """Odoo Debranding, odoo14""",
+    'summary': """Customize Odoo, odoo14""",
+    'description': """Customize Odoo, odoo14""",
     'live_test_url': 'https://www.youtube.com/watch?v=fYSPARjmYA4',
     'author': "Cybrosys Techno Solutions",
     'company': "Cybrosys Techno Solutions",
