@@ -20,28 +20,28 @@
 #
 #############################################################################
 {
-    'name': 'Support Package Management',
-    'summary': 'Support Service and Package Management Module',
-    'description': """Support Module is an easy-to-use Support Management app.
-                     It enables users to create, manage, optimize, and monitor 
-                     the entire service request from a centralized application.
-                     """,
-    'author': "Cybrosys Techno Solutions",
+    'name': "To Do List",
+    'summary': """
+        Create Todo List Using Activities""",
+    'description': """
+        Scheduling Activities For each model  and General Activities.
+            """,
+    'author': 'Cybrosys Techno Solutions',
+    'company': 'Cybrosys Techno Solutions',
+    'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'company': "Cybrosys Techno Solutions",
-    'maintainer': "Cybrosys Techno Solutions",
-    'category': 'Project',
-    'Version': '14.0.1.0.0',
-    'depends': ['base', 'project', 'sale_management', 'hr_timesheet'],
+    'category': 'Tools',
+    'version': '14.0.1.0.0',
+    'depends': ['base', 'mail'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
-        'views/support_package.xml',
-        'views/support_client.xml',
-        'views/package_template.xml',
-        'report/support_report_views.xml',
+        'data/recurring.xml',
+        'data/general.xml',
+        'views/views.xml',
     ],
     'license': 'LGPL-3',
-    'images': ['static/description/banner.jpg'],
+    'images': ['static/description/banner.png'],
     'installable': True,
     'auto_install': False,
     'application': True,
