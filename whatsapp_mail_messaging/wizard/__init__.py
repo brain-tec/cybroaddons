@@ -19,5 +19,6 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-from . import wh_message_wizard
 
+from . import wh_message_wizard
+from . import portal_share
