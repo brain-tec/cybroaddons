@@ -20,17 +20,17 @@
 ##############################################################################
 {
     'name': 'Global Search',
-    'version': '13.0.1.0.0',
+    'version': '13.0.1.1.0',
     'summary': """Search, Quick Search, Easy Search, Easy Search in Customers, Products, Sale, Purchase, Inventory and Accounting modules""",
     'description': """Easy Search in Customers, Products, Sale, Purchase, Inventory and Accounting modules, 
-                      Search, Advance search, master search, odoo14, """,
+                      Search, Advance search, global search, odoo14, """,
     'category': 'Settings',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
     'license': 'AGPL-3',
-    'images': ['static/description/banner.jpg'],
+    'images': ['static/description/banner.png'],
     'depends': ['base', 'stock', 'sale', 'purchase'],
     'data': [
         'security/ir.model.access.csv',
