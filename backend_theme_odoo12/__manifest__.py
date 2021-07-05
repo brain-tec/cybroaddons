@@ -19,31 +19,33 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
+
 {
-    'name': "To Do List",
-    'summary': """
-        Create Todo List Using Activities""",
-    'description': """
-        Scheduling Activities For each model  and General Activities.
-            """,
+    "name": "Blueberry Backend Theme",
+    "description": """Backend theme for Odoo 14.0 community edition""",
+    "summary": "Backend theme for Odoo 14.0 community edition.",
+    "version": "14.0.1.0.0",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'live_test_url': 'https://youtu.be/LGiDWPFdkbks',
-    'category': 'Tools',
-    'version': '14.0.1.0.0',
-    'depends': ['base', 'mail'],
-    'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
-        'data/recurring.xml',
-        'data/general.xml',
-        'views/views.xml',
+    "website": "https://www.cybrosys.com",
+    "category": "Theme/Backend",
+    'images': [
+        'static/description/banner.png',
+        'static/description/theme_screenshot.png'
     ],
+    "depends": [
+        'website',
+        'portal',
+        'web_responsive'
+    ],
+    "data": [
+        'views/assets.xml',
+        'views/login_templates.xml',
+    ],
+    'qweb': ['static/src/xml/*.xml'],
     'license': 'LGPL-3',
-    'images': ['static/description/banner.png'],
     'installable': True,
     'auto_install': False,
-    'application': True,
+    'application': False,
 }
