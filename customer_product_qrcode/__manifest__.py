@@ -21,34 +21,26 @@
 #############################################################################
 
 {
-    "name": "Code Backend Theme V14",
-    "description": """Minimalist and elegant backend theme for Odoo 14, Backend Theme, Theme""",
-    "summary": "Code Backend Theme V14 is an attractive theme for backend",
-    "category": "Theme/Backend",
-    "version": "14.0.1.1.1",
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
+    'name': 'Customer and Product QR Code Generator',
+    'version': '14.0.1.0.0',
+    'summary': 'Generate Unique QR Codes for Customers and Products',
+    'description': 'QR Code, QR Code Generator, Odoo QR Code Generator, Customer QR Code, Product QR Code, QR, QR Code Odoo',
+    'category': 'Extra Tools',
+    'author': 'Cybrosys Techno solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    "depends": ['base', 'web', 'mail'],
-    "data": [
-        'assets/assets.xml',
-        'views/icons.xml',
-        'views/layout.xml',
+    'company': 'Cybrosys Techno Solutions',
+    'website': 'https://www.cybrosys.com',
+    'depends': ['base', 'sale', 'stock'],
+    'data': [
+        'report/paperformat.xml',
+        'report/report.xml',
+        'views/view.xml',
+        'report/template.xml',
     ],
-    "qweb": [
-        'static/src/xml/sidebar.xml',
-        'static/src/xml/styles.xml',
-        'static/src/xml/top_bar.xml',
-    ],
-    'images': [
-        'static/description/banner.png',
-        'static/description/theme_screenshot.png',
-    ],
-    'license': 'LGPL-3',
-    'pre_init_hook': 'test_pre_init_hook',
-    'post_init_hook': 'test_post_init_hook',
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': False,
     'auto_install': False,
+    'license': 'LGPL-3',
+    'post_init_hook': '_set_qr'
 }
