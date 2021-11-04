@@ -1,6 +1,34 @@
 odoo.define('pos_discount_manager.ValidateManager', function(require) {
     'use strict';
 
+
+    var models = require('point_of_sale.models');
+
+    models.load_fields('hr.employee', ['limited_discount']);
+
+    var posmodel_super = models.PosModel.prototype;
+    models.PosModel = models.PosModel.extend({
+        load_server_data: function () {
+            var self = this;
+            return posmodel_super.load_server_data.apply(this, arguments).then(function () {
+                var employee_ids = _.map(self.employees, function(employee){return employee.id;});
+                var records = self.rpc({
+                    model: 'hr.employee',
+                    method: 'get_employee_disc_limit',
+                    args: [employee_ids],
+                });
+                return records.then(function (employee_data) {
+                    self.employees.forEach(function (employee) {
+                        var data = _.findWhere(employee_data, {'id': employee.id});
+                        if (data !== undefined){
+                            employee.limited_discount = data.limited_discount;
+                        }
+                    });
+                });
+            });
+        },
+    });
+
     const {
         parse
     } = require('web.field_utils');
@@ -33,7 +61,6 @@ odoo.define('pos_discount_manager.ValidateManager', function(require) {
                 }
 
                 this.currentOrder.initialize_validation_date();
-                this.currentOrder.finalized = true;
 
                 let syncedOrderBackendIds = [];
 
@@ -111,8 +138,13 @@ odoo.define('pos_discount_manager.ValidateManager', function(require) {
 
                         }
                     }
+                    else {
+                        return false;
+                    }
 
                 }
+
+                this.currentOrder.finalized = true;
 
                 this.showScreen(this.nextScreen);
 
