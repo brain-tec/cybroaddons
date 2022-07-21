@@ -19,6 +19,7 @@ Company
 Credits
 -------
 * 'Cybrosys Techno Solutions <https://cybrosys.com/>'__
+   Gion D @Cybrosys
 
 Contacts
 --------
