@@ -3,8 +3,8 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2021-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Sayooj A O(<https://www.cybrosys.com>)
+#    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: ASWATHI C (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,27 +20,26 @@
 #
 #############################################################################
 {
-    'name': "Invoice Multi level Approval",
-    'version': '15.0.1.1.1',
-    'summary': """This module add the multiple approval option for invoice,
-    			  bill,refund and credit notes.""",
-    'description': """This module add the multiple approval option for invoice,
-    bill,refund and credit notes.""",
-    'category': 'Accounting',
+    'name': 'POS Customer Greeting Messages',
+    'version': '15.0.1.0.0',
+    'category': 'Point of Sale',
+    'summary': 'Send Greeting messages to Customers in Pos Order',
+    'description': 'Send Greeting messages to Customers in Pos Order',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'depends': ['account'],
+    'depends': ['point_of_sale'],
+    'external_dependencies': {'python': ['twilio']},
     'data': [
-        'data/data.xml',
-        'security/groups.xml',
         'security/ir.model.access.csv',
-        'views/invoice_approval_view.xml',
-        'views/account_move_inherited.xml',
+        'views/pos_config_settings.xml',
+        'views/pos_greetings_view.xml',
     ],
-    'license': "AGPL-3",
+    'license': 'AGPL-3',
     'images': ['static/description/banner.png'],
     'installable': True,
-    'application': True,
+    'application': False,
+    'auto_install': False,
+
 }
