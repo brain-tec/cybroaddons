@@ -20,18 +20,28 @@
 #
 #############################################################################
 {
-    'name': 'Index Test',
-    'version': '16.0.1.0.0',
-    'summary': 'Index Test',
-    'description': """Index Test""",
-    'author': "JK Group",
-    'website': "https://www.jkgroup.com",
-    'company': 'JK Group',
-    'maintainer': 'JK Group',
+    'name': "Account Invoice Line",
+    "description": """ccount Invoice/Bill
+                    Lines Tree,Form,Kanban,Pivot,Graph,Calendar Views""",
+    "summary": "Account Invoice/Bill Lines Tree,Form,Kanban,Pivot,Graph,Calendar Views",
+    "category": "Accounting",
+    "version": "16.0.1.0.0",
+    'author': 'Cybrosys Techno Solutions',
+    'company': 'Cybrosys Techno Solutions',
+    'maintainer': 'Cybrosys Techno Solutions',
+    'website': "https://www.cybrosys.com",
+    'depends': ['account'],
+    'data': [
+        'views/account_line_view.xml',
+        'views/bill_line_view.xml',
+        'views/credit_note_line_view.xml',
+        'views/refund_line_view.xml',
+        'views/account_move_line_view.xml'
+    ],
+    'images': [
+        'static/description/banner.png', ],
     'license': 'LGPL-3',
-    'depends': ['base'],
     'installable': True,
-    'application': True,
+    'application': False,
     'auto_install': False,
-
 }

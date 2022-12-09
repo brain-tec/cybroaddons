@@ -19,19 +19,5 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-{
-    'name': 'Index Test',
-    'version': '16.0.1.0.0',
-    'summary': 'Index Test',
-    'description': """Index Test""",
-    'author': "JK Group",
-    'website': "https://www.jkgroup.com",
-    'company': 'JK Group',
-    'maintainer': 'JK Group',
-    'license': 'LGPL-3',
-    'depends': ['base'],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
 
-}
+from . import account_move_line
