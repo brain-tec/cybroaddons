@@ -3,8 +3,8 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Sreejith sasidharan(<https://www.cybrosys.com>)
+#    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Javid A(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,40 +20,31 @@
 #
 #############################################################################
 {
-    'name': "POS Product Multi variant",
-    'version': '15.0.1.0.2',
-    'summary': """Product with multi-variants""",
-    'description': """Configure products having variants in POS""",
+    'name': 'Manufacturing Reports',
+    'version': '15.0.1.0.0',
+    'summary': 'PDF & XLS Reports For Manufacturing Module',
+    'description': 'PDF & XLS reports for manufacturing module with advanced filters.',
+    'category': 'Manufacturing',
     'author': 'Cybrosys Techno Solutions',
+    'website': "http://www.cybrosys.com",
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'category': 'Point of Sale',
-    'depends': ['base',
-                'point_of_sale',
-                ],
-    'data': ['views/pos_variants.xml',
-             'security/ir.model.access.csv',
-             ],
-
+    'depends': ['base', 'mrp'],
+    'data': [
+        'security/ir.model.access.csv',
+        'wizards/mrp_wizard_view.xml',
+        'reports/mrp_report_template.xml',
+        'reports/mrp_report.xml',
+        'views/menu_items.xml',
+    ],
     'assets': {
-        'point_of_sale.assets': [
-            'pos_multi_variant/static/src/css/label.css',
-            'pos_multi_variant/static/src/js/models.js',
-            'pos_multi_variant/static/src/js/ProductPopup.js',
-            'pos_multi_variant/static/src/js/ProductScreen.js'
-        ],
-        'web.assets_qweb': [
-            'pos_multi_variant/static/src/xml/label.xml',
-            'pos_multi_variant/static/src/xml/popup.xml'
-        ],
+        'web.assets_backend': [
+            'manufacturing_reports/static/src/js/action_manager.js',
+        ]
     },
-
     'images': ['static/description/banner.png'],
     'license': 'AGPL-3',
     'installable': True,
-
-
-
     'auto_install': False,
+    'application': False,
 }
