@@ -3,8 +3,8 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2022-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
+#    Copyright (C) 2021-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Author: Midilaj (<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
@@ -21,28 +21,24 @@
 #############################################################################
 
 {
-    'name': 'Custom List View',
-    'version': '16.0.1.0.1',
-    'summary': 'Helps to Show Row Number, Fixed Header, Duplicate Record and Highlight Selected Record in List View',
-    'description': 'Helps to Show Row Number, Fixed Header, Duplicate Record and Highlight Selected Record in List View',
-    'category': 'Tools',
+    'name': 'Product Brand in eCommerce',
+    'version': '16.0.1.0.0',
+    'category': 'eCommerce',
+    'summary': 'Product Brand in eCommerce',
+    'description': 'Product Brand in eCommerce',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'license': 'LGPL-3',
     'images': ['static/description/banner.png'],
-    'depends': ['base'],
-    'assets': {
-        'web.assets_backend': [
-            'custom_list_view/static/src/js/duplicate_record.js',
-            'custom_list_view/static/src/js/record_highlight.js',
-            'custom_list_view/static/src/css/sticky_header.css',
-            'custom_list_view/static/src/css/highlight.css',
-            'custom_list_view/static/src/xml/record_highlight.xml'
-        ],
-    },
+    'website': 'https://www.cybrosys.com',
+    'depends': ['product_brand_sale', 'website_sale'],
+    'data': [
+        'views/template.xml',
+        'views/sale_report_views.xml'
+    ],
+    'license': 'AGPL-3',
     'installable': True,
     'auto_install': False,
     'application': False,
+
 }
