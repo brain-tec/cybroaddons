@@ -1,11 +1,10 @@
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+    :alt: License: AGPL-3
 
-Product Discount Limit
-=====================================
-Product Discount Limit
-
-Configuration
-=============
-* No additional configurations needed
+Employee Attendance Xlsx Report
+=======================
+This module helps to manage the XLSX report of the attendance of employees.
 
 Company
 -------
@@ -13,7 +12,7 @@ Company
 
 Credits
 -------
-* Developers:	Prayag@cybrosys
+Developer: LAJINA K V @cybrosys, Contact: odoo@cybrosys.com
 
 Contacts
 --------
@@ -36,5 +35,3 @@ For support and more information, please visit `Our Website <https://cybrosys.co
 Further information
 ===================
 HTML Description: `<static/description/index.html>`__
-
-
