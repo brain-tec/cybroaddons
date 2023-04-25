@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2021-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU LESSER
@@ -19,26 +19,21 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
+from odoo import models
 
-{
-    'name': 'List View Sticky Header',
-    'version': '15.0.1.0.1',
-    'summary': 'Helps to Stick The Header of List View',
-    'description': 'Helps to Stick The Header of List View',
-    'category': 'Tools',
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'license': 'LGPL-3',
-    'images': ['static/description/banner.png'],
-    'depends': ['base'],
-    'assets': {
-        'web.assets_backend': [
-            "list_view_sticky_header/static/src/scss/sticky_header.scss"
-        ],
-    },
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-}
+
+class SaleOrder(models.Model):
+    """Inheriting sale order for creating a sale order through POS"""
+    _inherit = 'sale.order'
+
+    def create_sale_order(self, temp_list, cus):
+        """To create sale order through POS"""
+        self.create({
+                'partner_id': cus.get('id'),
+                'order_line': [(0, 0, {
+                    'product_id': rec.get('product'),
+                    'discount': rec.get('discount'),
+                    'product_uom_qty': rec.get('quantity'),
+                    'price_subtotal': rec.get('price'),
+                }) for rec in temp_list]
+            })
