@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Megha A P (odoo@cybrosys.com)
+#    Author: Archana(odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -21,33 +21,22 @@
 ################################################################################
 
 {
-    'name': "Portal Dashboard",
+    'name': 'POS Direct Login',
     'version': '16.0.1.0.0',
-    'summary': """Portal Dashboard to view the my account in dashboard view""",
-    'description': 'View of my account in portal view is changed to dashboard '
-                   'view for better user experience',
-    'category': 'Extra Tools',
+    'category': 'Point of Sale',
+    'summary': 'Helps to directly login to POS.',
+    'description': 'Log in to configured POS shop to save time without backend.',
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'depends': ['base', 'sale', 'project', 'crm', 'purchase', 'website'],
-    'images': [
-        'static/description/banner.png',
-    ],
-    'data': [
-        'views/res_config_settings_views.xml',
-        'views/dashboard.xml',
-    ],
-    'assets': {
-        'web.assets_frontend': [
-            'portal_dashboard/static/src/js/portal_dashboard_graph.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js',
-            '/portal_dashboard/static/src/scss/style.scss'
-        ]
-    },
+    'website': 'https://www.cybrosys.com',
     'license': 'AGPL-3',
+    'depends': ['base', 'point_of_sale'],
+    'data': [
+        'views/res_users_views.xml'
+    ],
+    'images': ['static/description/banner.png'],
     'installable': True,
-    'auto_install': True,
     'application': False,
+    'auto_install': False,
 }
