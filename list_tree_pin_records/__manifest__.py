@@ -20,37 +20,29 @@
 #
 #############################################################################
 {
-    'name': 'Whatsapp Chat Layout in Odoo Discuss',
+    'name': "Pin Records In Tree/List View",
     'version': '16.0.1.0.0',
-    'summary': 'Redesigned the discuss module into whatsapp chat layout',
-    'description': 'Odoo discuss with whatsapp view',
-    'category': 'Discuss',
+    'category': 'Extra Tools',
+    'summary': """Pin Records In Tree/List View module is used to Pin Records 
+    in Top of the Table.""",
+    'description': """Pin Records In Tree/List View module is used to Pin 
+    Records in Top of the Table.""",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'license': 'LGPL-3',
-    'depends': ['base', 'mail', 'base_setup'],
+    'depends': ['account', 'purchase', 'hr_expense', 'web'],
     'data': [
-        'views/res_config_settings.xml'
+        'security/ir.model.access.csv'
     ],
     'assets': {
         'web.assets_backend': [
-            'whatsapp_chat_layout/static/src/css/discuss.css',
-            'whatsapp_chat_layout/static/src/css/thread.css',
-            'whatsapp_chat_layout/static/src/css/color.css',
-            'whatsapp_chat_layout/static/src/js/discuss_sidebar.js',
-            'whatsapp_chat_layout/static/src/js/discuss_container.js',
-            'whatsapp_chat_layout/static/src/xml/discuss_sidebar.xml',
-            'whatsapp_chat_layout/static/src/xml/discuss_sidebar_category.xml',
-            'whatsapp_chat_layout/static/src/xml/discuss_sidebar_mailbox.xml',
-            'whatsapp_chat_layout/static/src/xml/composer.xml'
+            'list_tree_pin_records/static/src/js/pin_records.js',
+            'list_tree_pin_records/static/src/xml/pin_list_views.xml',
         ],
     },
-    'images': [
-        'static/description/banner.png'
-    ],
+    'images': ['static/description/banner.png'],
+    'license': 'LGPL-3',
     'installable': True,
     'auto_install': False,
-    'application': False,
 }

@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Afra MP (odoo@cybrosys.com)
+#    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
@@ -20,36 +20,24 @@
 #
 #############################################################################
 {
-    'name': 'Whatsapp Chat Layout in Odoo Discuss',
+    'name': "Customer Progress Billing",
     'version': '16.0.1.0.0',
-    'summary': 'Redesigned the discuss module into whatsapp chat layout',
-    'description': 'Odoo discuss with whatsapp view',
-    'category': 'Discuss',
+    'category': 'Accounting',
+    'summary': """ Customer Invoice as Progress Billing for Project Odoo """,
+    'description': """ Progress Billing for Analytic Account / Project """,
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
+    'images': ['static/description/banner.png'],
     'website': "https://www.cybrosys.com",
-    'license': 'LGPL-3',
-    'depends': ['base', 'mail', 'base_setup'],
+    'depends': ['base', 'account', 'analytic'],
     'data': [
-        'views/res_config_settings.xml'
+        'reports/progress_billing_reports.xml',
+        'reports/progress_billing_report_templates.xml',
+        'views/analytic_account_views.xml',
+        'views/account_move_views.xml',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'whatsapp_chat_layout/static/src/css/discuss.css',
-            'whatsapp_chat_layout/static/src/css/thread.css',
-            'whatsapp_chat_layout/static/src/css/color.css',
-            'whatsapp_chat_layout/static/src/js/discuss_sidebar.js',
-            'whatsapp_chat_layout/static/src/js/discuss_container.js',
-            'whatsapp_chat_layout/static/src/xml/discuss_sidebar.xml',
-            'whatsapp_chat_layout/static/src/xml/discuss_sidebar_category.xml',
-            'whatsapp_chat_layout/static/src/xml/discuss_sidebar_mailbox.xml',
-            'whatsapp_chat_layout/static/src/xml/composer.xml'
-        ],
-    },
-    'images': [
-        'static/description/banner.png'
-    ],
+    'license': 'LGPL-3',
     'installable': True,
     'auto_install': False,
     'application': False,
