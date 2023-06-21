@@ -26,27 +26,24 @@ import ast
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    product_tags_ids = fields.Many2many(
-        "product.tags", string="Product Tags", help="Product Tags")
-
     @api.model
     def create(self, vals):
         """Inherited for passing the product Tags."""
         res = super(ProductTemplate, self).create(vals)
-        if not res.product_tags_ids:
+        if not res.product_tag_ids:
             pro_tag = self.env['ir.config_parameter'].sudo().get_param(
-                'odoo_product_tags.product_tags_ids')
+                'odoo_product_tags.product_tag_ids')
             if pro_tag:
                 tag_ids = ast.literal_eval(pro_tag)
                 res.update({
-                    "product_tags_ids": [(6, 0, tag_ids)],
+                    "product_tag_ids": [(6, 0, tag_ids)],
                 })
 
             return res
         else:
             return res
 
-    def action_apply_tags(self):
+    def action_apply_template_tags(self):
         return {
             'name': 'Apply Product Tag',
             'type': 'ir.actions.act_window',
@@ -54,7 +51,8 @@ class ProductTemplate(models.Model):
             'view_mode': 'form',
             'res_model': 'product.tags.wizard',
             'context': {
-                'default_product_ids': self.ids,
+                'default_product_tmp_ids': self.ids,
+                'default_is_product_template': True
             },
             'target': 'new',
         }
