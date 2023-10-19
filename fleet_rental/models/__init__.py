@@ -19,6 +19,12 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
+from . import account_move
+from . import account_move_line
 from . import car_rental
+from . import car_rental_checklist
+from . import car_tools
 from . import fleet
+from . import fleet_rental_line
+from . import fleet_vehicle
 from . import res_config_settings
