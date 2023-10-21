@@ -1,14 +1,19 @@
-.. image:: https://img.shields.io/badge/licence-LGPL--3-blue.svg
-    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-    :alt: License: LGPL-3
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.svg
+    :target: https://www.gnu.org/licenses/agpl-3.0-standalone.html
+    :alt: License: AGPL-3
 
-Delivery Gate Pass
-==================
-Gatepass tickets for delivery orders.
+Question Duplicator in Survey
+=============================
+Makes it possible to duplicate existing survey questions to multiple surveys.
 
 Configuration
 =============
 * No additional configurations needed
+
+License
+-------
+General Public License, Version 3 (AGPL v3).
+(https://www.gnu.org/licenses/agpl-3.0-standalone.html)
 
 Company
 -------
@@ -16,7 +21,7 @@ Company
 
 Credits
 -------
-* Developer:  Mohamed Muzammil VP @cybrosys
+* Developer:(V14) Mruthul Raj, Contact: odoo@cybrosys.com
 
 Contacts
 --------
@@ -39,4 +44,3 @@ For support and more information, please visit `Our Website <https://cybrosys.co
 Further information
 ===================
 HTML Description: `<static/description/index.html>`__
-
