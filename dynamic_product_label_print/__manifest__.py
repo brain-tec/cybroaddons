@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Sruthi Renjith (odoo@cybrosys.com)
+#    Author: Ammu Raj (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,24 +20,23 @@
 #
 ################################################################################
 {
-    'name': 'Import Bank Statement',
+    'name': 'Dynamic Product Label Print',
     'version': '15.0.1.0.0',
-    'category': 'Accounting',
-    'summary': 'Import Bank Statement in CSV, XLSX, QIF and OFX format',
-    'description': """Uploading the data in CSV, XLSX, OFX and QIF format and 
-     converting it into bank statement""",
-    'author': "Cybrosys Techno Solutions",
+    'category': 'Stock',
+    'summary': "Print Label Dynamically for multiple products",
+    'description': "Dynamically print the barcode and product fields of"
+                   "multiple products",
+    'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'depends': ['base_accounting_kit'],
-    'data': ['security/ir.model.access.csv',
-             'views/account_journal_views.xml',
-             'wizard/import_bank_statement_views.xml'
-             ],
-    'external_dependencies': {
-        'python': ['openpyxl', 'ofxparse', 'qifparse']
-    },
+    'website': 'https://www.cybrosys.com',
+    'depends': ['stock'],
+    'data': [
+        'security/ir.model.access.csv',
+        'report/label_layout_templates.xml',
+        'views/dynamic_template_views.xml',
+        'wizard/product_label_layout_views.xml',
+    ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',
     'installable': True,
