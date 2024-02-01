@@ -14,6 +14,6 @@
         </field>
     </record>
     <record id="hr_attendance.hr_attendance_action" model="ir.actions.act_window">
-        <field name="view_mode">gantt,tree,form,calendar</field>
+        <field name="view_mode">tree,form,kanban,calendar</field>
     </record>
 </odoo>

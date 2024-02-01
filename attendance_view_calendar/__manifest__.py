@@ -22,7 +22,7 @@
 {
     'name': 'Attendance Calendar View',
     'version': '17.0.1.0.0',
-    'category': 'Human Resources',
+    'category': 'Human Resources/Attendances',
     'summary': 'Calender View for Attendance Module.',
     'description': 'This module will help you to create timesheet'
                    'for manufacturing orders according to the '
@@ -31,7 +31,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'depends': ['base', 'hr_attendance',  'hr_attendance_gantt'],
+    'depends': ['base', 'hr_attendance'],
     'data': [
         'views/hr_attendance_calendar_view.xml',
     ],
