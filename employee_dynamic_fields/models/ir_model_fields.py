@@ -24,7 +24,6 @@ from odoo import fields, models
 
 class IrModelFields(models.Model):
     """Adding a new field to understand the dynamically created fields."""
-
     _inherit = 'ir.model.fields'
 
     is_employee_dynamic = fields.Boolean(string="Dynamic Field",
