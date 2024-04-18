@@ -3,7 +3,7 @@
     <!--    Inheriting res_config_settings_view_form to add new fields-->
     <record id="res_config_settings_view_form" model="ir.ui.view">
         <field name="name">
-            res.config.settings.view.form.inherit.website.maintenance
+            res.config.settings.view.form.inherit.website.maintenance.page
         </field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="website.res_config_settings_view_form"/>
@@ -25,7 +25,6 @@
                         <div class="o_setting_right_pane" attrs="{'invisible': [('is_under_maintenance', '=', False)]}">
                             <label for="maintenance_img"
                                    string="Maintenance Image"/>
-<!--                            <br/>-->
                             <field name="maintenance_img" widget="image"
                                    style="padding-left: 5px;"/>
                         </div>
