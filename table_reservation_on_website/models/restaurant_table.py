@@ -19,7 +19,7 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class RestaurantTable(models.Model):
@@ -28,3 +28,18 @@ class RestaurantTable(models.Model):
 
     rate = fields.Float(string="Amount",
                         help="Amount for reservation of this table")
+
+    is_show_field = fields.Boolean(string='Show field',
+                                   compute='_compute_is_show_field',
+                                   help='Depends on the field value field '
+                                        'rate visibility is determined')
+
+    @api.depends('name')
+    def _compute_is_show_field(self):
+        """Compute field rate visibility using this function"""
+        for record in self:
+            if record.env['ir.config_parameter'].get_param(
+                    'table_reservation_on_website.reservation_charge'):
+                record.is_show_field = True
+            else:
+                record.is_show_field = False
