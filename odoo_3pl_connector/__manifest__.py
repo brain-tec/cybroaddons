@@ -3,8 +3,8 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Sreenath K, Shafna K (odoo@cybrosys.com)
+#    Copyright (C) 2024-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Unnimaya C O (odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,26 +20,36 @@
 #
 ################################################################################
 {
-    'name': 'Geolocation in HR Attendance',
-    'version': '16.0.1.0.1',
-    'summary': "The attendance location of the employee",
-    'description': "This module helps to identify the checkin/out location of the employee",
+    'name': "Odoo 3pl Connector",
+    'version': '16.0.1.0.0',
+    'category': 'Productivity',
+    'summary': """Facilitates seamless integration  between Odoo and 3pl 
+     for efficient supply chain management.""",
+    'description': """Enabling a smooth integration between Odoo and 3pl 
+     streamlines supply chain management for enhanced efficiency. This 
+     integration facilitates seamless coordination, optimizing processes 
+     across the entire supply chain. """,
     'author': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
+    'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
-    'category': 'Human Resources',
-    'depends': ['base', 'hr', 'hr_attendance'],
+    'depends': ['stock'],
     'data': [
-        'views/hr_attendance_views.xml',
+        'security/ir.model.access.csv',
+        'views/ftp_server_views.xml',
+        'views/stock_warehouse_views.xml',
+        'views/stock_picking_views.xml',
+        'wizard/tpl_operation_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
-            'odoo_attendance_user_location/static/src/js/my_attendances.js',
+            'odoo_3pl_connector/static/src/js/action_manager.js',
         ],
     },
+    'external_dependencies': {
+        'python': ['openpyxl']
+    },
     'images': ['static/description/banner.jpg'],
-    'external_dependencies': {'python': ['geopy']},
     'license': 'AGPL-3',
     'installable': True,
     'auto_install': False,
