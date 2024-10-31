@@ -24,3 +24,8 @@
 #### Version 14.0.1.0.1
 #### ADD
 - Nextcloud and Amazon S3 integration added. Backup can be stored into Nextcloud and Amazon S3.
+
+#### 24.10.2024
+#### Version 14.0.2.0.2
+#### UPDT
+-  Fixed the errors while inputting list_db = False in odoo conf file.

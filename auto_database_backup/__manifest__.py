@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': "Automatic Database Backup",
-    'version': '14.0.1.0.1',
+    'version': '14.0.2.0.2',
     'summary': 'Generate automatic backup of databases and store to local, '
                'google drive or remote server',
     'description': 'his module has been developed for creating '
@@ -40,8 +40,8 @@
         'wizard/dropbox_auth_code_views.xml'
     ],
     'external_dependencies': {
-        'python': ['dropbox', 'pyncclient', 'boto3', 'nextcloud-api-wrapper',
-                   'paramiko']},
+        'python': ['dropbox', 'pyncclient', 'boto3', 'nextcloud-api-wrapper', 'paramiko']
+    },
     'license': 'LGPL-3',
     'images': ['static/description/banner.gif'],
     'installable': True,
