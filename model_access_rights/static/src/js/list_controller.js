@@ -14,6 +14,7 @@ odoo.define('model_access_rights/static/src/js/list_controller.js', function (re
     * This function will used to hide the selected options from the list view
     */
         async willStart() {
+            const sup = this._super(...arguments);
             var self = this;
             var user_id = self.initialState.context.uid;
             var model = self.modelName;
