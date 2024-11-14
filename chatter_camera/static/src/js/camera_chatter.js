@@ -10,8 +10,8 @@ odoo.define('chatter_camera.camera_chatter', function(require) {
          * Open the camera
          **/
         onClickCamera(ev) {
-            var myModal = $(ev.target.parentElement.nextSibling.childNodes[0]);
-            myModal[0].style.display = "block";
+            var myModal = document.getElementById('CameraModal');
+            $(myModal)[0].style.display = "block";
             var All_mediaDevices = navigator.mediaDevices;
             All_mediaDevices.getUserMedia({
                     audio: false,
@@ -33,8 +33,8 @@ odoo.define('chatter_camera.camera_chatter', function(require) {
          * Capture the image
          **/
         async onClickStop(ev){
-            var myModal = $(ev.target.parentElement.parentElement.parentElement);
-            myModal[0].style.display = "none";
+            var myModal = document.getElementById('CameraModal');
+            $(myModal)[0].style.display = "none";
             window.location.reload();
         },
         async ImageCapture() {

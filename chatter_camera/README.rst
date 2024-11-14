@@ -1,9 +1,9 @@
-.. image:: https://img.shields.io/badge/license-LGPL--3-blue.svg
+.. image:: https://img.shields.io/badge/licence-LGPL--3-blue.svg
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 
 Chatter Camera
-==============
+=======================
 This module helps you to capture the images from the chatter, and also we can attach the corresponding images.
 
 Configuration
