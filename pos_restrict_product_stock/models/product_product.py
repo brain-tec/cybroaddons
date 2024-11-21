@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Gayathri v (odoo@cybrosys.com)
+#    Author: Gayathri V(odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -19,5 +19,18 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-from . import pos_config
-from . import product_product
+from odoo import api, models
+
+
+class ProductProduct(models.Model):
+
+    _inherit = 'product.product'
+
+    @api.model
+    def get_product_quantity(self):
+        """
+       Retrieves a list of products that are available in the Point of Sale (POS) system,
+       including their current available quantity and virtual available quantity.
+       """
+        products= self.search_read([('available_in_pos','=',True)],fields=['id', 'qty_available','virtual_available'])
+        return products

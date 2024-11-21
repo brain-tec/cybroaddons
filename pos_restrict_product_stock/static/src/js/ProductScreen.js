@@ -24,5 +24,23 @@ const RestrictProductScreen = (ProductScreen) => class RestrictProductScreen ext
             await super._clickProduct(event)
         }
     }
+    async _onClickPay(){
+    var type = this.env.pos.config.stock_type
+    var out_of_stock = false
+ for (let rec of this.env.pos.get_order().orderlines.models) {
+ if (this.env.pos.config.is_restrict_product && ((type == 'qty_on_hand') && (rec.quantity > rec.product.qty_available)) | ((type == 'virtual_qty') && (rec.quantity > rec.product.virtual_available)) |
+            ((rec.quantity > rec.product.qty_available) && (rec.quantity > rec.product.virtual_available))) {
+               out_of_stock = true
+               this.showPopup("OutOfStockPopup", {
+                body: rec.product.display_name,
+                pro_id: rec.product.id
+            });
+              break;
+            }
+        }
+        if (out_of_stock==false){
+        await super._onClickPay()
+}
+    }
 }
 Registries.Component.extend(ProductScreen, RestrictProductScreen);

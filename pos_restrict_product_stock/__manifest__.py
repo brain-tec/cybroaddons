@@ -42,10 +42,13 @@
             '/pos_restrict_product_stock/static/src/css/display_stock.css',
             '/pos_restrict_product_stock/static/src/js/RestrictStockPopup.js',
             '/pos_restrict_product_stock/static/src/js/ProductScreen.js',
+            '/pos_restrict_product_stock/static/src/js/OutOfStockPopup.js',
+            '/pos_restrict_product_stock/static/src/js/ProductItem.js',
         ],
         'web.assets_qweb': [
             '/pos_restrict_product_stock/static/src/xml/ProductItem.xml',
             '/pos_restrict_product_stock/static/src/xml/RestrictStockPopup.xml',
+            '/pos_restrict_product_stock/static/src/xml/OutOfStockPopup.xml',
         ],
     },
     'images': ['static/description/banner.jpg'],
