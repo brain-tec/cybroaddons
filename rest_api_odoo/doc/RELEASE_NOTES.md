@@ -8,3 +8,8 @@
 #### Version 17.0.1.0.1
 ##### BUG FIX
 - Updated the issue of date fields
+
+#### 25.11.2024
+#### Version 17.0.1.0.2
+##### BUG FIX
+- Included documentation in the index file.

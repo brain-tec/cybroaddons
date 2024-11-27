@@ -39,7 +39,7 @@
 					"host": [
 						"cybrosys"
 					],
-					"port": "8016",
+					"port": "8017",
 					"path": [
 						"odoo_connect"
 					]
@@ -86,7 +86,7 @@
 					"host": [
 						"cybrosys"
 					],
-					"port": "8016",
+					"port": "8017",
 					"path": [
 						"send_request"
 					],
@@ -140,7 +140,7 @@
 					"host": [
 						"cybrosys"
 					],
-					"port": "8016",
+					"port": "8017",
 					"path": [
 						"send_request"
 					],
@@ -190,7 +190,7 @@
 					"host": [
 						"cybrosys"
 					],
-					"port": "8016",
+					"port": "8017",
 					"path": [
 						"send_request"
 					],
@@ -235,7 +235,7 @@
 					"host": [
 						"cybrosys"
 					],
-					"port": "8016",
+					"port": "8017",
 					"path": [
 						"send_request"
 					],
