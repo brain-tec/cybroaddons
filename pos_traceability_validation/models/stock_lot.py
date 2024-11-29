@@ -41,8 +41,13 @@ class StockLot(models.Model):
         return True
 
     @api.model
-    def get_available_lots_qty_pos(self, product_id, lot_name):
+    def get_available_lots_qty_pos(self, product_id, lot_names, pos_config_id):
         """Check the max lot quantity of corresponding product."""
+        pos_config = self.env['pos.config'].browse(pos_config_id)
+        location_id = pos_config.picking_type_id.default_location_src_id.id
         stock_quant = self.env['stock.lot'].search([
-            ('product_id', '=', product_id), ('name', '=', lot_name)])
+            ('product_id', '=', product_id),
+            ('name', '=', lot_names),
+            ('location_id', '=', location_id)
+        ])
         return stock_quant.product_qty
