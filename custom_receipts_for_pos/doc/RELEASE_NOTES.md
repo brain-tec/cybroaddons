@@ -40,4 +40,9 @@
 #### Version 17.0.3.0.5
 ##### BUGFIX
 - Fixed the receipt printing blank screen.
+- 
+#### 29.11.2024
+#### Version 17.0.3.0.6
+##### BUGFIX
+- Fixed the receipt number duplication.
 
