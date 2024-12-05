@@ -1528,7 +1528,7 @@ label:hover div.popover.fade.in {
 
 #theme_editor_sidebar {
     margin-left: 1587px !important;
-    height: 934px;
+    height: inherit;
 }
 
 .oe_kanban_action_button {
