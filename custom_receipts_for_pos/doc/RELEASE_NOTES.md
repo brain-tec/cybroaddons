@@ -40,9 +40,8 @@
 #### Version 17.0.3.0.5
 ##### BUGFIX
 - Fixed the receipt printing blank screen.
-- 
-#### 29.11.2024
-#### Version 17.0.3.0.6
-##### BUGFIX
-- Fixed the receipt number duplication.
 
+#### 07.10.2024
+#### Version 17.0.3.1.5
+##### UPDATE
+- Updated the tracking number to custom receipt screen and fixed the issues when tip is enabled. 
