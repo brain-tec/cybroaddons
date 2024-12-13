@@ -120,3 +120,7 @@ class SendGridSendEmails(models.Model):
                         line.state = 'send'
                         line.error_check = False
                         line.error_msg = False
+
+
+
+

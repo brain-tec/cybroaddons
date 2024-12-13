@@ -91,7 +91,6 @@ class SendGridEmail(models.Model):
                 type_check_field: True
             }
             response = send_individual_email(recipient[email_field])
-            response.status_code = 201
             if response.status_code in [200, 201, 202]:
                 common_data.update({'state': 'send'})
                 self.env["email.api"].create(common_data)
