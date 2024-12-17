@@ -4,7 +4,7 @@
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2024-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Ayana KP(odoo@cybrosys.com)
+#    Author: Mohammed Irfan T(odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -20,25 +20,34 @@
 #
 ###############################################################################
 {
-    'name': 'POS Auto Lot Selection',
-    'version': '17.0.1.1.0',
-    'category': 'Point of Sale',
-    'summary': """Automatic lot selection in POS """,
-    'description': """This module helps to Auto select Lot/Serial numbers for
-     products in pos""",
+    'name': 'Automatic Project Task Timer',
+    'version': '17.0.1.0.0',
+    'category': 'Project',
+    'summary': 'Automatic Running Timer for Project Tasks',
+    'description': "This module helps you to track time sheet in project "
+                   "using a real timer, it's starts when task is in "
+                   "configured stage and stops when its moves to any other "
+                   "stage and the timesheet will be recorded.",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
-    'depends': ['point_of_sale', 'mrp','mrp_product_expiry','product'],
+    'website': 'https://www.cybrosys.com',
+    'depends': ['hr_timesheet'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/project_task_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/timer_configuration_views.xml'
+    ],
     'assets': {
-        'point_of_sale._assets_pos': [
-            'pos_auto_lot_selection/static/src/js/product.js',
-        ],
-    },
+        'web.assets_backend': [
+            'automatic_project_task_timer/static/src/js/task_timer.js',
+            'automatic_project_task_timer/static/src/js/form_open.js',
+            'automatic_project_task_timer/static/src/xml/task_timer_templates.xml',
+        ]},
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',
     'installable': True,
-    'application': False,
     'auto_install': False,
+    'application': False,
 }
