@@ -18,3 +18,8 @@
 #### Version 17.0.2.1.2
 #### Update
 -  Added Paused feature.
+
+#### 17.12.2024
+#### Version 17.0.3.1.2
+#### Update
+-  Updated with the issue in unit price.
