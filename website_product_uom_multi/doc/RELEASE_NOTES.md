@@ -11,3 +11,9 @@
 #### BUGFIX
 
 - Fixed the uom issue on instant checkout
+
+#### 18.12.2024
+#### Version 17.0.1.0.1
+#### BUGFIX
+
+- Updated the gif

@@ -33,6 +33,7 @@
     'depends': ['base_setup', 'hr_attendance', 'web'],
     'data': [
         'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         'data/ir_cron_data.xml',
         'data/ir_action_data.xml',
         'wizards/user_management_views.xml',

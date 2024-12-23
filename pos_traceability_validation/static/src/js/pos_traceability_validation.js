@@ -20,7 +20,7 @@ patch(EditListPopup.prototype, {
     /**Checking the lot and serial and raising the error popup**/
         if (this.props.title === 'Lot/Serial Number(s) Required'){
             var pos_config_id = this.pos.config.id
-            let product_id = this.props.id
+            let product_id = this.props.product
             var lot_string = this.state.array
             var lot_names = [];
             for (var i = 0; i < lot_string.length; i++) {
@@ -28,9 +28,9 @@ patch(EditListPopup.prototype, {
                     lot_names.push(lot_string[i].text);
                 }
             }
-
+            var pos_config_id = this.pos.config.id
             const result = await this.orm.call(
-                "stock.lot", "validate_lots", [lot_names], {}
+                "stock.lot", "validate_lots", [lot_names, pos_config_id], {}
             )
             const StockStatus = this.pos.get_order()?.get_selected_orderline()?.stock
             if(result != true){
@@ -60,14 +60,6 @@ patch(EditListPopup.prototype, {
                     });
                 }
             }
-//            else if(StockStatus === 0){
-//                    this.env.services.popup.add(ErrorPopup, {
-//                        title: _t("No Stock Available"),
-//                        body: _t(
-//                            "The requested lot: is currently out of stock."
-//                        ),
-//                    });
-//                }
             else{
                 this.props.resolve({ confirmed: true, payload: await this.getPayload() });
                 this.pos.closeTempScreen();
