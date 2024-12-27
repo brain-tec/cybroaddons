@@ -21,7 +21,7 @@
 ################################################################################
 {
     'name': "HR Biometric Device Integration",
-    'version': "15.0.1.0.0",
+    'version': "15.0.1.1.1",
     'summary': "Integrating Zk Biometric Devices With HR Attendance",
     'description': '''This module integrates Odoo with ZK biometric devices, 
     incorporating features such as live capturing and user management''',
@@ -33,6 +33,7 @@
     'depends': ['base_setup', 'hr_attendance', 'web'],
     'data': [
         'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         'data/ir_cron_data.xml',
         'data/ir_action_data.xml',
         'wizards/user_management_views.xml',

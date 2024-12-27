@@ -45,6 +45,9 @@ class DailyAttendance(models.Model):
                                   help='The Punching Type of attendance')
     punching_time = fields.Datetime(string='Punching Time',
                                     help='Punching time in the device')
+    company_id = fields.Many2one('res.company', string='Company',
+                                 help="Name of the Company",
+                                 default=lambda self: self.env.company)
 
     def init(self):
         """Retrieve the data's for attendance report"""
@@ -58,16 +61,18 @@ class DailyAttendance(models.Model):
                         z.address_id as address_id,
                         z.attendance_type as attendance_type,
                         z.punching_time as punching_time,
-                        z.punch_type as punch_type
+                        z.punch_type as punch_type,
+                        e.company_id as company_id
                     from zk_machine_attendance z
-                        join hr_employee e on (z.employee_id=e.id)
+                        join hr_employee e on (z.employee_id = e.id)
                     GROUP BY
                         z.employee_id,
                         z.write_date,
                         z.address_id,
                         z.attendance_type,
                         z.punch_type,
-                        z.punching_time
+                        z.punching_time,
+                        e.company_id
                 )
             """
         self._cr.execute(query)

@@ -52,6 +52,8 @@
                         <field name="device_ip"/>
                         <field name="port_number"/>
                         <field name="address_id"/>
+                        <field name="device_password"/>
+                        <field name="company_id"/>
 
                     </group>
                     <button name="action_test_connection"

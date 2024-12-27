@@ -50,3 +50,7 @@ class ZkMachineAttendance(models.Model):
                                     help="Punching time in the device")
     address_id = fields.Many2one('res.partner', string='Working Address',
                                  help="Working address of the employee")
+    company_id = fields.Many2one('res.company', string='Company',
+                                 help="Name of the Company",
+                                 default=lambda self: self.env.company)
+

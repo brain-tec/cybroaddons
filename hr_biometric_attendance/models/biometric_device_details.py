@@ -57,9 +57,8 @@ class BiometricDeviceDetails(models.Model):
                                           "from the device",
                                      readonly=True)
     company_id = fields.Many2one('res.company', string='Company',
-                                 default=lambda
-                                     self: self.env.user.company_id.id,
-                                 help='Current Company')
+                                 help="Name of the Company",
+                                 default=lambda self: self.env.company)
     stopwatch_time = fields.Float('Stopwatch timer',
                                   help='Time from Live capture enabled')
     device_name = fields.Char(String='Device Name', readonly=True,
@@ -75,6 +74,8 @@ class BiometricDeviceDetails(models.Model):
     live_capture_start_time = fields.Datetime('Live Capture Time',
                                               help='The Time When Live '
                                                    'Capture Enabled')
+    device_password = fields.Integer(string='Password',
+                                     help='Enter the device password')
 
     def device_connect(self, zk):
         """Function for connecting the device with Odoo"""
@@ -87,7 +88,7 @@ class BiometricDeviceDetails(models.Model):
     def action_test_connection(self):
         """Checking the connection status"""
         zk = ZK(self.device_ip, port=self.port_number, timeout=30,
-                password=False, ommit_ping=False)
+                password=self.device_password, ommit_ping=False)
         try:
             if zk.connect():
                 zk.test_voice(index=0)
@@ -114,7 +115,7 @@ class BiometricDeviceDetails(models.Model):
                 try:
                     # Connecting with the device
                     zk = ZK(machine_ip, port=zk_port, timeout=30,
-                            password=0, force_udp=False, ommit_ping=False)
+                            password=self.device_password, force_udp=False, ommit_ping=False)
                 except NameError:
                     raise UserError(_(
                         "Please install it with 'pip3 install pyzk'."))
@@ -156,7 +157,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -183,7 +184,8 @@ class BiometricDeviceDetails(models.Model):
                             base64_data = base64.b64encode(binary_data).decode(
                                 'utf-8')
                             employee = self.env['hr.employee'].search(
-                                [('device_id_num', '=', use.user_id)])
+                                [('device_id_num', '=', use.user_id),
+                                 ('company_id', '=', self.env.company.id)])
                             employee.write({
                                 'device_id': self.id,
                             })
@@ -216,11 +218,13 @@ class BiometricDeviceDetails(models.Model):
                         for uid in user:
                             if uid.user_id == each.user_id:
                                 get_user_id = self.env['hr.employee'].search(
-                                    [('device_id_num', '=', each.user_id)])
+                                    [('device_id_num', '=', each.user_id),
+                                     ('company_id', '=', self.env.company.id)])
                                 if get_user_id:
                                     duplicate_atten_ids = zk_attendance.search(
                                         [('device_id_num', '=', each.user_id),
-                                         ('punching_time', '=', atten_time)])
+                                         ('punching_time', '=', atten_time),
+                                         ('company_id', '=', self.env.company.id)])
                                     if not duplicate_atten_ids:
                                         zk_attendance.create({
                                             'employee_id': get_user_id.id,
@@ -228,7 +232,8 @@ class BiometricDeviceDetails(models.Model):
                                             'attendance_type': str(each.status),
                                             'punch_type': str(each.punch),
                                             'punching_time': atten_time,
-                                            'address_id': info.address_id.id
+                                            'address_id': info.address_id.id,
+                                            'company_id': self.env.company.id
                                         })
                                         att_var = hr_attendance.search([(
                                             'employee_id', '=', get_user_id.id),
@@ -257,7 +262,8 @@ class BiometricDeviceDetails(models.Model):
                                     employee = self.env['hr.employee'].create({
                                         'device_id_num': each.user_id,
                                         'device_id': self.id,
-                                        'name': uid.name
+                                        'name': uid.name,
+                                        'company_id': self.env.company.id
                                     })
                                     zk_attendance.create({
                                         'employee_id': employee.id,
@@ -265,7 +271,8 @@ class BiometricDeviceDetails(models.Model):
                                         'attendance_type': str(each.status),
                                         'punch_type': str(each.punch),
                                         'punching_time': atten_time,
-                                        'address_id': info.address_id.id
+                                        'address_id': info.address_id.id,
+                                        'company_id': self.company_id.id
                                     })
                                     hr_attendance.create({
                                         'employee_id': employee.id,
@@ -290,7 +297,7 @@ class BiometricDeviceDetails(models.Model):
     def action_restart_device(self):
         """For restarting the device"""
         zk = ZK(self.device_ip, port=self.port_number, timeout=15,
-                password=0,
+                password=self.device_password,
                 force_udp=False, ommit_ping=False)
         if self.device_connect(zk):
             if self.is_live_capture:
@@ -324,10 +331,11 @@ class BiometricDeviceDetails(models.Model):
         for info in self:
             machine_ip = info.device_ip
             zk_port = info.port_number
+            password = info.device_password
             try:
                 self.is_live_capture = True
                 self.action_set_timezone()
-                instance = ZKBioAttendance(machine_ip, zk_port, info)
+                instance = ZKBioAttendance(machine_ip, zk_port,password, info)
                 global live_capture_thread
                 live_capture_thread = instance
                 live_capture_thread.start()
@@ -362,7 +370,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -397,7 +405,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -433,7 +441,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -479,7 +487,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -514,7 +522,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -553,7 +561,7 @@ class BiometricDeviceDetails(models.Model):
             try:
                 # Connecting with the device with the ip and port provided
                 zk = ZK(machine_ip, port=zk_port, timeout=15,
-                        password=0,
+                        password=self.device_password,
                         force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(
@@ -569,8 +577,7 @@ class BiometricDeviceDetails(models.Model):
             else:
                 raise UserError(_(
                     "Please Check the Connection"))
-#
-#
+
 class ZKBioAttendance(Thread):
     """
     Represents a thread for capturing live attendance data from a ZKTeco
@@ -584,7 +591,7 @@ class ZKBioAttendance(Thread):
     live attendance data.
     """
 
-    def __init__(self, machine_ip, port_no, record):
+    def __init__(self, machine_ip, port_no,password, record):
         """Function to Initialize the thread"""
         Thread.__init__(self)
         self.machine_ip = machine_ip
@@ -597,7 +604,7 @@ class ZKBioAttendance(Thread):
             machine_ip,
             port=port_no,
             timeout=5,
-            password=0,
+            password=password,
             force_udp=False,
             ommit_ping=False,
         )
