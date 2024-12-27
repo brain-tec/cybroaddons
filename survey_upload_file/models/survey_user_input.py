@@ -71,15 +71,16 @@ class SurveyUserInput(models.Model):
             'answer_type': answer_type,
         }
         if answer_type == 'upload_file':
-            file_data = answer[0]
-            file_name = answer[1]
             attachment_ids = []
-            for file in range(len(answer[1])):
-                attachment = self.env['ir.attachment'].create({
-                    'name': file_name[file],
-                    'type': 'binary',
-                    'datas': file_data[file],
-                })
-                attachment_ids.append(attachment.id)
+            if len(answer) >= 2:
+                file_data = answer[0]
+                file_name = answer[1]
+                for file in range(len(answer[1])):
+                    attachment = self.env['ir.attachment'].create({
+                        'name': file_name[file],
+                        'type': 'binary',
+                        'datas': file_data[file],
+                    })
+                    attachment_ids.append(attachment.id)
             vals['value_file_data_ids'] = attachment_ids
         return vals
