@@ -4,3 +4,9 @@
 #### Version 17.0.1.0.0
 #### ADD
 - Initial commit for Sale Discount On Total Amount
+
+
+#### 14.03.2024
+#### Version 17.0.1.1.0
+#### ADD
+- Added margin in sale orders
