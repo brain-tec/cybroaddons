@@ -16,3 +16,8 @@
 #### Version 17.0.1.0.3
 #### BUG FIX
 - Fix the issue with returning the product from the POS backend.
+
+#### 06.01.2025
+#### Version 17.0.1.0.4
+#### BUG FIX
+- Fix the issue - Floor and Time is not showing in the kitchen display.

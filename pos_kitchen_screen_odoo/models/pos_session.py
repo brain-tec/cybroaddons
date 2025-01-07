@@ -40,7 +40,7 @@ class PosSession(models.Model):
             'domain': [],
             'fields': ['name', 'date_order', 'pos_reference',
                        'partner_id', 'lines', 'order_status', 'order_ref',
-                       'is_cooking']}}
+                       'is_cooking', 'minutes', 'floor']}}
 
     def _get_pos_ui_pos_order(self, params):
         """Get pos ui pos order"""

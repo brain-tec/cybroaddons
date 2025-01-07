@@ -98,6 +98,9 @@ class PosOrder(models.Model):
             if not orders:
                 self.create(dic)
             else:
+                orders.floor = dic[0]['floor']
+                orders.hour = dic[0]['hour']
+                orders.minutes = dic[0]['minutes']
                 orders.lines = False
                 orders.lines = dic[0]['lines']
         kitchen_screen = self.env["kitchen.screen"].sudo().search(

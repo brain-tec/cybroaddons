@@ -87,7 +87,7 @@ setup() {
                         'hour':self.currentOrder.date_order.c.hour,
                         'minutes':self.currentOrder.date_order.c.minute,
                         'table_id':this.pos.get_order().pos.table.id,
-                        'floor':this.pos.get_order().pos.currentFloor.name,
+                        'floor':this.pos.currentFloor.name,
                         'config_id':this.pos.get_order().pos.config.id
                     }]
                     await self.orm.call("pos.order", "get_details", ["", self.pos.config.id, orders])
