@@ -7,7 +7,7 @@
       <div id ="captcha" class="imageContainer">
         <div class="form-group">
           <!-- specify your site  in data-sitekey attribute-->
-          <div class="g-recaptcha" data-sitekey="6Le5nMQUAAAAALpK02mtPPGnpjVlnq6orhz4Zj0u"
+          <div class="g-recaptcha" data-sitekey="6LfvQ7AqAAAAAI3FGHmFxvwIoZor4UuM9tnJNvWu"
                   data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
           <input class="form-control d-none" data-recaptcha="true"/>
           <div class="help-block with-errors" id="err" style='color: red'></div>
@@ -34,7 +34,7 @@
     <div class="form-group field-confirm_password" position="after">
       <script src='https://www.google.com/recaptcha/api.js'></script>
       <div id ="captcha" class="imageContainer" >
-        <div class="g-recaptcha" data-sitekey="6Le5nMQUAAAAALpK02mtPPGnpjVlnq6orhz4Zj0u"
+        <div class="g-recaptcha" data-sitekey="6LfvQ7AqAAAAAI3FGHmFxvwIoZor4UuM9tnJNvWu"
                   data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
         <input class="form-control d-none" data-recaptcha="true" />
         <div class="help-block with-errors" id="err" style='color: red'  required = "required"></div>

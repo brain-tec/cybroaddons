@@ -23,7 +23,7 @@
 
 {
     'name': 'Login/signup reCAPTCHA',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'summary': """Protect robot login and signup with reCAPTCHA""",
     'description': """CAPTCHA helps you detect abusive traffic on your website without any user friction. 
     The user must register their  domain with CAPTCHA site to get site key add same with our code and use the app.
