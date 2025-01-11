@@ -20,3 +20,8 @@
 #### Version 17.0.3.0.0
 ##### UPDT
 - Bug Fix - Fixed the error that occurred after installing the website_sale_stock module
+
+#### 10.01.2025
+#### Version 17.0.3.0.1
+##### UPDT
+- Bug Fix - Fixed the bug where the cart was not being hidden even when the option was enabled.

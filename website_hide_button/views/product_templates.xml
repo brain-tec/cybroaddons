@@ -35,10 +35,11 @@
     <!--    Cart_hide   -->
     <template id="header_cart_link_hide"
               inherit_id="website_sale.header_cart_link">
-        <xpath expr="//t[@t-set='show_cart']" position="replace">
-            <t t-if="not request.env.user._is_public() or  (request.env.user._is_public() and not request.env['ir.config_parameter'].sudo().get_param('website_hide_button.hide_cart'))">
-                <t t-set="show_cart" t-value="true"/>
-            </t>
+    <xpath expr="//a[@href='/shop/cart']" position="attributes">
+                        <attribute name="t-if">not request.env.user._is_public() or
+                (request.env.user._is_public() and not
+                request.env['ir.config_parameter'].sudo().get_param('website_hide_button.hide_cart'))
+            </attribute>
         </xpath>
     </template>
     <!--    Hide details section in search bar for hide price -->

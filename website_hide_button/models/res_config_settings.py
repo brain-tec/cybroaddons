@@ -59,3 +59,5 @@ class ResConfigSettings(models.TransientModel):
     def _onchange_hide_price(self):
         if self.hide_price:
             self.hide_cart = True
+            self.env['ir.config_parameter'].sudo().set_param(
+                'website_hide_button.hide_cart', self.hide_cart)
