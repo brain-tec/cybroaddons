@@ -24,3 +24,8 @@
 #### Version 17.0.1.0.4
 ##### FIX
 - Bug Fix-Resolved displaying payment badge when confirming the invoice.
+
+#### 07.01.2025
+#### Version 17.0.1.0.5
+##### UPDT
+- Removed the transactions and statements from bank journal in the account journal dashboard.
