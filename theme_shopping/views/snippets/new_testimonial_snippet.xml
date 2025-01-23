@@ -12,7 +12,7 @@
     <!-- Main testimonial template -->
     <template id="shopping_testimonial" name="Testimonial">
         <section class="container oe_structure testimonial-section">
-            <div class="st-wrapper" style="background-color: #ccccb3; padding:10px; border-radius: 10px;">
+            <div class="st-wrapper" style="background-color: #ccccb3; padding:10px; border-radius: 10px;  overflow: hidden;">
                 <div class="row p-3">
                     <!-- Testimonial Header Section -->
                     <div class="col-md-4">
