@@ -161,3 +161,300 @@ margin-bottom: -16px;
         gap: 1.5rem !important;
     }
  }
+
+
+
+
+/* Testimonial Card Mobile Fixes */
+.st-testimonial__card {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0px 0px 14px 0px rgba(128,0,0,0.08);
+    padding: 2rem;
+    margin: 0.8rem;
+}
+
+/* Testimonial Person Details Layout */
+.st-testimonial__person--detail {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Testimonial Image Container */
+.st-testimonial__person-img {
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Testimonial Image */
+.st-testimonial__person-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 767px) {
+    .st-testimonial__card {
+        padding: 1.5rem !important;
+        margin: 0.5rem;
+    }
+
+    .st-testimonial__person-img {
+        min-width: 60px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .st-testimonial_name {
+        font-size: 1rem !important;
+        margin-bottom: 0.25rem;
+    }
+
+    .st-testimonial__content {
+        font-size: 0.9rem !important;
+        line-height: 1.5;
+        margin-top: 1rem;
+    }
+
+    /* Ensure carousel navigation is visible */
+    .owl-nav {
+        display: flex !important;
+        justify-content: space-between;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+    }
+
+}
+
+/* Additional Container Fixes */
+@media (max-width: 575px) {
+    .st-testimonial-section .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+   /* Textarea Styling */
+#testimonial {
+    width: 100%;
+    padding-left:50px;
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+    padding: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    overflow-y: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Focus state */
+#testimonial:focus {
+    border-color: #800000;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.1);
+}
+}
+/* Mobile Responsive Adjustments */
+@media (max-width: 767px) {
+    .testimonial_form {
+        margin-left: 3px !important;
+        width: 100% !important;
+        padding: 0 15px;
+    }
+
+    #testimonial {
+        min-height: 100px;
+    }
+}
+
+/* Submit Button Styling */
+#submit_testimonial {
+    margin-top: 15px;
+    padding: 8px 24px;
+}
+
+
+
+
+
+
+
+.st-testimonial__card {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0px 0px 14px 0px rgba(128,0,0,0.08);
+    padding: 2rem;
+    margin: 0.8rem;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Testimonial Person Details Layout */
+.st-testimonial__person--detail {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Testimonial Image Container */
+.st-testimonial__person-img {
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Textarea Styling */
+#testimonial {
+    width: 100%;
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+    padding: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    box-sizing: border-box;
+}
+
+
+
+/* Mobile Specific Adjustments */
+@media (max-width: 767px) {
+    .st-testimonial__person-img {
+        min-width: 60px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+
+
+.st-wrapper {
+    position: relative;
+    max-width: 100%;
+}
+
+.testimonial-link {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+/* Owl Carousel Fixes */
+.owl-carousel-about {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.owl-carousel .owl-stage-outer {
+    overflow: hidden;
+}
+
+/* Testimonial Card Styles */
+.st-testimonial__card {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0px 0px 14px 0px rgba(128,0,0,0.08);
+    padding: 2rem;
+    margin: 0.8rem;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Form Styles */
+.testimonial_form {
+    padding: 15px;
+    max-width: 100%;
+}
+
+#testimonial {
+    width: 100%;
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+    padding: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    box-sizing: border-box;
+}
+
+/* Mobile Responsive Fixes */
+@media (max-width: 767px) {
+    .st-wrapper {
+        padding: 10px;
+    }
+
+    .st-testimonial__card {
+        padding: 1.5rem;
+        margin: 0.5rem;
+    }
+
+    .owl-carousel-about {
+        padding: 0;
+    }
+
+    .testimonial_form {
+        margin: 0 !important;
+        width: 100% !important;
+        padding: 10px;
+    }
+
+    /* Ensure carousel navigation stays within bounds */
+    .owl-nav {
+        display: flex !important;
+        justify-content: space-between;
+        position: absolute;
+        top: 50%;
+        width: calc(100% - 20px);
+        transform: translateY(-50%);
+        left: 10px;
+        pointer-events: none;
+    }
+
+
+    /* Prevent text overflow in cards */
+    .st-testimonial__content {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 375px) {
+    .st-wrapper {
+        padding: 5px;
+    }
+
+    .st-testimonial__card {
+        padding: 1rem;
+        margin: 0.25rem;
+    }
+}
