@@ -39,7 +39,11 @@ class SalonBookingWeb(http.Controller):
             service_list.append(int(val))
             val += 1
         dates_time = date + " " + salon_time + ":00"
-        date_and_time = (pytz.timezone(request.env.user.tz).localize(
+        user_tz = request.env.user.tz or 'UTC'
+        if isinstance(user_tz, bool):
+            user_tz = 'UTC'  # Ensure it's a string
+        local_tz = pytz.timezone(user_tz)
+        date_and_time = (local_tz.localize(
             datetime.strptime(str(dates_time), '%Y-%m-%d %H:%M:%S')).
                          astimezone(pytz.UTC).replace(tzinfo=None))
         a = request.env['salon.booking'].create({
@@ -58,10 +62,14 @@ class SalonBookingWeb(http.Controller):
                 website=True)
     def salon_check(self, **kwargs):
         year, month, day = map(int, kwargs['check_date'].split('-'))
-        date_start = pytz.timezone(request.env.user.tz).localize(
+        user_tz = request.env.user.tz or 'UTC'
+        if isinstance(user_tz, bool):
+            user_tz = 'UTC'  # Ensure it's a string
+        local_tz = pytz.timezone(user_tz)
+        date_start = local_tz.localize(
             datetime(year, month, day, hour=0, minute=0, second=0)).astimezone(
             pytz.UTC).replace(tzinfo=None)
-        date_end = (pytz.timezone(request.env.user.tz).
+        date_end = (local_tz.
                     localize(datetime(year, month, day, hour=23, minute=59,
                                       second=59)).astimezone(pytz.UTC).
                     replace(tzinfo=None))
@@ -74,11 +82,9 @@ class SalonBookingWeb(http.Controller):
             data = {
                 'number': order.id,
                 'start_time_only': fields.Datetime.to_string(pytz.UTC.localize(
-                    order.start_time).astimezone(pytz.timezone(
-                                    request.env.user.tz)).replace(tzinfo=None))[11:16],
+                    order.start_time).astimezone(local_tz).replace(tzinfo=None))[11:16],
                 'end_time_only': fields.Datetime.to_string(pytz.UTC.localize(
-                    order.end_time).astimezone(pytz.timezone(
-                                    request.env.user.tz)).replace(tzinfo=None))[11:16],
+                    order.end_time).astimezone(local_tz).replace(tzinfo=None))[11:16],
             }
             if order.chair_id.id not in order_details:
                 order_details[order.chair_id.id] = {
@@ -104,10 +110,13 @@ class SalonBookingWeb(http.Controller):
         salon_holiday_obj = request.env['salon.holiday'].search(
             [('holiday', '=', True)])
         date_check = datetime.today().date()
-        date_start = (pytz.timezone(request.env.user.tz).localize(
-            datetime.combine(date_check, time(hour=0, minute=0, second=0))).
-                      astimezone(pytz.UTC).replace(tzinfo=None))
-        date_end = (pytz.timezone(request.env.user.tz).localize(
+        user_tz = request.env.user.tz or 'UTC'
+        if isinstance(user_tz, bool):
+            user_tz = 'UTC'  # Ensure it's a string
+        local_tz = pytz.timezone(user_tz)
+        date_start = local_tz.localize(datetime.combine(date_check, time(hour=0, minute=0, second=0))).astimezone(
+            pytz.UTC).replace(tzinfo=None)
+        date_end = (local_tz.localize(
             datetime.combine(date_check, time(hour=23, minute=59, second=59))).
                     astimezone(pytz.UTC).replace(tzinfo=None))
         # chair_obj =

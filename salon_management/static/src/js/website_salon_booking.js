@@ -60,6 +60,7 @@ publicWidget.registry.SalonManagement = publicWidget.Widget.extend({
     },
     /** Website function to check already booked chairs and details **/
     ClickCheckButton(ev){
+        console.log("ClickCheckButton")
         var check_date = this.$el.find("#check_date").val();
         if (check_date != "") {
             jsonrpc('/page/salon_check_date', {
@@ -71,6 +72,7 @@ publicWidget.registry.SalonManagement = publicWidget.Widget.extend({
                 var chair_name;
                 for (x in order_details) {
                     var chair_name = order_details[x]['name']
+                    console.log("chair_name:", chair_name)
                     var i;
                     var lines = "";
                     for (i = 0; i < order_details[x]['orders'].length; i++) {
@@ -96,6 +98,7 @@ publicWidget.registry.SalonManagement = publicWidget.Widget.extend({
                 date_field.innerHTML = "";
                 date_field.innerHTML = date_value;
             })
+
         } else {
             alert("Fill the Field");
         }
