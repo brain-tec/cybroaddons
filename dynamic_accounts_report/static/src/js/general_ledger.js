@@ -49,7 +49,11 @@ class GeneralLedger extends owl.Component {
         var action_title = self.props.action.display_name;
         try {
             var self = this;
-            self.state.account_data = await self.orm.call("account.general.ledger", "view_report", [[this.wizard_id], action_title,]);
+            let filtered_data = await this.orm.call("account.general.ledger", "get_filter_values", [self.state.selected_journal_list, self.state.date_range, self.state.options, self.state.selected_analytic_list,self.state.method]);
+            self.state.journals = filtered_data['journal_ids']
+            self.state.analytics = filtered_data['analytic_ids']
+            account_totals = filtered_data['account_totals']
+            self.state.account_data = await self.orm.call("account.general.ledger", "view_report", [self.wizard_id, action_title,]);
             $.each(self.state.account_data, function (index, value) {
                 if (index !== 'account_totals' && index !== 'journal_ids' && index !== 'analytic_ids') {
                     account_list.push(index)

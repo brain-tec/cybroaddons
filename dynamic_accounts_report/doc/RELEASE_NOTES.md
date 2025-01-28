@@ -9,3 +9,8 @@
 #### Version 18.0.1.1.1
 #### UPDT
 - Fixed the errors in the filters.
+
+#### 27.01.2025
+#### Version 18.0.1.1.2
+#### UPDT
+- Fixed the errors in the filters.
