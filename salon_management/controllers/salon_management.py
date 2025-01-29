@@ -31,17 +31,12 @@ class SalonBookingWeb(http.Controller):
 
     @http.route(route='/page/salon_details', type='json', auth='public',
                 website=True, csrf=False)
-    def salon_details(self, name, date, salon_time, phone, email, chair,
-                      number):
-        val = 0
-        service_list = []
-        while val < (int(number)):
-            service_list.append(int(val))
-            val += 1
+    def salon_details(self, name, date, salon_time, phone, email, chair, number, list_service):
+        service_lists = [service['item'] for service in list_service]
         dates_time = date + " " + salon_time + ":00"
         user_tz = request.env.user.tz or 'UTC'
         if isinstance(user_tz, bool):
-            user_tz = 'UTC'  # Ensure it's a string
+            user_tz = 'UTC'
         local_tz = pytz.timezone(user_tz)
         date_and_time = (local_tz.localize(
             datetime.strptime(str(dates_time), '%Y-%m-%d %H:%M:%S')).
@@ -53,9 +48,9 @@ class SalonBookingWeb(http.Controller):
             'email': email,
             'chair_id': chair,
             'service_ids': [(6, 0, [salon.id for salon in request.env
-                                    ['salon.service'].search([('id', 'in',
-                                                             service_list)])])],
+            ['salon.service'].search([('id', 'in', service_lists)])])],
         })
+
         return json.dumps({'result': True})
 
     @http.route('/page/salon_check_date', type='json', auth="public",
