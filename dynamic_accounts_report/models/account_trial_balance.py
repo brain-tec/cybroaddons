@@ -87,7 +87,11 @@ class AccountTrialBalance(models.TransientModel):
                 'end_total_credit': end_total_credit
             }
             move_line_list.append(data)
-        return move_line_list
+        journal = {
+            'journal_ids': self.env['account.journal'].search_read([], [
+                'name'])
+        }
+        return move_line_list, journal
 
     @api.model
     def get_filter_values(self, start_date, end_date, comparison_number,

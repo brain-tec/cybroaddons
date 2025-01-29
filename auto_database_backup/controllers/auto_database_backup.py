@@ -30,7 +30,6 @@ class OnedriveAuth(http.Controller):
     def oauth2callback(self, **kw):
         """
              Callback function for OneDrive authentication.
-
                 :param kw: A dictionary of keyword arguments.
                 :return: A redirect response.
         """
