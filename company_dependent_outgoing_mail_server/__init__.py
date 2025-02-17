@@ -20,10 +20,3 @@
 #
 #############################################################################
 from . import models
-
-
-def _post_init_check_company(env):
-    """Set current company id to current.company.id key in
-    ir.config_parameter"""
-    env['ir.config_parameter'].sudo().set_param('current.company.id',
-                                                env.company.id)
