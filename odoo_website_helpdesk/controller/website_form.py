@@ -55,7 +55,6 @@ class WebsiteFormInherit(WebsiteForm):
         :return: JSON response indicating the success or failure of form submission.
         :rtype: str
         """
-        customer = request.env.user.partner_id
         lowest_stage_id = None
         if model_name == 'ticket.helpdesk':
             tickets = request.env['ticket.stage'].sudo().search([])
@@ -69,6 +68,12 @@ class WebsiteFormInherit(WebsiteForm):
                 return json.dumps(
                     {'error': "No stage found with the lowest sequence."})
             products = kwargs.get('product')
+            partner_create = request.env['res.partner'].sudo().create({
+                'name': kwargs.get('customer_name'),
+                'company_name': kwargs.get('company'),
+                'phone': kwargs.get('phone'),
+                'email': kwargs.get('email_from')
+            })
             if products:
                 split_product = products.split(',')
                 product_list = [int(i) for i in split_product]
@@ -81,7 +86,7 @@ class WebsiteFormInherit(WebsiteForm):
                     'priority': kwargs.get('priority'),
                     'product_ids': product_list,
                     'stage_id': lowest_stage_id.id,
-                    'customer_id': customer.id,
+                    'customer_id': partner_create.id,
                     'ticket_type_id': kwargs.get('ticket_type_id'),
                     'category_id': kwargs.get('category'),
                 }
@@ -94,10 +99,11 @@ class WebsiteFormInherit(WebsiteForm):
                     'phone': kwargs.get('phone'),
                     'priority': kwargs.get('priority'),
                     'stage_id': lowest_stage_id.id,
-                    'customer_id': customer.id,
+                    'customer_id': partner_create.id,
                     'ticket_type_id': kwargs.get('ticket_type_id'),
                     'category_id': kwargs.get('category'),
                 }
+
             ticket_id = request.env['ticket.helpdesk'].sudo().create(rec_val)
             request.session['ticket_number'] = ticket_id.name
             request.session['ticket_id'] = ticket_id.id
