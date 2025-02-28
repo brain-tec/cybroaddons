@@ -29,35 +29,45 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         """ Create manufacturing order of components in selected BOM """
         for rec in self.order_line:
-            if rec.bom_id and rec.bom_id.type != 'phantom' and rec.bom_id.type != 'subcontract':
-                mo = self.env["mrp.production"].create(
-                    {
-                        "product_id": rec.product_id.id,
-                        "product_uom_id": rec.product_id.uom_id.id,
-                        "origin": self.name,
-                        'company_id': self.env.user.company_id.id,
-                        "product_qty": rec.product_uom_qty,
-                        "qty_to_produce": rec.product_uom_qty,
-                        "bom_id": rec.bom_id.id,
-                        "sale_line_id": rec.id,
-                    }
-                )
-                moves_raw_values = mo._get_moves_raw_values()
-                list_move_raw = []
-                for move_raw_values in moves_raw_values:
-                    list_move_raw += [(0, 0, move_raw_values)]
-        return super().action_confirm()
+            if rec.bom_id and rec.bom_id in rec.product_template_id.bom_ids:
+                # Store the original sequence order
+                original_sequences = {bom.id: bom.sequence for bom in rec.product_template_id.bom_ids}
+                # Set the selected BOM's sequence to 0
+                rec.bom_id.sequence = 0
+                # Get all other BOMs and update their sequence accordingly
+                other_boms = rec.product_template_id.bom_ids - rec.bom_id
+                sequence_counter = 1  # Start sequence from 1 for others
+                for bom in other_boms.sorted('sequence'):
+                    bom.sequence = sequence_counter
+                    sequence_counter += 1
+        result = super().action_confirm()
+        # Restore original sequences after the confirmation
+        for rec in self.order_line:
+            if rec.bom_id and rec.bom_id in rec.product_template_id.bom_ids:
+                for bom in rec.product_template_id.bom_ids:
+                    if bom.id in original_sequences:
+                        bom.sequence = original_sequences[bom.id]
+            manufacturing_order = self.env["mrp.production"].search(
+                [('origin', '=', self.name),
+                 ('state', '=', 'confirmed')])
+            if manufacturing_order:
+                for mo in manufacturing_order:
+                    print(mo.product_qty)
+                    mo.update({'qty_to_produce': mo.product_qty})
+                # mo.update({'state':'draft'})
+        return result
 
     def write(self, values):
-        """Super write method to change the manufacturing quantity
-        based on sale order quantity"""
+        """Super write method to change the qty_to_produce in the MO
+            based on sale order quantity"""
         res = super().write(values)
         for order_line in self.order_line:
             if order_line.product_uom_qty:
-                mo = self.env["mrp.production"].search(
-                    [('sale_line_id', '=', order_line.id),
-                     ('state', '=', 'draft')])
-                if mo:
-                    mo.write({'product_qty': order_line.product_uom_qty})
-                    mo.write({'qty_to_produce': order_line.product_uom_qty})
+                manufacturing_order = self.env["mrp.production"].search(
+                    [('origin', '=', self.name),
+                     ('state', '=', 'confirmed')])
+                if manufacturing_order:
+                    for mo in manufacturing_order:
+                        mo.write({'qty_to_produce': mo.product_qty})
         return res
+
