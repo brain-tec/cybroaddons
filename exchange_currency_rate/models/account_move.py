@@ -29,23 +29,91 @@ class AccountMove(models.Model):
     the exchange rate through the 'rate' field."""
     _inherit = 'account.move'
 
-    is_exchange = fields.Boolean(string='Apply Manual Exchange',
-                                 help='Check this box if you want to manually '
-                                      'apply an exchange rate for this '
-                                      'transaction.')
-    rate = fields.Float(string='Rate', help='specify the rate',
-                        compute='_compute_rate', readonly=False, store=True,
-                        default=1)
+    is_exchange = fields.Boolean(string="Apply Manual Exchange", compute="_compute_is_exchange",
+                                 inverse="_inverse_is_exchange",
+                                 store=True, help='Check this box if you want to manually '
+                                                  'apply an exchange rate for this '
+                                                  'transaction.')
 
-    @api.depends('invoice_line_ids.product_id')
+    rate = fields.Float(string="Exchange Rate", compute="_compute_rate", inverse="_inverse_rate", store=True,
+                        help='specify the rate')
+
+    sale_order_id = fields.Many2one('sale.order', string="Sale Order", compute="_compute_sale_order",
+                                    store=True,help="Linking corresponding Sale Order")
+    purchase_order_id = fields.Many2one('purchase.order', string="Purchase Order",
+                                        compute="_compute_purchase_order", store=True,help="Linking Purchase Order")
+
+    @api.constrains('company_currency_id', 'currency_id')
+    def _onchange_different_currency(self):
+        """ When the Currency is changed back to company currency, the boolean field is disabled """
+        if self.company_currency_id == self.currency_id:
+            if self.is_exchange:
+                self.is_exchange = False
+
+    @api.depends('line_ids.sale_line_ids.order_id')
+    def _compute_sale_order(self):
+        """ Compute Function to Update the Corresponding Sale Order """
+        for move in self:
+            sale_orders = move.line_ids.mapped('sale_line_ids.order_id')
+            move.sale_order_id = sale_orders and sale_orders[0] or False
+
+    @api.depends('line_ids.purchase_line_id.order_id')
+    def _compute_purchase_order(self):
+        """ Compute Function to Update the Corresponding Purchase Order """
+        for move in self:
+            purchase_orders = move.line_ids.mapped('purchase_line_id.order_id')
+            move.purchase_order_id = purchase_orders and purchase_orders[0] or False
+
+    @api.depends('currency_id', 'company_currency_id', 'company_id', 'invoice_date', 'rate', 'is_exchange')
+    def _compute_invoice_currency_rate(self):
+        """Overriding the Default Compute function to include the Manual Rate Also."""
+        for move in self:
+            if move.is_invoice(include_receipts=True):
+                if move.currency_id:
+                    if move.is_exchange:
+                        rate = move.rate if move.rate else 1
+                        move.invoice_currency_rate = rate
+                        continue
+                    move.invoice_currency_rate = self.env['res.currency']._get_conversion_rate(
+                        from_currency=move.company_currency_id,
+                        to_currency=move.currency_id,
+                        company=move.company_id,
+                        date=move._get_invoice_currency_rate_date(),
+                    )
+                else:
+                    move.invoice_currency_rate = 1
+
+    @api.depends('sale_order_id.is_exchange', 'purchase_order_id.is_exchange')
+    def _compute_is_exchange(self):
+        """ Compute Function to Update the Exchange Boolean based on Sale Order and Purchase Order"""
+        for move in self:
+            if move.sale_order_id:
+                move.is_exchange = move.sale_order_id.is_exchange
+            elif move.purchase_order_id:
+                move.is_exchange = move.purchase_order_id.is_exchange
+            else:
+                move.is_exchange = False
+
+    def _inverse_is_exchange(self):
+        """ Allow manual editing of is_exchange in account.move """
+        pass
+
+    @api.depends('sale_order_id.rate', 'purchase_order_id.rate')
     def _compute_rate(self):
-        """Changing the unit price of product by changing the rate."""
-        for rec in self:
-            if rec.move_type == 'out_invoice':
-                if len(rec.invoice_line_ids) >= 1 and rec.is_exchange:
-                    rec.invoice_line_ids[-1].price_unit = rec.invoice_line_ids[
-                                                              -1].product_id.list_price * rec.rate
-            elif rec.move_type == 'in_invoice':
-                if len(rec.invoice_line_ids) >= 1 and rec.is_exchange:
-                    rec.invoice_line_ids[-1].price_unit = rec.invoice_line_ids[
-                                                              -1].product_id.standard_price * rec.rate
+        """ Compute The rate based on sale order and purchase order"""
+        for move in self:
+            if move.sale_order_id:
+                move.rate = move.sale_order_id.rate
+            elif move.purchase_order_id:
+                move.rate = move.purchase_order_id.rate
+            else:
+                move.rate = move.env['res.currency']._get_conversion_rate(
+                from_currency=move.company_currency_id,
+                to_currency=move.currency_id,
+                company=move.company_id,
+                date=self.date,
+            )
+
+    def _inverse_rate(self):
+        """ Allow manual editing of rate in account.move """
+        pass

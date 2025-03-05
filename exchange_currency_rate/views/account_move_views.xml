@@ -8,9 +8,11 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_reference']"
                    position='after'>
-                <field name="is_exchange"/>
-                <field name="rate"
-                       invisible="is_exchange == False"/>
+                <field name="sale_order_id" invisible="1"/>
+                <field name="purchase_order_id" invisible="1"/>
+                <field name="is_exchange" invisible="currency_id == company_currency_id" readonly="state != 'draft'"/>
+                <field name="rate" digits="[12,6]"
+                       invisible="is_exchange == False" readonly="state != 'draft'"/>
             </xpath>
         </field>
     </record>

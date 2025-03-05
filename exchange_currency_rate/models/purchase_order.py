@@ -21,7 +21,6 @@
 ################################################################################
 from odoo import api, fields, models
 
-
 class PurchaseOrder(models.Model):
     """This class extends the base 'purchase.order' model to introduce a
     new field, 'is_exchange',which allows users to manually apply an exchange
@@ -29,17 +28,25 @@ class PurchaseOrder(models.Model):
     the exchange rate through the 'rate' field."""
     _inherit = 'purchase.order'
 
-    is_exchange = fields.Boolean(string='Apply Manual Currency',
-                                 help='Check this box if you want to manually'
-                                      'apply an exchange rate for this '
-                                      'transaction.')
-    rate = fields.Float(string='Rate', help='specify the rate', compute='_compute_rate', readonly=False, store=True,
-                        default=1)
+    company_currency_id = fields.Many2one(
+        string='Company Currency',
+        related='company_id.currency_id', readonly=True, help="To store the Company Currency")
+    is_exchange = fields.Boolean(string='Apply Manual Currency', help='allows users to manually apply an exchange rate')
+    rate = fields.Float(string='Rate', help='specify the rate', default=1)
 
-    @api.depends('order_line.product_id')
-    def _compute_rate(self):
-        """Changing the unit price of product by changing the rate."""
-        for rec in self:
-            if len(rec.order_line) >= 1 and rec.is_exchange:
-                rec.order_line[-1].price_unit = rec.order_line[
-                                                    -1].product_id.standard_price * rec.rate
+    @api.constrains('company_currency_id', 'currency_id')
+    def _onchange_different_currency(self):
+        """ When the Currency is changed back to company currency, the boolean field is disabled """
+        if self.company_currency_id == self.currency_id:
+            if self.is_exchange:
+                self.is_exchange = False
+
+    @api.onchange('is_exchange')
+    def _onchange_is_exchange(self):
+        """ Update Rate when is_exchange is Enabled."""
+        if self.is_exchange:
+            self.rate = self.env['res.currency']._get_conversion_rate(
+                from_currency=self.company_currency_id,
+                to_currency=self.currency_id,
+                company=self.company_id,
+                date=self.date_order)

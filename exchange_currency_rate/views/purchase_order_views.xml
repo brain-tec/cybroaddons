@@ -7,9 +7,12 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='date_order']" position='after'>
-                <field name="is_exchange"/>
-                <field name="rate"
-                       invisible="is_exchange == False"/>
+                <field name="company_currency_id" invisible="1"/>
+                <field name="is_exchange" invisible="currency_id == company_currency_id"
+                       readonly="state in ['cancel', 'done', 'purchase']"/>
+                <field name="rate" digits="[12,6]"
+                       invisible="is_exchange == False or currency_id == company_currency_id"
+                       readonly="state in ['cancel', 'done', 'purchase']"/>
             </xpath>
         </field>
     </record>
