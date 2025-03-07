@@ -40,7 +40,7 @@
             'website_sign_sending_by_priority/static/src/xml/signer_x2many.xml',
         ],
     },
-    'images': ['static/description/banner.png'],
+    'images': ['static/description/banner.jpg'],
     'license': 'OPL-1',
     'installable': True,
     'application': False,
