@@ -26,7 +26,6 @@ class TermsConditions(models.Model):
     """Used to add the Mobile Service Terms and Conditions"""
     _name = 'terms.conditions'
     _description = 'Terms and Conditions'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'terms_id'
 
     terms_id = fields.Char(String="Terms and condition",

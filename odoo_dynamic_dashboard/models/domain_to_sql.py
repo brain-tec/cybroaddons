@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ################################################################################
-from odoo import models
+from odoo import models, fields
 
 
 def get_query(self, args, operation, field, start_date=None, end_date=None,
@@ -33,7 +33,36 @@ def get_query(self, args, operation, field, start_date=None, end_date=None,
             operation.upper(), self._table, field.name)
         join = ''
         group_by_str = ''
-        if group_by:
+        # ✅ Handle product_id case → product_product → product_template
+        if group_by and group_by.name == 'product_id':
+            model_name = self._name
+            field_relation = self.env[model_name]._fields.get('product_id')
+            if isinstance(field_relation,
+                          fields.Many2one) and field_relation.comodel_name == 'product.product':
+                # Join product_product and product_template
+                join += """
+                           INNER JOIN product_product ON product_product.id = "%s".product_id
+                           INNER JOIN product_template ON product_template.id = product_product.product_tmpl_id
+                       """ % self._table
+                # Use product_template.name instead of product_product.name
+                data += ', product_template.name AS product_name'
+                group_by_str = ' GROUP BY product_template.name'
+        # ✅ Handle categ_id case → product_template → product_category
+        elif group_by and group_by.name == 'categ_id':
+            model_name = self._name
+            field_relation = self.env[model_name]._fields.get('product_id')
+            if isinstance(field_relation,
+                          fields.Many2one) and field_relation.comodel_name == 'product.product':
+                # Join product_product, product_template, and product_category
+                join += """
+                           INNER JOIN product_product ON product_product.id = "%s".product_id
+                           INNER JOIN product_template ON product_template.id = product_product.product_tmpl_id
+                           INNER JOIN product_category ON product_category.id = product_template.categ_id
+                       """ % self._table
+                # Use product_category.complete_name instead of product_product.name
+                data += ', product_category.complete_name AS categ_name'
+                group_by_str = ' GROUP BY product_category.complete_name'
+        elif group_by:
             if group_by.ttype == 'many2one':
                 relation_model = group_by.relation.replace('.', '_')
                 join = ' INNER JOIN %s on "%s".id = "%s".%s' % (
@@ -60,6 +89,7 @@ def get_query(self, args, operation, field, start_date=None, end_date=None,
     else:
         end_date_query = ''
     query_str = 'SELECT %s FROM ' % data + from_clause + join + where_str + start_date_query + end_date_query + group_by_str
+
     def format_param(x):
         if not isinstance(x, tuple):
             return "'" + str(x) + "'"
@@ -67,6 +97,9 @@ def get_query(self, args, operation, field, start_date=None, end_date=None,
             return "(" + str(x[0]) + ")"
         else:
             return str(x)
+
     exact_query = query_str % tuple(map(format_param, where_clause_params))
     return exact_query
+
+
 models.BaseModel.get_query = get_query

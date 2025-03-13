@@ -31,7 +31,7 @@ class MobileComplaintDescription(models.Model):
 
     complaint_type_template = fields.Many2one('mobile.complaint',
                                               string="Complaint Type",
-                                              required=True,
+                                              required=True, copy=False,
                                               help="Complaint type template.")
     description = fields.Text(string="Description",
                               help="Complaint description.")

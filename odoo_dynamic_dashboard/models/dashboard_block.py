@@ -90,6 +90,7 @@ class DashboardBlock(models.Model):
         if self.operation or self.measured_field_id:
             self.operation = False
             self.measured_field_id = False
+            self.group_by_id = False
 
     def get_dashboard_vals(self, action_id, start_date=None, end_date=None):
         """Fetch block values from js and create chart"""

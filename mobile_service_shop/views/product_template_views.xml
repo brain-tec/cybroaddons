@@ -15,7 +15,8 @@
                     <group>
                         <group>
                             <field name="brand_name" required="is_a_parts == True"/>
-                            <field name="model_name" required="is_a_parts == True"/>
+                            <field name="model_name" domain="[('id', 'in', allowed_model_ids)]" required="is_a_parts == True"/>
+                            <field name="allowed_model_ids" invisible="1"/>
                         </group>
                         <group>
                             <field name="model_colour"/>
