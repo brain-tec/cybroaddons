@@ -12,11 +12,7 @@ export class ThemeWidget extends Component{
             is_admin:false,
         })
         this.action = useService("action");
-        console.log(session.storeData['res.partner'])
-        console.log(session.storeData.Store.self.id)
-//        console.log(session.storeData['res.partner'].filter((partner)=>partner.userId === session.user_id[0]))
         var admin = session.storeData['res.partner'].find((partner)=>partner.id == session.storeData.Store.self.id)
-        console.log(admin)
         this.state.is_admin=admin.isAdmin;
     }
     _onClick(){ // create a onclick function for click on brush icon open the theme data wizard

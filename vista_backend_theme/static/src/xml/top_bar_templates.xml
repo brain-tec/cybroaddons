@@ -84,7 +84,7 @@
                         <div class="c_dots_menu"/>
                     </div>
                 </a>
-                <a id="closeSidebar" t-ref="closeSidebar"
+                <a id="closeSidebar" t-ref="closeSidebars"
                    style="display: none; cursor: pointer;">
                     <div class="c_sidebar_passive">
                         <div class="c_dots_menu_toggled "/>

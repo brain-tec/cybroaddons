@@ -6,7 +6,7 @@ import { useRef, onMounted } from "@odoo/owl";
 patch(NavBar.prototype, {
     setup(){
         super.setup();
-        this.closeSidebar = useRef("closeSidebar")
+        this.closeSidebar = useRef("closeSidebars")
         this.openSidebar = useRef("openSidebar")
         this.sidebar = useRef("sidebar")
         this.sidebarPanel = useRef("sidebarPanel")
@@ -16,10 +16,12 @@ patch(NavBar.prototype, {
         onMounted(() => {
             const closeSide = this.closeSidebar.el
             const openSide = this.openSidebar.el
-            console.log(closeSide,this.closeSidebar)
-            console.log(openSide)
-            closeSide.addEventListener("click",this.closeSides)
-            openSide.addEventListener("click",this.openSides)
+            if (closeSide){
+                closeSide.addEventListener("click",this.closeSides)
+            }
+            if (openSide) {
+                openSide.addEventListener("click",this.openSides)
+            }
         });
     },
 

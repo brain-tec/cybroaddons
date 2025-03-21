@@ -23,7 +23,6 @@ from odoo import http
 from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 
-
 class WebsiteSaleInherit(WebsiteSale):
     """class to hide price, add to cart and quantity"""
 
