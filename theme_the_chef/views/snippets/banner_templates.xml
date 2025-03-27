@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="banner" name="Banner">
+        <section class="banner_section_body">
+            <div class="container">
+                <div class="alert alert-info">
+                    <h4>Your Banner Tab snippet will be displayed here...
+                        Please save to view the snippet
+                    </h4>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>
