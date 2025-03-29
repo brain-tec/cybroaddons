@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Automatic Invoice And Post',
-    'version': "18.0.1.0.0",
+    'version': "18.0.1.0.1",
     'category': 'Sales,Warehouse,Accounting',
     'summary': """ Auto Invoice Generation and Auto Sending of Invoice on 
      Delivery validation.""",
@@ -33,7 +33,9 @@
     'maintainer': "Cybrosys Techno Solutions",
     'website': "https://www.cybrosys.com",
     'depends': ['base', 'sale_management', 'stock', 'account'],
-    'data': ['views/res_config_settings_views.xml'],
+    'data': [
+        'views/res_config_settings_views.xml',
+    ],
     'license': "AGPL-3",
     'images': ['static/description/banner.jpg'],
     'installable': True,

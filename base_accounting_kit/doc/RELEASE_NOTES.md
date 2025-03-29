@@ -15,3 +15,7 @@
 #### FIX
 - Fixed the Asset creation issue from the vendor bill.
 
+#### 27.03.2025
+#### Version 18.0.2.0.2
+#### UPDT
+- Added the Import Bank Statement feature.

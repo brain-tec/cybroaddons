@@ -25,7 +25,7 @@
     'category': 'Accounting',
     'summary': 'Invoice Report, Report Editor, Customise Invoice Report, '
                'Invoice Report Templates, Account Reports, Odoo18, '
-               'Odoo Apps, Report Templates, Odoo17, Odoo Apps',
+               'Odoo Apps, Report Templates, Odoo18, Odoo Apps',
     'description': """Invoice Format Editor For Configuring the Invoice Templates""",
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
