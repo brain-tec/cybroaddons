@@ -148,9 +148,17 @@ class ResCompany(models.Model):
                     [("name", 'ilike', state)], limit=1)
                 state_id = state.id if state else False
                 country_code = addresses.get('countryCode', '')
-                country = self.env['res.country'].search(
-                    [('code', 'ilike', country_code)], limit=1)
-                country_id = country.id if country else False
+
+                if addresses:
+                    if country_code:
+                        country_record = self.env['res.country'].search([('code', 'ilike', country_code)], limit=1)
+                        country_id = country_record.id if country_record else False
+                    else:
+                        country_id = False
+                else:
+                    state_id = False
+                    country_id = False
+
                 partner_vals = {
                     'name': name or '',
                     'first_name': first_name or '',
