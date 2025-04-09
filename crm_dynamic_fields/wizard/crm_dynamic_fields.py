@@ -111,6 +111,7 @@ class CRMDynamicFields(models.TransientModel):
                                          "whether to display extra properties "
                                          "for this dynamic field in the user "
                                          "interface")
+    is_translate =fields.Boolean(string="Translate")
 
     def action_create_fields(self):
         """ Creates a new custom field for the project.project model and adds
@@ -128,7 +129,8 @@ class CRMDynamicFields(models.TransientModel):
              'readonly': self.readonly,
              'selection': self.selection_field,
              'copied': self.copied,
-             'is_dynamic': True
+             'is_dynamic': True,
+             'translate':self.is_translate,
              })
         inherit_id = self.env.ref('crm.crm_lead_view_form')
         view_id = self.env.ref('crm.crm_lead_view_form')

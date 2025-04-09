@@ -32,6 +32,7 @@
                                    invisible="field_type not in ['binary', 'many2many', 'selection', 'float', 'many2one']"
                             />
                             <field name="required"/>
+                            <field name="is_translate"/>
                         </group>
                         <group string="Position">
                             <field name="position_field_id"
