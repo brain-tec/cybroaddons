@@ -88,7 +88,7 @@ class ResUsers(models.Model):
                             product.sudo().write(
                                 {'restrict_user_ids': [
                                     Command.unlink(user.id)]})
-            return res
+        return res
 
     def _compute_is_admin(self):
         """ Compute the value of is_admin based on the user id admin or not"""

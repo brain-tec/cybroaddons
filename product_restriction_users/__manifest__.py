@@ -21,7 +21,7 @@
 ################################################################################
 {
     'name': "Product Restriction Users",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': "Inventory",
     'summary': "Restrict products for users based on products and categories.",
     'description': """This module used to allow products to user or only

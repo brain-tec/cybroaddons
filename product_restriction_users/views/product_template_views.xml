@@ -12,7 +12,6 @@
                     <list>
                         <field name="restrict_user_ids"/>
                     </list>
-                    <field name="is_product" invisible="1"/>
                 </page>
             </xpath>
         </field>

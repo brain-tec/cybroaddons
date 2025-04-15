@@ -20,12 +20,16 @@
 #
 ###############################################################################
 import base64
+import imghdr
 import io
 import xlsxwriter
 from io import BytesIO
 from odoo import http
 from odoo.http import content_disposition, request
 from odoo.tools import image_process
+import subprocess
+import os
+
 
 
 class ExcelReportController(http.Controller):
@@ -47,11 +51,8 @@ class ExcelReportController(http.Controller):
                 ("Content-Disposition", content_disposition("Products" + ".xlsx")),
             ],
         )
-        # Create workbook object from xlsxwriter library
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {"in_memory": True})
-        # Create styles to set up the font type, the font size, the border,
-        # and the alignment
         header_style = workbook.add_format(
             {
                 "text_wrap": True,
@@ -114,11 +115,45 @@ class ExcelReportController(http.Controller):
             sheet.write(row, 5, line["category"], text_style)
             if line["image"]:
                 source = base64.b64decode(line["image"])
-                image_data = BytesIO(image_process(source, size=(300, 300)))
-                sheet.write(row, 6, "", text_style)
-                sheet.insert_image(row, 6, "product.png", {"image_data": image_data})
-            row += 1
-            number += 1
+                image_type = imghdr.what(None, source)
+                if image_type in ["jpeg", "png", "gif", "bmp"]:
+                    image_data = BytesIO(image_process(source, size=(300, 300)))
+                    sheet.write(row, 6, "", text_style)
+                    sheet.insert_image(row, 6, "product." + image_type, {"image_data": image_data})
+                elif image_type == "webp":
+                    try:
+                        from tempfile import NamedTemporaryFile
+
+                        with NamedTemporaryFile(suffix='.webp', delete=False) as temp_in:
+                            temp_in.write(source)
+                            temp_in_path = temp_in.name
+
+                        with NamedTemporaryFile(suffix='.png', delete=False) as temp_out:
+                            temp_out_path = temp_out.name
+
+                        result = subprocess.run(
+                            ['dwebp', temp_in_path, '-o', temp_out_path],
+                            capture_output=True, text=True, check=True
+                        )
+
+                        with open(temp_out_path, 'rb') as f:
+                            png_data = f.read()
+
+                        os.unlink(temp_in_path)
+                        os.unlink(temp_out_path)
+
+                        processed_image = image_process(png_data, size=(300, 300))
+                        image_data = BytesIO(processed_image)
+
+                        # Insert into sheet
+                        sheet.write(row, 6, "", text_style)
+                        sheet.insert_image(row, 6, "product.png", {"image_data": image_data})
+
+                    except Exception as e:
+                        import traceback
+                        traceback.print_exc()
+        row += 1
+        number += 1
         workbook.close()
         output.seek(0)
         response.stream.write(output.read())
