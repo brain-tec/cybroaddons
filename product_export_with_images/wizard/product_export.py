@@ -76,6 +76,5 @@ class ExportWizard(models.TransientModel):
                 "sales_price": rec.list_price,
                 "image": rec.image_128,
             }
-            print("vals", rec.image_128)
             rec_list.append(vals)
         return rec_list

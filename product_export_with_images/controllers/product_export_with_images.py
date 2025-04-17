@@ -29,7 +29,8 @@ from odoo.http import content_disposition, request
 from odoo.tools import image_process
 import subprocess
 import os
-
+import traceback
+from tempfile import NamedTemporaryFile
 
 
 class ExcelReportController(http.Controller):
@@ -51,6 +52,7 @@ class ExcelReportController(http.Controller):
                 ("Content-Disposition", content_disposition("Products" + ".xlsx")),
             ],
         )
+        # Create workbook object from xlsxwriter library
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {"in_memory": True})
         header_style = workbook.add_format(
@@ -122,7 +124,6 @@ class ExcelReportController(http.Controller):
                     sheet.insert_image(row, 6, "product." + image_type, {"image_data": image_data})
                 elif image_type == "webp":
                     try:
-                        from tempfile import NamedTemporaryFile
 
                         with NamedTemporaryFile(suffix='.webp', delete=False) as temp_in:
                             temp_in.write(source)
@@ -150,7 +151,6 @@ class ExcelReportController(http.Controller):
                         sheet.insert_image(row, 6, "product.png", {"image_data": image_data})
 
                     except Exception as e:
-                        import traceback
                         traceback.print_exc()
         row += 1
         number += 1
