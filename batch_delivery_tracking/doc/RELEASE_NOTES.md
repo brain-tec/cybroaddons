@@ -1,0 +1,6 @@
+## Module <batch_delivery_tracking>
+
+#### 29.03.2025
+#### Version 18.0.1.0.0
+#### ADD
+- Initial Commit for Batch Delivery Tracking

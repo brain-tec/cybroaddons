@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Auto Save Restrict',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.1.0',
     'category': 'Extra Tools',
     'summary': """Restrict auto save in all models""",
     'description': 'Using this module,we can restrict'
@@ -38,6 +38,8 @@
             'auto_save_restrict/static/src/js/form_controller.js',
             'auto_save_restrict/static/src/js/list_controller.js',
             'auto_save_restrict/static/src/js/list_renderer.js',
+            'auto_save_restrict/static/src/js/view_button.js',
+
         ],
     },
     'images': ['static/description/banner.jpg'],
