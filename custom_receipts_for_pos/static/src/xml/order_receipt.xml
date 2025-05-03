@@ -37,7 +37,7 @@
                                           style="visibility: hidden;">A</span>
                                     <span class="fw-bolder"
                                           t-out="subtotal.name"/>
-                                    <span t-esc="props.formatCurrency(subtotal.base_amount_currency)"
+                                    <span t-esc="props.formatCurrency(subtotal.base_amount_currency).toFixed()"
                                           class="ms-auto"/>
                                 </div>
 
@@ -55,10 +55,10 @@
                                         <span t-esc="tax_group.group_name"/>
                                         <t t-if="!taxTotals.same_tax_base">
                                             on
-                                            <span t-esc="props.formatCurrency(tax_group.base_amount_currency)"/>
+                                            <span t-esc="props.formatCurrency(tax_group.base_amount_currency).toFixed()"/>
                                         </t>
                                     </span>
-                                    <span t-esc="props.formatCurrency(tax_group.tax_amount_currency)"
+                                    <span t-esc="props.formatCurrency(tax_group.tax_amount_currency).toFixed()"
                                           class="ms-auto"/>
                                 </div>
                             </t>
@@ -67,18 +67,18 @@
                         <div class="text-center">--------------------------------</div>
                         <div class="pos-receipt-amount receipt-total">
                             <t t-out="props.data.label_total"/>
-                            <span t-esc="props.formatCurrency(taxTotals.order_total)"
+                            <span t-esc="props.formatCurrency(taxTotals.order_total).toFixed()"
                                   class="pos-receipt-right-align"/>
                         </div>
                         <t t-if="'order_rounding' in taxTotals">
                             <div class="pos-receipt-amount receipt-rounding">
                                 <t t-out="props.data.label_rounding"/>
-                                <span t-esc="props.formatCurrency(taxTotals.order_rounding)"
+                                <span t-esc="props.formatCurrency(taxTotals.order_rounding).toFixed()"
                                       class="pos-receipt-right-align"/>
                             </div>
                             <div class="pos-receipt-amount receipt-to-pay">
                                 To Pay
-                                <span t-esc="props.formatCurrency(taxTotals.order_to_pay)"
+                                <span t-esc="props.formatCurrency(taxTotals.order_to_pay).toFixed()"
                                       class="pos-receipt-right-align"/>
                             </div>
                         </t>
@@ -87,22 +87,23 @@
                              t-foreach="props.data.paymentlines" t-as="line"
                              t-key="line_index">
                             <t t-esc="line.name"/>
-                            <span t-esc="props.formatCurrency(line.amount)"
+                            <span t-esc="props.formatCurrency(line.amount).toFixed()"
                                   class="pos-receipt-right-align"/>
                         </div>
 
                         <div t-if="'order_change' in taxTotals"
                              class="pos-receipt-amount receipt-change">
                             <t t-out="props.data.label_change"/>
-                            <span t-esc="props.formatCurrency(taxTotals.order_change)"
+                            <span t-esc="props.formatCurrency(taxTotals.order_change).toFixed()"
                                   class="pos-receipt-right-align"/>
                         </div>
                         <!-- Extra Payment Info -->
                         <t t-if="props.data.total_discount">
                             <div class="text-center">
                                 <t t-out="props.data.label_discounts"/>
-                                <span t-esc="props.formatCurrency(props.data.total_discount)"
+                                <span t-esc="props.formatCurrency(props.data.total_discount).toFixed()"
                                       class="pos-receipt-right-align"/>
+
                             </div>
                         </t>
                         <div class="before-footer"/>
