@@ -115,19 +115,29 @@ class ResCompany(models.Model):
             )
 
     def action_import_google_contacts(self):
-        """IMPORT Contacts FROM Google TO ODOO"""
-        url = ("https://people.googleapis.com/v1/people/me/"
-               "connections?personFields=names,addresses,"
-               "emailAddresses,phoneNumbers&pageSize=1000")
+        """IMPORT Contacts FROM Google TO ODOO with pagination support"""
+        base_url = ("https://people.googleapis.com/v1/people/me/"
+                    "connections?personFields=names,addresses,"
+                    "emailAddresses,phoneNumbers&pageSize=1000")
         headers = {
             'Authorization': f'Bearer {self.contact_company_access_token}',
             'Content-Type': 'application/json'
         }
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json().get('connections', [])
-            partners = []
-            for connection in data:
+        next_page_token = None
+        partners = []
+
+        while True:
+            url = base_url
+            if next_page_token:
+                url += f"&pageToken={next_page_token}"
+            response = requests.get(url, headers=headers)
+            if response.status_code != 200:
+                error_message = f"Failed to import contact. Error: {response.text}"
+                raise ValidationError(error_message)
+
+            data = response.json()
+            connections = data.get('connections', [])
+            for connection in connections:
                 cnt_rsr_name = connection.get('resourceName', '')
                 etag = connection.get('etag', '')
                 names = connection.get('names', [{}])[0]
@@ -151,7 +161,8 @@ class ResCompany(models.Model):
 
                 if addresses:
                     if country_code:
-                        country_record = self.env['res.country'].search([('code', 'ilike', country_code)], limit=1)
+                        country_record = self.env['res.country'].search(
+                            [('code', 'ilike', country_code)], limit=1)
                         country_id = country_record.id if country_record else False
                     else:
                         country_id = False
@@ -180,19 +191,23 @@ class ResCompany(models.Model):
                     existing_partner.write(partner_vals)
                 else:
                     partners.append(partner_vals)
-            if partners:
-                self.env['res.partner'].create(partners)
-            _logger.info("Contact imported successfully!")
-            return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'type': 'danger',
-                    'sticky': False,
-                    'message': _("Contact imported successfully!"),
-                    'next': {'type': 'ir.actions.act_window_close'},
-                }
+
+            if data.get('nextPageToken'):
+                next_page_token = data['nextPageToken']
+            else:
+                break
+
+        if partners:
+            self.env['res.partner'].create(partners)
+        _logger.info("Contacts imported successfully!")
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'sticky': False,
+                'message': _("Contacts imported successfully!"),
+                'next': {'type': 'ir.actions.act_window_close'},
             }
-        else:
-            error_message = f"Failed to import contact. Error: {response.text}"
-            raise ValidationError(error_message)
+        }
