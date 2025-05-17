@@ -794,46 +794,86 @@ class DbBackupConfigure(models.Model):
                         mail_template_failed.send_mail(rec.id, force_send=True)
             # Onedrive Backup
             elif rec.backup_destination == 'onedrive':
-                if rec.onedrive_token_validity <= fields.Datetime.now():
-                    rec.generate_onedrive_refresh_token()
-                temp = tempfile.NamedTemporaryFile(
-                    suffix='.%s' % rec.backup_format)
-                with open(temp.name, "wb+") as tmp:
-                    self.dump_data(rec.db_name, tmp, rec.backup_format, rec.backup_frequency)
-                headers = {
-                    'Authorization': 'Bearer %s' % rec.onedrive_access_token,
-                    'Content-Type': 'application/json'}
-                upload_session_url = MICROSOFT_GRAPH_END_POINT + "/v1.0/me/drive/items/%s:/%s:/createUploadSession" % (
-                    rec.onedrive_folder_key, backup_filename)
                 try:
-                    upload_session = requests.post(upload_session_url,
-                                                   headers=headers)
-                    upload_url = upload_session.json().get('uploadUrl')
-                    requests.put(upload_url, data=temp.read())
-                    if rec.auto_remove:
-                        list_url = MICROSOFT_GRAPH_END_POINT + "/v1.0/me/drive/items/%s/children" % rec.onedrive_folder_key
-                        response = requests.get(list_url, headers=headers)
-                        files = response.json().get('value')
-                        for file in files:
-                            create_time = file['createdDateTime'][:19].replace(
-                                'T',
-                                ' ')
-                            diff_days = (
-                                    fields.datetime.now() - fields.datetime.strptime(
-                                create_time, '%Y-%m-%d %H:%M:%S')).days
-                            if diff_days >= rec.days_to_remove:
-                                delete_url = MICROSOFT_GRAPH_END_POINT + "/v1.0/me/drive/items/%s" % \
-                                             file['id']
-                                requests.delete(delete_url, headers=headers)
-                    if rec.notify_user:
-                        mail_template_success.send_mail(rec.id,
-                                                        force_send=True)
-                except Exception as error:
-                    rec.generated_exception = error
-                    _logger.info('Onedrive Exception: %s', error)
+                    if rec.onedrive_token_validity <= fields.Datetime.now():
+                        rec.generate_onedrive_refresh_token()
+
+                    with tempfile.NamedTemporaryFile(suffix=f'.{rec.backup_format}') as temp:
+                        with open(temp.name, "wb+") as tmp:
+                            self.dump_data(rec.db_name, tmp, rec.backup_format, rec.backup_frequency)
+
+                        headers = {
+                            'Authorization': f'Bearer {rec.onedrive_access_token}',
+                            'Content-Type': 'application/json'
+                        }
+
+                        upload_session_url = (
+                            f"{MICROSOFT_GRAPH_END_POINT}/v1.0/me/drive/items/"
+                            f"{rec.onedrive_folder_key}:/{backup_filename}:/createUploadSession"
+                        )
+
+                        upload_session = requests.post(upload_session_url, headers=headers)
+                        upload_session.raise_for_status()
+
+                        upload_url = upload_session.json().get('uploadUrl')
+                        if not upload_url:
+                            raise ValueError("Failed to get upload URL from OneDrive")
+
+                        file_size = os.path.getsize(temp.name)
+                        with open(temp.name, 'rb') as f:
+                            headers_upload = {
+                                'Content-Length': str(file_size),
+                                'Content-Range': f'bytes 0-{file_size - 1}/{file_size}'
+                            }
+                            upload_response = requests.put(upload_url, headers=headers_upload, data=f)
+                            upload_response.raise_for_status()
+
+
+                        if rec.auto_remove:
+                            verify_url = (
+                                f"{MICROSOFT_GRAPH_END_POINT}/v1.0/me/drive/items/"
+                                f"{rec.onedrive_folder_key}:/{backup_filename}"
+                            )
+                            verify_response = requests.get(verify_url, headers=headers)
+
+                            if verify_response.status_code == 200:
+                                list_url = (
+                                    f"{MICROSOFT_GRAPH_END_POINT}/v1.0/me/drive/items/"
+                                    f"{rec.onedrive_folder_key}/children"
+                                )
+                                response = requests.get(list_url, headers=headers)
+                                response.raise_for_status()
+
+                                files = response.json().get('value', [])
+                                current_time = fields.datetime.now()
+
+                                for file in files:
+                                    if file['name'] == backup_filename:
+                                        continue
+
+                                    create_time_str = file['createdDateTime'][:19].replace('T', ' ')
+                                    create_time = fields.datetime.strptime(create_time_str, '%Y-%m-%d %H:%M:%S')
+                                    diff_days = (current_time - create_time).days
+
+                                    if diff_days >= rec.days_to_remove:
+                                        delete_url = f"{MICROSOFT_GRAPH_END_POINT}/v1.0/me/drive/items/{file['id']}"
+                                        requests.delete(delete_url, headers=headers).raise_for_status()
+
+                        # Notify user on success
+                        if rec.notify_user:
+                            mail_template_success.send_mail(rec.id, force_send=True)
+
+                except requests.exceptions.RequestException as req_error:
+                    rec.generated_exception = str(req_error)
+                    _logger.error('OneDrive API Error: %s', req_error, exc_info=True)
                     if rec.notify_user:
                         mail_template_failed.send_mail(rec.id, force_send=True)
-            # NextCloud Backup
+
+                except Exception as error:
+                    rec.generated_exception = str(error)
+                    _logger.error('OneDrive Backup Error: %s', error, exc_info=True)
+                    if rec.notify_user:
+                        mail_template_failed.send_mail(rec.id, force_send=True)
             elif rec.backup_destination == 'next_cloud':
                 try:
                     if rec.domain and rec.next_cloud_password and \

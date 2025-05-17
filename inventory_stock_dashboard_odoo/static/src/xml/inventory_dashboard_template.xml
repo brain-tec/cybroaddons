@@ -8,7 +8,7 @@
 				<div class="container-fluid py-5">
 					<div class="row" id="set">
 						<t t-foreach="state.op_types" t-as="op_type" t-key="op_type_index">
-							<div class="col-sm-12 col-md-6 col-lg-3" t-att-id="op_type" t-on-click="onclick_tiles">
+							<div class="col-sm-12 col-md-6" t-att-id="op_type" t-on-click="onclick_tiles">
 								<div t-attf-class="dashboard-card dashboard-card--border-top dashboard-card--border-top-#{state.colors[op_type_index]}">
 									<div class="dashboard-card__details">
 										<span class="dashboard-card__title">

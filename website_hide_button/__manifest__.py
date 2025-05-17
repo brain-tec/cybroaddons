@@ -36,8 +36,10 @@
     'data': [
         'views/product_templates.xml',
         'views/shop_templates.xml',
-        'views/res_config_settings_views.xml'
+        'views/res_config_settings_views.xml',
+        'views/website_sale_comparison.xml',
     ],
+
     'images': ['static/description/banner.png'],
     'license': 'AGPL-3',
     'installable': True,

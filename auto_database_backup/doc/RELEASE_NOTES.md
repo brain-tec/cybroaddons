@@ -11,3 +11,9 @@
 #### UPDT
 
 - Added feature to set Multi-Level Backup Storage, Store backups in multiple locations based on different intervals. 
+
+#### 13.05.2025
+#### Version 18.0.2.0.1
+#### UPDT
+
+- Updated the function that uploads the database backup to OneDrive by adding a header configurator and fixed the issue where enabling 'Remove Old Backups' would delete all backups without uploading a new one.
