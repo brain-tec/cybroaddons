@@ -74,13 +74,9 @@ export class TestX2ManyField extends X2ManyField {
                         });
             }
             else{
-                     selected.forEach((rec) => {
-                                    if (this.activeActions.onDelete) {
-                                            selected.forEach((rec) => {
-                                                    this.activeActions.onDelete(rec);
-                                            })
-                                    }
-                    })
+                    selected.forEach((rec) => {
+                        this.list.delete(rec)
+            })
             }
         }
     }
@@ -91,13 +87,9 @@ export class TestX2ManyField extends X2ManyField {
          if (w_response){
              let unselected = this.list.records.filter((rec) => !rec.selected)
             var unselected_list =[]
-                    unselected.forEach((rec) => {
-                            if (this.activeActions.onDelete) {
-                                    unselected.forEach((rec) => {
-                                            this.activeActions.onDelete(rec);
-                                    })
-                            }
-                    })
+                     unselected.forEach((rec) => {
+                        this.list.delete(rec)
+            })
         }
     }
 }
