@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.module.category" id="franchise_management">
+            <field name="name">Dealer</field>
+            <field name="description">User access levels for Franchise Management</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="dealer_user_access" model="res.groups">
+            <field name="name">Franchise User</field>
+            <field name="category_id" ref="franchise_management"/>
+        </record>
+        <!-- Shareable Records -->
+        <record model="ir.rule" id="franchise_dealer_company_rule">
+            <field name="name">Franchise Dealer: multi-company</field>
+            <field name="model_id" ref="model_franchise_dealer"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+            </field>
+        </record>
+         <record model="ir.rule" id="dealer_sale_company_rule">
+            <field name="name">Dealer Sale: multi-company</field>
+            <field name="model_id" ref="model_dealer_sale"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+            </field>
+        </record>
+    </data>
+</odoo>

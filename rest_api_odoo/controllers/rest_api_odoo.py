@@ -23,6 +23,7 @@ import json
 import logging
 from odoo import http
 from odoo.http import request
+from datetime import datetime, date
 
 _logger = logging.getLogger(__name__)
 
@@ -81,6 +82,11 @@ class RestApi(http.Controller):
                             domain=[('id', '=', rec_id)],
                             fields=fields
                         )
+                        for record in partner_records:
+                            for key, value in record.items():
+                                if isinstance(value, (datetime, date)):
+                                    record[key] = value.isoformat()
+
                         data = json.dumps({
                             'records': partner_records
                         })
