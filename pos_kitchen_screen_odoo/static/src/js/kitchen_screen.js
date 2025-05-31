@@ -10,7 +10,7 @@ class kitchen_screen_dashboard extends Component {
         this.busService = this.env.services.bus_service;
         this.busService.addChannel("pos_order_created");
         onWillStart(() => {
-        this.busService.addEventListener('notification', this.onPosOrderCreation.bind(this));})
+        this.busService.subscribe('notification', this.onPosOrderCreation.bind(this));})
         this.action = useService("action");
         this.rpc = this.env.services.rpc;
         this.action = useService("action");
@@ -49,10 +49,10 @@ class kitchen_screen_dashboard extends Component {
 
     //Calling the onPosOrderCreation when an order is created or edited on the backend and return the notification
     onPosOrderCreation(message){
-        let payload = message.detail[0].payload
         var self=this
-        if(payload.message == "pos_order_created" && payload.res_model == "pos.order"){
+        if(message.message == "pos_order_created" && message.res_model == "pos.order"){
             self.orm.call("pos.order", "get_details", ["", self.shop_id,""]).then(function(result) {
+            console.log('orm call result', result)
             self.state.order_details = result['orders']
             self.state.lines = result['order_lines']
             self.state.shop_id=self.shop_id

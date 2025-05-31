@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2024-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Copyright (C) 2025-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
 #    Author: Sreerag PM (<https://www.cybrosys.com>)
 #
 #    This program is free software: you can modify
@@ -22,7 +22,7 @@
 ################################################################################
 {
     'name': 'POS Receipt Design',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.2',
     'category': 'Point of Sale',
     'summary': "POS Receipt, Receipt Design, POS Receipt Template, Design "
                "Report, Custom Receipt, POS Report, Customise Receipt, Odoo18, "

@@ -11,13 +11,7 @@ patch(OrderReceipt.prototype, {
             template: true,
         })
         this.pos = useState(useService("pos"));
-        // const templateProps = {
-        //     data: this.props.data,
-        //     order: this.pos.get_order(),
-        //     receipt: this.pos.get_order().export_for_printing(),
-        //     orderlines: this.pos.get_order().get_orderlines(),
-        //     paymentlines: this.pos.get_order().export_for_printing().paymentlines
-        // };
+
     },
     get templateProps() {
         return {

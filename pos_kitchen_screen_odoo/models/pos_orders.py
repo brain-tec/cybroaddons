@@ -46,6 +46,9 @@ class PosOrder(models.Model):
 
     def write(self, vals):
         """Super the write function for adding order status in vals"""
+        if vals.get("state") == "paid" and "order_status" in vals:
+            vals.pop("order_status")
+
         message = {
             'res_model': self._name,
             'message': 'pos_order_created'
@@ -57,8 +60,9 @@ class PosOrder(models.Model):
             if order.order_status == "waiting" and vals.get(
                     "order_status") != "ready":
                 vals["order_status"] = order.order_status
-            if order.order_status == "ready":
-                vals["order_status"] = order.order_status
+            if vals.get("state") and vals[
+                "state"] == "paid" and order.name == "/":
+                vals["name"] = self._compute_order_name()
         return super(PosOrder, self).write(vals)
 
     @api.model_create_multi
@@ -71,16 +75,12 @@ class PosOrder(models.Model):
         self.env["bus.bus"]._sendone('pos_order_created',
                                      "notification",
                                      message)
-
         for vals in vals_list:
+            if not vals["order_status"]:
+                vals["order_status"] = 'draft'
             pos_orders = self.search(
                 [("pos_reference", "=", vals["pos_reference"])])
             if pos_orders:
-                for rec in pos_orders.lines:
-                    for lin in vals_list[0]["lines"]:
-                        if lin[2]["product_id"] == rec.product_id.id:
-                            lin[2]["order_status"] = rec.order_status
-                vals_list[0]["order_status"] = pos_orders.order_status
                 return super().create(vals_list)
 
             else:
@@ -88,9 +88,12 @@ class PosOrder(models.Model):
                     # set name based on the sequence specified on the config
                     config = self.env['pos.order'].browse(
                         vals['order_id']).session_id.config_id
-                    vals['order_status'] = 'draft'
+                    if config.sequence_line_id:
+                        vals['name'] = config.sequence_line_id._next()
                 if not vals.get('name'):
-                    vals['order_status'] = 'draft'
+                    # fallback on any pos.order sequence
+                    vals['name'] = self.env['ir.sequence'].next_by_code(
+                        'pos.order.line')
                 return super().create(vals_list)
 
     def get_details(self, shop_id, order=None):
@@ -99,9 +102,13 @@ class PosOrder(models.Model):
         if order:
             orders = self.search(
                 [("pos_reference", "=", order[0]['pos_reference'])])
-            if orders:
-                orders.lines = False
-                orders.lines = dic[0]['lines']
+            if not orders:
+                self.create(dic)
+            else:
+                orders.floor = dic[0]['floor']
+                orders.hour = dic[0]['hour']
+                orders.minutes = dic[0]['minutes']
+                orders.lines.write({'is_cooking': True})
         kitchen_screen = self.env["kitchen.screen"].sudo().search(
             [("pos_config_id", "=", shop_id)])
         pos_orders = self.env["pos.order.line"].search(
@@ -131,7 +138,6 @@ class PosOrder(models.Model):
                 local_dt = utc_dt.astimezone(user_tz)
                 value['hour'] = local_dt.hour
                 value['minutes'] = local_dt.minute
-
         return values
 
     def action_pos_order_paid(self):

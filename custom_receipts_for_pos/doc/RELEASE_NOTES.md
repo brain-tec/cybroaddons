@@ -9,3 +9,8 @@
 #### Version 18.0.1.0.1
 ##### BUG FIX
 - BUG FIX
+
+#### 28.05.2025
+#### Version 18.0.1.0.2
+##### BUG FIX
+- Fixed the issues in the custom receipts which show error while printing the receipts.
