@@ -5,3 +5,9 @@
 ##### ADD
 
 - Initial Commit for Product Approval
+
+#### 05.06.2025
+#### Version 18.0.1.0.1
+#### UPDT
+- Fixed a bug in the confirm action of the module, implemented the functionality for Product Variants, and added a corresponding server action.
+

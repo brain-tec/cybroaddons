@@ -20,7 +20,7 @@
 ###############################################################################
 {
     'name': "Product Approval",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': "Extra tools",
     'summary': 'Product approval allow you to control the product creation',
     'description': "Using this module a user can create product which"
@@ -35,6 +35,7 @@
     'data': ['security/product_approval_management_groups.xml',
              'security/ir.model.access.csv',
              'views/product_template_views.xml',
+             'views/product_product_views.xml',
              'views/sale_order_views.xml'],
     'images': ['static/description/banner.png'],
     'post_init_hook': '_default_product_confirm',

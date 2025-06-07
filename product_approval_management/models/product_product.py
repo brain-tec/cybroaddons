@@ -23,7 +23,7 @@ from odoo import fields, models
 
 class ProductTemplate(models.Model):
     """The module is used to add the approval state in the product form page"""
-    _inherit = 'product.template'
+    _inherit = 'product.product'
 
     approve_state = fields.Selection([('draft', 'Draft'),
                                       ('confirmed', 'Confirmed')],
@@ -43,5 +43,5 @@ class ProductTemplate(models.Model):
     def action_confirm_products(self):
         """Bulk product approval button on the product form page"""
         active_ids = self.env.context.get('active_ids')
-        products = self.env['product.template'].browse(active_ids)
+        products = self.env['product.product'].browse(active_ids)
         products.action_confirm_product_approval()
