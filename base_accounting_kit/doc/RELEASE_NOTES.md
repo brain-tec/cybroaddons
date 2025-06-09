@@ -24,3 +24,9 @@
 #### Version 18.0.2.0.4
 #### FIX
 - Fixed qifparse external dependency (python) issue.
+
+#### 09.06.2025
+#### Version 18.0.2.0.5
+#### FIX
+- Fixed computed depreciation edit issue.
+
