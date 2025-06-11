@@ -32,7 +32,7 @@ class RoomBooking(models.Model):
     _description = "Hotel Room Reservation"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string="Folio Number", readonly=True, index=True,
+    name = fields.Char(string="Folio Number", readonly=True, index=True, copy=False,
                        default="New", help="Name of Folio")
     company_id = fields.Many2one('res.company', string="Company",
                                  help="Choose the Company",
@@ -77,7 +77,7 @@ class RoomBooking(models.Model):
                               help="Number of days which will automatically "
                                    "count from the check-in and check-out "
                                    "date.", )
-    invoice_button_visible = fields.Boolean(string='Invoice Button Display',
+    invoice_button_visible = fields.Boolean(string='Invoice Button Display', copy=False,
                                             help="Invoice button will be "
                                                  "visible if this button is "
                                                  "True")
@@ -86,7 +86,7 @@ class RoomBooking(models.Model):
                    ('to_invoice', 'To Invoice'),
                    ('invoiced', 'Invoiced'),
                    ], string="Invoice Status",
-        help="Status of the Invoice",
+        help="Status of the Invoice",copy=False,
         default='no_invoice', tracking=True)
     hotel_invoice_id = fields.Many2one("account.move",
                                        string="Invoice",
@@ -137,7 +137,7 @@ class RoomBooking(models.Model):
                                         ('cancel', 'Cancelled'),
                                         ('done', 'Done')], string='State',
                              help="State of the Booking",
-                             default='draft', tracking=True)
+                             default='draft', tracking=True,copy=False,)
     user_id = fields.Many2one(comodel_name='res.partner',
                               string="Invoice Address",
                               compute='_compute_user_id',

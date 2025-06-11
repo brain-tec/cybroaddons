@@ -23,6 +23,7 @@ import calendar
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
+from odoo.fields import Date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF, float_is_zero
 from odoo.exceptions import UserError, ValidationError
 
@@ -147,6 +148,7 @@ class AccountAssetAsset(models.Model):
                            ('category_id.group_entries', '=', False)])
         created_move_ids += ungrouped_assets._compute_entries(date,
                                                               group_entries=False)
+        print("created_move_ids",created_move_ids)
 
         for grouped_category in self.env['account.asset.category'].search(
                 type_domain + [('group_entries', '=', True)]):
@@ -353,6 +355,18 @@ class AccountAssetAsset(models.Model):
                                                               fields))
             asset.message_post(subject=_('Asset created'),
                                tracking_value_ids=tracking_value_ids)
+        return {
+            'name': _('Asset Depreciation Confirmation'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'asset.depreciation.confirmation',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_date': Date.today(),
+                'asset_type': self.type,
+            },
+        }
+
 
     def _get_disposal_moves(self):
         """Get the disposal moves for the asset."""

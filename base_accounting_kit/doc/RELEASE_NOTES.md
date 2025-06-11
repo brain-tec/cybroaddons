@@ -25,8 +25,13 @@
 #### FIX
 - Fixed qifparse external dependency (python) issue.
 
-#### 09.06.2025
+#### 06.06.2025
 #### Version 18.0.2.0.5
 #### FIX
 - Fixed computed depreciation edit issue.
+
+#### 09.06.2025
+#### Version 18.0.3.0.5
+#### UPDT
+- Updated the generation of asset entry when the confim button click.
 

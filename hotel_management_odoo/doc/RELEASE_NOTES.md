@@ -14,3 +14,8 @@
 #### Version 18.0.1.1.1
 #### UPDT
 - The key name has been updated based on the latest addons.
+
+#### 09.06.2025
+#### Version 18.0.1.1.1
+#### UPDT
+- Added copy=false in some fields of room_booking model
