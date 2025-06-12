@@ -148,7 +148,6 @@ class AccountAssetAsset(models.Model):
                            ('category_id.group_entries', '=', False)])
         created_move_ids += ungrouped_assets._compute_entries(date,
                                                               group_entries=False)
-        print("created_move_ids",created_move_ids)
 
         for grouped_category in self.env['account.asset.category'].search(
                 type_domain + [('group_entries', '=', True)]):

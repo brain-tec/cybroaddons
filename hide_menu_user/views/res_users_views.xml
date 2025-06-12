@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Hide Specific Menu" invisible="is_admin">
+                <page string="Hide Specific Menu" invisible="is_admin or is_show_specific_menu">
                     <list>
                         <field name="hide_menu_ids"/>
                     </list>

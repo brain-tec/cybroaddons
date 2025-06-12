@@ -23,6 +23,7 @@
     'name': 'Odoo18 Dynamic Accounting Reports',
     'version': '18.0.1.1.2',
     'category': 'Accounting',
+    'live_test_url': 'https://www.youtube.com/watch?v=bqtqqnGVAD8',
     'summary': "Odoo 18 Accounting Financial Reports,Dynamic Accounting Reports, Dynamic Financial Reports,Dynamic Report Odoo18, Odoo18,Financial Reports, Odoo18 Accounting,Accounting, Odoo Apps",
     'description': "This module creates dynamic Accounting General Ledger, Trial"
                    "Balance, Balance Sheet, Profit and Loss, Cash Book, Partner"

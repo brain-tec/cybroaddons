@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2024-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Copyright (C) 2025-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU LESSER
@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Hide Any Menu User Wise',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Extra Tools',
     'summary': 'Hide Menu, Odoo18 Hide Menu, Hide Menu Odoo, Restrict Menu Items, Odoo18 Menu, Odoo18, Odoo Apps',
     'description': 'Hide Any Menu Item User Wise, Hide Menu Items, Hide Menu',
