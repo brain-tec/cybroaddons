@@ -46,3 +46,5 @@ class AssetDepreciationConfirmationWizard(models.TransientModel):
             'domain': "[('id','in',[" + ','.join(str(id) for id in created_move_ids) + "])]",
             'type': 'ir.actions.act_window',
         }
+
+

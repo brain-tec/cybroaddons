@@ -39,3 +39,8 @@
 #### Version 18.0.3.0.6
 #### FIX
 - Fixed the CSV bank statement import errors for unformatted files.
+
+#### 12.06.2025
+#### Version 18.0.4.0.6
+#### FIX
+- Updated the generation of asset entry when the compute depreciation button click.

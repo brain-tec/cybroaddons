@@ -54,7 +54,7 @@ class SecondaryUomLine(models.Model):
                                   f" {self.secondary_uom_ratio} "
                                   f"{self.product_id.uom_id.name}")
         if self._context.get('params'):
-            sec_uom_ids = self.env['product.template'].browse(
+            sec_uom_ids = self.env['product.product'].browse(
                 self._context.get('params').get('id')).secondary_uom_ids.mapped(
                 'secondary_uom_id.id')
             if self.secondary_uom_id.id in sec_uom_ids:

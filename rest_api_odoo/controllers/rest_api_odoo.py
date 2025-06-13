@@ -86,7 +86,6 @@ class RestApi(http.Controller):
                             for key, value in record.items():
                                 if isinstance(value, (datetime, date)):
                                     record[key] = value.isoformat()
-
                         data = json.dumps({
                             'records': partner_records
                         })
@@ -98,6 +97,10 @@ class RestApi(http.Controller):
                             domain=[],
                             fields=fields
                         )
+                        for record in partner_records:
+                            for key, value in record.items():
+                                if isinstance(value, (datetime, date)):
+                                    record[key] = value.isoformat()
                         data = json.dumps({
                             'records': partner_records
                         })
@@ -121,6 +124,10 @@ class RestApi(http.Controller):
                         domain=[('id', '=', new_resource.id)],
                         fields=fields
                     )
+                    for record in partner_records:
+                        for key, value in record.items():
+                            if isinstance(value, (datetime, date)):
+                                record[key] = value.isoformat()
                     new_data = json.dumps({'New resource': partner_records, })
                     datas.append(new_data)
                     return request.make_response(data=datas)
@@ -151,6 +158,10 @@ class RestApi(http.Controller):
                                 domain=[('id', '=', resource.id)],
                                 fields=fields
                             )
+                            for record in partner_records:
+                                for key, value in record.items():
+                                    if isinstance(value, (datetime, date)):
+                                        record[key] = value.isoformat()
                             new_data = json.dumps(
                                 {'Updated resource': partner_records,
                                  })
@@ -195,6 +206,7 @@ class RestApi(http.Controller):
         specified url, and it will authenticate the api-key and then will
         generate the result"""
         http_method = request.httprequest.method
+
         api_key = request.httprequest.headers.get('api-key')
         auth_api = self.auth_api_key(api_key)
         model = kw.get('model')

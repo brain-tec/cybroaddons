@@ -7,7 +7,7 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='uom_po_id']" position="after">
+            <xpath expr="//field[@name='product_tooltip']" position="after">
                 <field name="is_need_secondary_uom" groups="uom.group_uom"/>
                 <field name="secondary_uom_ids"
                        invisible="is_need_secondary_uom == False"

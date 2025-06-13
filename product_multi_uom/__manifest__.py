@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': "Product Multi UoM",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Sales',
     'summary': 'This module help to sell a product with multiple Uom category',
     'description': "This versatile module empowers your sales strategy by "
