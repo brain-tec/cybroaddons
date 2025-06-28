@@ -224,9 +224,8 @@ class StockLandedCost(models.Model):
             self.write({'state': 'cancel'})
             self.unlink()
             return {
-                'name': 'Landed Cost',
-                'type': 'ir.actions.act_window',
-                'res_model': 'stock.landed.cost',
-                'view_mode': 'tree,form',
-                'target': 'current'
+                'type': 'ir.actions.client',
+                'tag': 'reload',
+                'params': {'menu_id': self.env.ref(
+                    'stock_landed_costs.menu_stock_landed_cost').id},
             }

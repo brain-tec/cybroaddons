@@ -95,13 +95,19 @@ class SaleOrder(models.Model):
     @api.depends('invoice_ids')
     def _compute_amount_due(self):
         """The function is used to compute the amount due from the invoice and
-        if payment is registered."""
+        if payment is registered, accounting for exchange rate differences and credit notes."""
         for rec in self:
-            amount_due = 0
-            for order in rec.invoice_ids:
-                amount_due = amount_due + (order.amount_total -
-                                           order.amount_residual)
-            rec.amount_due = rec.amount_total - amount_due
+            total_invoiced = 0
+            total_paid = 0
+            for invoice in rec.invoice_ids:
+                if invoice.move_type == 'out_invoice':  # Regular invoices
+                    total_invoiced += invoice.amount_total
+                    total_paid += invoice.amount_total - invoice.amount_residual
+                elif invoice.move_type == 'out_refund':  # Credit notes
+                    total_invoiced -= invoice.amount_total
+                    total_paid -= (
+                                invoice.amount_total - invoice.amount_residual)
+            rec.amount_due = total_invoiced - total_paid
 
     def action_open_business_doc(self):
         """ This method is intended to be used in the context of an

@@ -20,12 +20,13 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import base64
 import datetime
 import logging
 import time
-from odoo import api, models, _
+from odoo import models, _
 from odoo.exceptions import ValidationError
-from odoo.fields import Datetime, _logger
+from odoo.fields import _logger
 
 
 class IrCron(models.Model):
@@ -70,7 +71,6 @@ class IrCron(models.Model):
             self.pool.reset_changes()
             _logger.exception('Job %r (%s) server action #%s failed',
                               cron_name, self.id, server_action_id)
-            # self.env.cr.rollback()
             if exception:
                 self.env['failure.history'].create({
                     'name': cron_name,
@@ -87,14 +87,30 @@ class IrCron(models.Model):
              ('create_date', '<', current_datetime)]
         )
         if failure:
-            admin_mail = self.env['res.groups'].search(
-                [('category_id', '=', 'Administration'),
-                 ('name', '=', 'Access Rights')]).users.mapped('login')
+            admin_mail = self.env.ref('base.group_erp_manager').users.mapped('login')
             email_values = {
                 'email_to': admin_mail[0] if len(admin_mail) == 1
                 else ",".join(admin_mail)
             }
+
+            report_template_id = self.env['ir.actions.report']._render_qweb_pdf(
+                report_ref='cron_failure_notification.cron_fail_pdf_report',
+                res_ids=False,
+            )
+            data_record = base64.b64encode(report_template_id[0])
+            ir_values = {
+                'name': "Scheduled Cron Job Failed Attachment.pdf",
+                'type': 'binary',
+                'datas': data_record,
+                'store_fname': data_record,
+                'mimetype': 'application/x-pdf',
+            }
+            data_id = self.env['ir.attachment'].create(ir_values)
+
             mail_template = self.env.ref(
                 'cron_failure_notification.mail_template_cron_error')
+            mail_template.attachment_ids = [(6, 0, [data_id.id])]
             mail_template.send_mail(self.id, email_values= email_values,
                                     force_send=True)
+            mail_template.attachment_ids = [(3, data_id.id)]
+        return

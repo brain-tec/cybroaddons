@@ -22,7 +22,7 @@
 ################################################################################
 {
     'name': "Cron Failure Notification",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Discuss',
     'summary': 'Notify the Admin About Cron Failures Via Mail',
     'description': """This module helps to send notification to admin with 
