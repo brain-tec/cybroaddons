@@ -140,20 +140,28 @@ class MrpWorkorder(models.Model):
             Boolean: Returns true
         """
         res = super(MrpWorkorder, self).button_finish()
-        project = self.env['project.project'].search(
-            [('name', '=', ("MO: {}".format(self.production_id.name)))])
-        task_id = project.task_ids.search([('name', '=', (
-            "{} in {} for {} on {}".format(self.name, self.workcenter_id.name,
-                                           self.product_id.display_name,
-                                           str(self.date_start))))])
-        task_id.write({
-            'allocated_hours': self.duration_expected
-        })
-        timesheet = task_id.mapped('timesheet_ids')
-        for rec in timesheet:
-            rec.write({
-                'unit_amount': self.duration,
+
+        for workorder in self:
+            project = self.env['project.project'].search([
+                ('name', '=', f"MO: {workorder.production_id.name}")
+            ], limit=1)
+
+            task = project.task_ids.search([
+                ('name', '=', (
+                    f"{workorder.name} in {workorder.workcenter_id.name} for "
+                    f"{workorder.product_id.display_name} on {str(workorder.date_start)}"
+                ))
+            ], limit=1)
+
+            task.write({
+                'allocated_hours': workorder.duration_expected
             })
+
+            for rec in task.timesheet_ids:
+                rec.write({
+                    'unit_amount': workorder.duration,
+                })
+
         return res
 
     @api.depends('employee_id')

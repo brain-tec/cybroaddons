@@ -21,7 +21,7 @@
 ################################################################################
 {
     'name': 'Manufacturing (MRP) Timesheet',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Manufacturing,Project',
     'summary': 'Timesheet for manufacturing.',
     'description': """ This module will help you to create timesheet for 
