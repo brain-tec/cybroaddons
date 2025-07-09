@@ -21,7 +21,7 @@
 ################################################################################
 {
     'name': "Manual Currency Exchange Rate",
-    'version': '18.0.1.1.0',
+    'version': '18.0.1.1.1',
     'category': 'Accounting',
     'summary': """By using this module ,we can change the currency rate manually
      in sale ,purchase and invoice. """,

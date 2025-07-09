@@ -9,3 +9,8 @@
 #### Version 18.0.1.0.1
 #### FIX
 - Fixed the singleton error that occurred when clicking the 'Produce All' button.
+
+#### 08.07.2025
+#### Version 18.0.1.0.1
+#### FIX
+- Fixed the singleton error that occurred when clicking the 'start and pause' button.

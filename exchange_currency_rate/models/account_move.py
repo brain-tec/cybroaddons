@@ -111,7 +111,7 @@ class AccountMove(models.Model):
                 from_currency=move.company_currency_id,
                 to_currency=move.currency_id,
                 company=move.company_id,
-                date=self.date,
+                date=move.date,
             )
 
     def _inverse_rate(self):
