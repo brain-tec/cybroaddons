@@ -37,6 +37,9 @@ class SecondaryUomLine(models.Model):
     product_id = fields.Many2one('product.product', readonly=True,
                                  string="Product",
                                  help="Product having the Secondary UOM")
+    product_template_id = fields.Many2one('product.template', readonly=True,
+                                 string="Product",
+                                 help="Product having the Secondary UOM")
     secondary_uom_ratio = fields.Float(string='Secondary UoM Ratio',
                                        help="Choose the ratio with the base"
                                             " Unit of Measure.")
@@ -61,3 +64,4 @@ class SecondaryUomLine(models.Model):
                 raise ValidationError(
                     _('This Unit of Measure is already exist in the secondary'
                       'uom list. Please select another uom for secondary uom'))
+
