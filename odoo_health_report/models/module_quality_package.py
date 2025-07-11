@@ -19,9 +19,14 @@
 #    DEALINGS IN THE SOFTWARE.
 #
 ######################################################################################
+import os
+from collections import defaultdict, Counter
+from pathlib import Path
 
 from odoo import api, models
-from .check_python_violations import installed_modules, count_module_lines, module_and_icons, violations_report, get_violations
+from odoo import modules
+from odoo.modules import get_modules, get_module_path
+from . import check_violations
 
 
 class ModuleQuality(models.AbstractModel):
@@ -31,12 +36,49 @@ class ModuleQuality(models.AbstractModel):
 
     def get_installed_modules(self):
         """Function to fetch installed modules"""
-        return installed_modules(self)
+        return self.env['ir.module.module'].search([
+            ('state', '=', 'installed'),
+            ('name', '!=', 'odoo_health_report')
+        ])
 
     @api.model
     def count_lines_of_code_in_modules(self):
         """Count lines of Python, JavaScript, and XML code in all installed Odoo modules."""
-        return count_module_lines(self)
+        module_ids = self.get_installed_modules()
+        total_lines = Counter()
+        exclude_files = {'__init__.py', '__manifest__.py'}
+        result = defaultdict(list)
+
+        for module in module_ids:
+            module_name = module.name
+            author = module.author
+            module_path = get_module_path(module_name)
+            if not module_path:
+                continue
+            loc = Counter({'.py': 0, '.js': 0, '.xml': 0})
+            for ext in loc:
+                for file in Path(module_path).rglob(f'*{ext}'):
+                    if file.name in exclude_files:
+                        continue
+                    try:
+                        with file.open('r', encoding='utf-8', errors='ignore') as f:
+                            loc[ext] += sum(1 for _ in f)
+                    except (IOError, UnicodeDecodeError):
+                        continue
+
+            result[author].append({
+                'technical_name': module_name,
+                'module_name': module.display_name,
+                'py_lines': loc['.py'],
+                'js_lines': loc['.js'],
+                'xml_lines': loc['.xml']
+            })
+            total_lines.update({
+                'py_lines': loc['.py'],
+                'js_lines': loc['.js'],
+                'xml_lines': loc['.xml']
+            })
+        return {'result': dict(result), 'total_lines': dict(total_lines)}
 
     @api.model
     def fields_and_apps_overview(self):
@@ -79,14 +121,26 @@ class ModuleQuality(models.AbstractModel):
     @api.model
     def get_module_and_icons(self):
         """Retrieve all custom module name and icon as a dictionary"""
-        return module_and_icons(self)
+        module_and_icon = {}
+        is_updated = self.env['base.module.update'].search([], limit=1, order='id desc')
+        if not is_updated:
+            is_updated = self.env['base.module.update'].create({})
+        is_updated.update_module()
+
+        for module in get_modules():
+            module_path = get_module_path(module)
+            if 'addons' not in module_path.split(os.sep) and module != 'odoo_health_report':
+                module_name = self.env.ref(f'base.module_{module}').display_name
+                module_icon = modules.module.get_module_icon(module)
+                module_and_icon[module] = [module_name, module_icon]
+        return module_and_icon
 
     @api.model
     def check_violations_report(self, module):
         """Check the violations for PDF report"""
-        return violations_report(self, module)
+        return check_violations.violations_report(self, module)
 
     @api.model
     def check_violations(self, module):
         """Check the violations and standards"""
-        return get_violations(module)
+        return check_violations.get_violations(module)

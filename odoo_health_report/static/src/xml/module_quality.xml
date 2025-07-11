@@ -180,6 +180,33 @@
                   </t>
                   <t t-else="">
                     <t t-if="state.module_selected">
+                      <!--  Odoo Code Standards  -->
+                      <div class="mt-4">
+                        <h3>Odoo Code Standards Check for: <t t-esc="module[1][0]"/></h3>
+                        <table t-if="state.module_selected.odoo_standards_check" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>File</th>
+                              <th>Line</th>
+                              <th>Issue</th>
+                              <th>Suggestion</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="state.module_selected.odoo_standards_check" t-as="issues" t-key="issues_index">
+                              <tr>
+                                <td t-esc="issues.file"/>
+                                <td t-esc="issues.line"/>
+                                <td class="error" t-esc="issues.issue"/>
+                                <td><t t-if="issues.suggestion" t-esc="issues.suggestion"/></td>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                        <t t-else="">
+                          No issues found
+                        </t>
+                      </div>
 
                       <!--  Style &amp; Linting Check  -->
                       <div class="mt-4">
@@ -209,6 +236,86 @@
                         </t>
                       </div>
 
+                      <!--  General Code Quality  -->
+                      <div class="mt-4">
+                        <h3>General Code Quality for: <t t-esc="module[1][0]"/></h3>
+                        <table t-if="state.module_selected.code_quality_check" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>File Name</th>
+                              <th>Line</th>
+                              <th>Column</th>
+                              <th>Code</th>
+                              <th>Violation Message</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="state.module_selected.code_quality_check" t-as="selected" t-key="selected_index">
+                              <tr>
+                                <td t-esc="selected['file']"/>
+                                <td t-esc="selected['line']"/>
+                                <td t-esc="selected['column']"/>
+                                <td t-esc="selected['code']"/>
+                                <td class="error">
+                                  <t t-esc="selected['message']"/>
+                                </td>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                        <t t-else="">
+                          No issues found
+                        </t>
+                      </div>
+
+                      <!--  Maintainability Index  -->
+                      <div class="mt-4">
+                        <h3>Maintainability Index for: <t t-esc="module[1][0]"/></h3>
+                        <table t-if="state.module_selected.mi_check" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>File Name</th>
+                              <th>Grade</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="state.module_selected.mi_check" t-as="selected" t-key="selected_index">
+                              <tr>
+                                <td t-esc="selected['file']"/>
+                                <td t-esc="selected['grade']"/>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                        <t t-else="">
+                          No issues found
+                        </t>
+                      </div>
+
+                      <!--  Import Sorting  -->
+                      <div class="mt-4">
+                        <h3>Import Sorting Check for: <t t-esc="module[1][0]"/></h3>
+                        <table t-if="state.module_selected.import_sort_check" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>File Name</th>
+                              <th>Message</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="state.module_selected.import_sort_check" t-as="selected" t-key="selected_index">
+                              <tr>
+                                <td t-esc="selected['file']"/>
+                                <td t-esc="selected['message']"/>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                        <t t-else="">
+                          No issues found
+                        </t>
+                      </div>
+
                       <!--  Coding Format  -->
                       <div class="mt-4">
                         <h3>Code Formatting Check for: <t t-esc="module[1][0]"/></h3>
@@ -228,8 +335,82 @@
                             </t>
                           </tbody>
                         </table>
+                        <t t-else="">
+                          No issues found
+                        </t>
                       </div>
 
+                      <!--  Code Complexity  -->
+                      <div class="mt-4">
+                        <t t-set="cc_colors" t-value="{'A': 'text-success', 'B': 'text-primary', 'C': 'text-warning', 'D': 'text-orange', 'E': 'text-danger', 'F': 'text-dark-red'}"/>
+                        <h3>Code Complexity for: <t t-esc="module[1][0]"/></h3>
+                        <t t-foreach="Object.entries(state.module_selected.cc_check)" t-as="cc_files" t-key="cc_files_index">
+                          <h5>File: <t t-esc="cc_files[0]"/></h5>
+                          <table t-if="cc_files[1]" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Class Name</th>
+                                <th>Line No.</th>
+                                <th>End Line</th>
+                                <th>Complexity</th>
+                                <th>Rank</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <t t-if="cc_files[1]" t-foreach="cc_files[1]" t-as="line" t-key="line_index">
+                                <tr>
+                                  <td t-esc="line.type"/>
+                                  <td t-esc="line.name"/>
+                                  <td><t t-if="line.classname" t-esc="line.classname"/></td>
+                                  <td t-esc="line.lineno"/>
+                                  <td t-esc="line.endline"/>
+                                  <td t-att-class="cc_colors[line.rank]" t-esc="line.complexity"/>
+                                  <td t-att-class="cc_colors[line.rank]" t-esc="line.rank"/>
+                                </tr>
+                              </t>
+                            </tbody>
+                          </table>
+                          <t t-else="">
+                            No issues found
+                          </t>
+                        </t>
+                      </div>
+
+                      <!--  Security scan  -->
+                      <div class="mt-4">
+                        <h3>Security Scan for: <t t-esc="module[1][0]"/></h3>
+                        <table t-if="state.module_selected.security_scan.length >= 1" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Test ID</th>
+                              <th>Test Name</th>
+                              <th>Severity</th>
+                              <th>Confidence</th>
+                              <th>Issue Text</th>
+                              <th>File</th>
+                              <th>Line</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="state.module_selected.security_scan" t-as="selected" t-key="selected_index">
+                              <tr>
+                                <td t-esc="selected.test_id"/>
+                                <td t-esc="selected.test_name"/>
+                                <td t-esc="selected.issue_severity"/>
+                                <td t-esc="selected.issue_confidence"/>
+                                <td t-esc="selected.issue_text"/>
+                                <td t-esc="selected.filename"/>
+                                <td t-esc="selected.line_number"/>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                        <t t-else="">
+                          No issues found
+                        </t>
+                      </div>
                     </t>
                   </t>
                 </t>

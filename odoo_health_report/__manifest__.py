@@ -21,7 +21,7 @@
 ######################################################################################
 {
     'name': 'Odoo Health Report',
-    'version': '18.0.1.0.1',
+    'version': '18.0.2.1.1',
     'category': 'Productivity',
     'summary': "Odoo Module Health Monitoring Tool",
     'description': 'Displays odoo apps report in the menu and as a PDF report.',

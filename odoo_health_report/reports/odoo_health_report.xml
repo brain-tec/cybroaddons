@@ -125,26 +125,126 @@
                     <h3>Violations of <t t-esc="violation_module['module']"/>
                     </h3>
                     <t t-foreach="violation_module['violations']" t-as="violations_categ">
+                      <!--  Odoo Code Standards Check  -->
+                      <t t-if="violations_categ == 'odoo_standards'">
+                        <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
+                            Odoo Code Standards Check
+                        </h3>
+                        <t t-if="violation_module['violations']['odoo_standards']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">File Name</th>
+                              <th style="text-align: center; padding: 10px">Line</th>
+                              <th style="text-align: left; padding: 10px">Violation Message</th>
+                              <th style="text-align: left; padding: 10px">Suggestion</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['odoo_standards']" t-as="line" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="line['file']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="line['line']"/>
+                                <td style="text-align: left; padding: 10px; color: #8B0000;" t-esc="line['issue']"/>
+                                <td style="text-align: left; padding: 10px" t-esc="line['suggestion']"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                        </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
+                      </t>
 
                       <!--  Style &amp; Linting Check  -->
-                      <t t-if="violations_categ == 'style_lint'">
+                      <t t-elif="violations_categ == 'style_lint'">
                         <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
                             Style &amp; Linting Check
                         </h3>
-                        <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
-                          <thead style="background-color: #ddf66b; color: #333">
-                            <th style="text-align: left; padding: 10px">File Name</th>
-                            <th style="text-align: center; padding: 10px">Line</th>
-                            <th style="text-align: left; padding: 10px">Violation Message</th>
-                          </thead>
-                          <tbody>
-                            <tr t-foreach="violation_module['violations']['style_lint']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
-                              <td style="padding: 10px" t-esc="selected['file_name']"/>
-                              <td style="text-align: center; padding: 10px" t-esc="selected['line_number']"/>
-                              <td style="text-align: left; padding: 10px; color: #8B0000;" t-esc="selected['violation_message']"/>
-                            </tr>
-                          </tbody>
-                        </table><br/>
+                        <t t-if="violation_module['violations']['style_lint']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">File Name</th>
+                              <th style="text-align: center; padding: 10px">Line</th>
+                              <th style="text-align: left; padding: 10px">Violation Message</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['style_lint']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="selected['file_name']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['line_number']"/>
+                                <td style="text-align: left; padding: 10px; color: #8B0000;" t-esc="selected['violation_message']"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                        </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
+                      </t>
+
+                      <!--  General Code Quality  -->
+                      <t t-elif="violations_categ == 'code_quality'">
+                        <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
+                          General Code Quality
+                        </h3>
+                        <t t-if="violation_module['violations']['code_quality']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">File Name</th>
+                              <th style="text-align: center; padding: 10px">Line</th>
+                              <th style="text-align: center; padding: 10px">Column</th>
+                              <th style="text-align: center; padding: 10px">Code</th>
+                              <th style="text-align: left; padding: 10px">Violation Message</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['code_quality']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="selected['file']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['line']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['column']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['code']"/>
+                                <td style="text-align: left; padding: 10px; color: #8B0000;" t-esc="selected['message']"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                          </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
+                      </t>
+
+                      <!--  Maintainability Index  -->
+                      <t t-elif="violations_categ == 'maintainability_index'">
+                        <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
+                          Maintainability Index
+                        </h3>
+                        <t t-if="violation_module['violations']['maintainability_index']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">File Name</th>
+                              <th style="text-align: center; padding: 10px">Grade</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['maintainability_index']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="selected['file']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['grade']"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                        </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
+                      </t>
+
+                      <!--  Import Sorting Check  -->
+                      <t t-elif="violations_categ == 'import_sort'">
+                        <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
+                          Import Sorting Check
+                        </h3>
+                        <t t-if="violation_module['violations']['import_sort']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">File Name</th>
+                              <th style="text-align: left; padding: 10px">Message</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['import_sort']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="selected['file']"/>
+                                <td style="text-align: left; padding: 10px" t-esc="selected['message']"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                        </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
                       </t>
 
                       <!--  Code Formatting Check  -->
@@ -152,20 +252,92 @@
                         <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
                           Code Formatting Check
                         </h3>
-                        <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
-                          <thead style="background-color: #ddf66b; color: #333">
-                            <th style="text-align: left; padding: 10px">File Name</th>
-                            <th style="text-align: left; padding: 10px">Action</th>
-                          </thead>
-                          <tbody>
-                            <tr t-foreach="violation_module['violations']['code_format']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
-                              <td style="padding: 10px" t-esc="selected[1]"/>
-                              <td style="text-align: left; padding: 10px" t-esc="selected[0]"/>
-                            </tr>
-                          </tbody>
-                        </table><br/>
+                        <t t-if="violation_module['violations']['code_format']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">File Name</th>
+                              <th style="text-align: left; padding: 10px">Action</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['code_format']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="selected[1]"/>
+                                <td style="text-align: left; padding: 10px" t-esc="selected[0]"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                        </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
                       </t>
 
+                      <!--  Code Complexity  -->
+                      <t t-elif="violations_categ == 'code_complexity'">
+                        <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
+                          Code Complexity
+                        </h3>
+                        <t t-set="cc_colors" t-value="{'A': 'text-success', 'B': 'text-primary', 'C': 'text-warning', 'D': 'text-orange', 'E': 'text-danger', 'F': 'text-dark-red'}"/>
+                        <t t-foreach="violation_module['violations']['code_complexity'].items()" t-as="cc_files">
+                          <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px">File: <t t-esc="cc_files[0]"/></h3>
+                          <t t-if="cc_files[1]">
+                            <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                              <thead style="background-color: #ddf66b; color: #333">
+                                <th style="text-align: left; padding: 10px">Type</th>
+                                <th style="text-align: left; padding: 10px">Name</th>
+                                <th style="text-align: left; padding: 10px">Class Name</th>
+                                <th style="text-align: center; padding: 10px">Line No.</th>
+                                <th style="text-align: center; padding: 10px">End Line</th>
+                                <th style="text-align: center; padding: 10px">Complexity</th>
+                                <th style="text-align: center; padding: 10px">Rank</th>
+                              </thead>
+                              <tbody>
+                                <tr t-if="cc_files[1]" t-foreach="cc_files[1]" t-as="line" style="border-bottom: 1px solid #e9e9e9">
+                                  <td style="padding: 10px" t-esc="line['type']"/>
+                                  <td style="text-align: left; padding: 10px" t-esc="line['name']"/>
+                                  <td style="text-align: left; padding: 10px">
+                                    <t t-if="line.get('classname')" t-esc="line['classname']"/>
+                                  </td>
+                                  <td style="text-align: center; padding: 10px" t-esc="line['lineno']"/>
+                                  <td style="text-align: center; padding: 10px" t-esc="line['endline']"/>
+                                  <td style="text-align: center; padding: 10px" t-att-class="cc_colors[line['rank']]" t-esc="line['complexity']"/>
+                                  <td style="text-align: center; padding: 10px" t-att-class="cc_colors[line['rank']]" t-esc="line['rank']"/>
+                                </tr>
+                              </tbody>
+                            </table><br/>
+                          </t>
+                          <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/></t>
+                        </t>
+                      </t>
+
+                      <!--  Security scan  -->
+                      <t t-elif="violations_categ == 'security_scan'">
+                        <h3 style="font-size: 1rem; color: #333; margin: 0; margin-bottom: 10px; font-weight: 700;">
+                          Security Scan
+                        </h3>
+                        <t t-if="violation_module['violations']['security_scan']">
+                          <table style="border-collapse: collapse; width: 100%; font-size: 0.8rem; border-radius: 10px; overflow: hidden; box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);">
+                            <thead style="background-color: #ddf66b; color: #333">
+                              <th style="text-align: left; padding: 10px">Test ID</th>
+                              <th style="text-align: center; padding: 10px">Test Name</th>
+                              <th style="text-align: center; padding: 10px">Severity</th>
+                              <th style="text-align: center; padding: 10px">Confidence</th>
+                              <th style="text-align: center; padding: 10px">Issue Text</th>
+                              <th style="text-align: center; padding: 10px">File</th>
+                              <th style="text-align: center; padding: 10px">Line</th>
+                            </thead>
+                            <tbody>
+                              <tr t-foreach="violation_module['violations']['security_scan']" t-as="selected" style="border-bottom: 1px solid #e9e9e9">
+                                <td style="padding: 10px" t-esc="selected['test_id']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['test_name']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['issue_severity']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['issue_confidence']"/>
+                                <td style="text-align: left; padding: 10px" t-esc="selected['issue_text']"/>
+                                <td style="text-align: left; padding: 10px" t-esc="selected['filename']"/>
+                                <td style="text-align: center; padding: 10px" t-esc="selected['line_number']"/>
+                              </tr>
+                            </tbody>
+                          </table><br/>
+                        </t>
+                        <t t-else=""><span style="font-size: 0.6rem; color: black; margin: 0; margin-bottom: 10px; font-weight: 500;">No issues found</span><br/><br/></t>
+                      </t>
                     </t>
                   </t>
                 </t>
