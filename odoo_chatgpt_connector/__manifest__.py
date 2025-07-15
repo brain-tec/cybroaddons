@@ -41,6 +41,9 @@
             'odoo_chatgpt_connector/static/src/js/submit_request.js',
             'odoo_chatgpt_connector/static/src/css/container.css'
         ],
+        'web.assets_backend': [
+                    'odoo_chatgpt_connector/static/src/discuss/ChatGPT/common/**/*'
+                ],
     },
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',

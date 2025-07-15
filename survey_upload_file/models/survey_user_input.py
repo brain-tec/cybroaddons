@@ -43,14 +43,14 @@ class SurveyUserInput(models.Model):
         old_answers = self.env['survey.user_input.line'].search([
             ('user_input_id', '=', self.id),
             ('question_id', '=', question.id), ])
-        if question.question_type in 'upload_file':
-            res = self._save_line_simple_answer(question, old_answers, answer)
+        if question.question_type == 'upload_file':
+            res = self._save_line_simple_answers(question, old_answers, answer)
         else:
-            res = super()._save_lines(question, answer, comment,
+            res = super(SurveyUserInput, self)._save_lines(question, answer, comment,
                                       overwrite_existing)
         return res
 
-    def _save_line_simple_answer(self, question, old_answers, answer):
+    def _save_line_simple_answers(self, question, old_answers, answer):
         """ Save the user's file upload answer for the given question."""
         vals = self._get_line_answer_file_upload_values(question,
                                                         'upload_file', answer)
