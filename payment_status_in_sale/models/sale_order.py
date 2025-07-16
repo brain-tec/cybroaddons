@@ -52,31 +52,29 @@ class SaleOrder(models.Model):
         will be either in paid,not paid,partially paid, reversed etc. """
         for order in self:
             order.payment_status = 'No invoice'
-            payment_states = order.invoice_ids.mapped('payment_state')
-            status_length = len(payment_states)
-            if 'partial' in payment_states:
-                order.payment_status = 'Partially Paid'
-            elif 'not_paid' in payment_states and any(
-                    (True for x in ['paid', 'in_payment', 'partial'] if
-                     x in payment_states)):
-                order.payment_status = 'Partially Paid'
-            elif 'not_paid' in payment_states and status_length == \
-                    payment_states.count('not_paid'):
-                order.payment_status = 'Not Paid'
-            elif 'paid' in payment_states and status_length == \
-                    payment_states.count('paid') and order.amount_due == 0:
-                order.payment_status = 'Paid'
-            elif 'paid' in payment_states and status_length == \
-                    payment_states.count('paid') and order.amount_due != 0:
-                order.payment_status = 'Partially Paid'
-            elif 'in_payment' in payment_states and status_length == \
-                    payment_states.count('in_payment'):
-                order.payment_status = 'In Payment'
-            elif 'reversed' in payment_states and status_length == \
-                    payment_states.count('reversed'):
-                order.payment_status = 'Reversed'
-            else:
+            posted_invoices = order.invoice_ids.filtered(
+                lambda x: x.state == 'posted')
+            if not posted_invoices:
                 order.payment_status = 'No invoice'
+            else:
+                payment_states = posted_invoices.mapped('payment_state')
+                status_length = len(payment_states)
+                if order.amount_due > 0:
+                    if 'partial' in payment_states or 'not_paid' in payment_states:
+                        order.payment_status = 'Partially Paid'
+                    elif 'not_paid' in payment_states and status_length == payment_states.count(
+                            'not_paid'):
+                        order.payment_status = 'Not Paid'
+                elif order.amount_due <= 0:  # Changed to <= 0 to handle overpayments or credit notes
+                    if 'paid' in payment_states and status_length == payment_states.count(
+                            'paid'):
+                        order.payment_status = 'Paid'
+                    elif 'in_payment' in payment_states and status_length == payment_states.count(
+                            'in_payment'):
+                        order.payment_status = 'In Payment'
+                elif 'reversed' in payment_states and status_length == payment_states.count(
+                        'reversed'):
+                    order.payment_status = 'Reversed'
 
     @api.depends('invoice_ids')
     def _compute_invoice_state(self):
@@ -99,7 +97,7 @@ class SaleOrder(models.Model):
         for rec in self:
             total_invoiced = 0
             total_paid = 0
-            for invoice in rec.invoice_ids:
+            for invoice in rec.invoice_ids.filtered(lambda x: x.state == 'posted'):
                 if invoice.move_type == 'out_invoice':  # Regular invoices
                     total_invoiced += invoice.amount_total
                     total_paid += invoice.amount_total - invoice.amount_residual

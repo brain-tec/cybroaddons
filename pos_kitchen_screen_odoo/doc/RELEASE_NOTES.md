@@ -11,3 +11,8 @@
 - Fixed issue where orders were not displaying on the kitchen screen.
 - Fixed kitchen screen not updating according to POS order changes.
 - Fixed completed orders incorrectly reverting to draft or cooking stage in kitchen screen after payment completion.
+
+#### 14.06.2025
+#### Version 18.0.1.1.1
+#### BUG FIX
+- Fixed issue where completed orders were still shown after the session was closed.

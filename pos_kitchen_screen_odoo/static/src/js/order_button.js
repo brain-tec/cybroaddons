@@ -52,6 +52,7 @@ setup() {
                     }
                 });
                 if ( self.kitchen_order_status){
+
                 await this.pos.sendOrderInPreparationUpdateLastChange(this.currentOrder);
                 for (const orders of this.pos.get_order().lines) {
                         line.push([0, 0, {
