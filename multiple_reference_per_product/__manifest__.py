@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2024-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Copyright (C) 2025-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU AFFERO
@@ -21,7 +21,7 @@
 ###############################################################################
 {
     'name': "Multiple Reference Per Product",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'summary': 'Allowing multiple references for each product.',
     'description': "Add multiple reference code for a product template or "
                    "product variant. Easily manage between the "

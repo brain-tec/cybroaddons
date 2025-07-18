@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2024-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Copyright (C) 2025-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU AFFERO
@@ -58,7 +58,7 @@ class MultipleReferencePerProduct(models.Model):
         })
         return True if reference else False
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         """Function to prevent the creation of duplicate references when
         adding a new record."""
