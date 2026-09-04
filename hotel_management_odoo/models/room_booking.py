@@ -491,6 +491,19 @@ class RoomBooking(models.Model):
                 }
             }
         if self.room_line_ids:
+            for line in self.room_line_ids:
+                domain = [
+                    ('state', 'in', ['reserved', 'check_in']),
+                    ('room_id', '=', line.room_id.id),
+                    ('id', '!=', line.id)
+                ]
+                overlapping_lines = self.env['room.booking.line'].search(domain)
+                for rec in overlapping_lines:
+                    if (rec.checkin_date < line.checkout_date and
+                            rec.checkout_date > line.checkin_date):
+                        raise ValidationError(
+                            _('Sorry, You cannot reserve room "%s" for this date since it overlaps with another reservation.') % line.room_id.name)
+
             for room in self.room_line_ids:
                 room.room_id.write({
                     'status': 'reserved',
@@ -528,7 +541,7 @@ class RoomBooking(models.Model):
         for rec in self.room_line_ids.room_id.ids:
             room_list.append(rec)
         if room_list:
-            room_id = self.env['hotel.room'].search([
+            room_id = self.env['product.template'].search([
                 ('id', 'in', room_list)])
             self.env['maintenance.request'].sudo().create({
                 'date': fields.Date.today(),
@@ -631,6 +644,19 @@ class RoomBooking(models.Model):
         if not self.room_line_ids:
             raise ValidationError(_("Please Enter Room Details"))
         else:
+            for line in self.room_line_ids:
+                domain = [
+                    ('state', 'in', ['reserved', 'check_in']),
+                    ('room_id', '=', line.room_id.id),
+                    ('id', '!=', line.id)
+                ]
+                overlapping_lines = self.env['room.booking.line'].search(domain)
+                for rec in overlapping_lines:
+                    if (rec.checkin_date < line.checkout_date and
+                            rec.checkout_date > line.checkin_date):
+                        raise ValidationError(
+                            _('Sorry, You cannot check-in to room "%s" for this date since it overlaps with another reservation.') % line.room_id.name)
+
             for room in self.room_line_ids:
                 room.room_id.write({
                     'status': 'occupied',
@@ -654,11 +680,11 @@ class RoomBooking(models.Model):
         today_utc = pytz.timezone('UTC').localize(today,
                                                   is_dst=False)
         context_today = today_utc.astimezone(pytz.timezone(tz_name))
-        total_room = self.env['hotel.room'].search_count([])
+        total_room = self.env['product.template'].search_count([('is_room', '=', True)])
         check_in = self.env['room.booking'].search_count(
             [('state', '=', 'check_in')])
-        available_room = self.env['hotel.room'].search(
-            [('status', '=', 'available')])
+        available_room = self.env['product.template'].search(
+            [('is_room', '=', True), ('status', '=', 'available')])
         reservation = self.env['room.booking'].search_count(
             [('state', '=', 'reserved')])
         check_outs = self.env['room.booking'].search([])

@@ -36,7 +36,7 @@ class AccountTrialBalance(models.TransientModel):
 
     @api.model
     def view_report(self):
-        """
+        """date_view
         Generates a trial balance report for multiple accounts.
         Retrieves account information and calculates total debit and credit
         amounts for each account within the specified date range. Returns a list
@@ -54,10 +54,22 @@ class AccountTrialBalance(models.TransientModel):
                 [('date', '<', get_month(today)[0]),
                  ('account_id', '=', account_id.id),
                  ('parent_state', '=', 'posted')])
-            initial_total_debit = round(
+
+            # Calculate raw totals
+            initial_total_debit_raw = round(
                 sum(initial_move_line_ids.mapped('debit')), 2)
-            initial_total_credit = round(
+            initial_total_credit_raw = round(
                 sum(initial_move_line_ids.mapped('credit')), 2)
+
+            # Calculate NET initial balance
+            initial_diff = initial_total_debit_raw - initial_total_credit_raw
+            if initial_diff > 0:
+                initial_total_debit = initial_diff
+                initial_total_credit = 0.0
+            else:
+                initial_total_debit = 0.0
+                initial_total_credit = abs(initial_diff)
+
             move_line_ids = self.env['account.move.line'].search(
                 [('date', '>=', get_month(today)[0]),
                  ('account_id', '=', account_id.id),
@@ -90,7 +102,8 @@ class AccountTrialBalance(models.TransientModel):
             'journal_ids': self.env['account.journal'].search_read([], [
                 'name'])
         }
-        return move_line_list, journal
+        totals = self._calculate_totals(move_line_list, None)
+        return move_line_list, journal, totals
 
     @api.model
     def get_filter_values(self, start_date, end_date, comparison_number,
@@ -143,16 +156,17 @@ class AccountTrialBalance(models.TransientModel):
             end_date = end_date_first
             if comparison_number:
                 if comparison_type == 'month':
-                    initial_start_date = subtract(start_date, months=eval(
+                    initial_start_date = subtract(start_date, months=int(
                         comparison_number))
                 elif comparison_type == 'year':
-                    initial_start_date = subtract(start_date, years=eval(
+                    initial_start_date = subtract(start_date, years=int(
                         comparison_number))
                 else:
-                    initial_start_date = subtract(start_date, months=eval(
+                    initial_start_date = subtract(start_date, months=int(
                         comparison_number) * 3)
             else:
                 initial_start_date = start_date
+
             domain = [('date', '<', initial_start_date),
                       ('account_id', '=', account_id.id),
                       ('parent_state', 'in', option_domain), ]
@@ -165,15 +179,26 @@ class AccountTrialBalance(models.TransientModel):
             if method is not None and 'cash' in method:
                 domain.append(('journal_id', 'in',
                                self.env.company.tax_cash_basis_journal_id.ids))
-            initial_move_line_ids = self.env['account.move.line'].search(
-                domain)
-            initial_total_debit = round(
+
+            initial_move_line_ids = self.env['account.move.line'].search(domain)
+
+            # Calculate raw totals
+            initial_total_debit_raw = round(
                 sum(initial_move_line_ids.mapped('debit')), 2)
-            initial_total_credit = round(
+            initial_total_credit_raw = round(
                 sum(initial_move_line_ids.mapped('credit')), 2)
+
+            # Calculate NET initial balance
+            initial_diff = initial_total_debit_raw - initial_total_credit_raw
+            if initial_diff > 0:
+                initial_total_debit = initial_diff
+                initial_total_credit = 0.0
+            else:
+                initial_total_debit = 0.0
+                initial_total_credit = abs(initial_diff)
             if comparison_number:
                 if comparison_type == 'year':
-                    for i in range(1, eval(comparison_number) + 1):
+                    for i in range(1, int(comparison_number) + 1):
                         com_start_date = subtract(start_date, years=i)
                         com_end_date = subtract(end_date, years=i)
                         domain = [('date', '>=', com_start_date),
@@ -202,7 +227,7 @@ class AccountTrialBalance(models.TransientModel):
                         f"dynamic_date_num{0}"] = self.get_month_name(
                         start_date) + ' ' + str(
                         start_date.year)
-                    for i in range(1, eval(comparison_number) + 1):
+                    for i in range(1, int(comparison_number) + 1):
                         com_start_date = subtract(start_date, months=i)
                         com_end_date = subtract(end_date, months=i)
                         domain = [('date', '>=', com_start_date),
@@ -235,7 +260,7 @@ class AccountTrialBalance(models.TransientModel):
                         f"dynamic_date_num{0}"] = 'Q' + ' ' + str(
                         get_quarter_number(start_date)) + ' ' + str(
                         start_date.year)
-                    for i in range(1, eval(comparison_number) + 1):
+                    for i in range(1, int(comparison_number) + 1):
                         com_start_date = subtract(start_date, months=i * 3)
                         com_end_date = subtract(end_date, months=i * 3)
                         domain = [('date', '>=', com_start_date),
@@ -304,16 +329,67 @@ class AccountTrialBalance(models.TransientModel):
             if comparison_number:
                 if dynamic_date_num:
                     data['dynamic_date_num'] = dynamic_date_num
-                for i in range(1, eval(comparison_number) + 1):
+                for i in range(1, int(comparison_number) + 1):
                     data[f'dynamic_total_debit_{i}'] = dynamic_total_debit.get(
-                        f"dynamic_total_debit_{eval(comparison_number) + 1 - i}",
+                        f"dynamic_total_debit_{int(comparison_number) + 1 - i}",
                         0.0)
                     data[
                         f'dynamic_total_credit_{i}'] = dynamic_total_credit.get(
-                        f"dynamic_total_credit_{eval(comparison_number) + 1 - i}",
+                        f"dynamic_total_credit_{int(comparison_number) + 1 - i}",
                         0.0)
             move_line_list.append(data)
-        return move_line_list
+        totals = self._calculate_totals(move_line_list, comparison_number)
+        return move_line_list, totals
+
+    def _calculate_totals(self, move_line_list, comparison_number):
+        """
+        Calculate totals for all monetary fields in the trial balance.
+        :param move_line_list: List of account data dictionaries
+        :param comparison_number: Number of comparison periods
+        :return: Dictionary containing all totals
+        """
+        totals = {
+            'initial_total_debit': 0.0,
+            'initial_total_credit': 0.0,
+            'total_debit': 0.0,
+            'total_credit': 0.0,
+            'end_total_debit': 0.0,
+            'end_total_credit': 0.0
+        }
+
+        # Add dynamic period totals if comparison is enabled
+        if comparison_number:
+            for i in range(1, int(comparison_number) + 1):
+                totals[f'dynamic_total_debit_{i}'] = 0.0
+                totals[f'dynamic_total_credit_{i}'] = 0.0
+
+        def to_float(value):
+            if isinstance(value, str):
+                try:
+                    return float(value.replace(',', ''))
+                except ValueError:
+                    return 0.0
+            return float(value) if value is not None else 0.0
+
+        # Sum all values
+        for account_data in move_line_list:
+            totals['initial_total_debit'] += to_float(account_data.get('initial_total_debit', 0))
+            totals['initial_total_credit'] += to_float(account_data.get('initial_total_credit', 0))
+            totals['total_debit'] += to_float(account_data.get('total_debit', 0))
+            totals['total_credit'] += to_float(account_data.get('total_credit', 0))
+            totals['end_total_debit'] += to_float(account_data.get('end_total_debit', 0))
+            totals['end_total_credit'] += to_float(account_data.get('end_total_credit', 0))
+
+            if comparison_number:
+                for i in range(1, int(comparison_number) + 1):
+                    totals[f'dynamic_total_debit_{i}'] += to_float(account_data.get(f'dynamic_total_debit_{i}', 0))
+                    totals[f'dynamic_total_credit_{i}'] += to_float(account_data.get(f'dynamic_total_credit_{i}', 0))
+
+        # Format totals as strings with commas and 2 decimal places
+        for key in totals:
+            totals[key] = "{:,.2f}".format(totals[key])
+
+        return totals
 
     @api.model
     def get_month_name(self, date):
@@ -421,7 +497,7 @@ class AccountTrialBalance(models.TransientModel):
         if data:
             if report_action == 'dynamic_accounts_report.action_trial_balance':
                 row = 11
-                for move_line in data['data'][0]:
+                for move_line in data['data']:
                     sheet.write(row, col, move_line['account'],
                                 side_heading_sub)
                     sheet.write(row, col + 1, move_line['initial_total_debit'],

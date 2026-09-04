@@ -24,3 +24,18 @@
 #### Version 18.0.1.1.2
 #### UPDT
 - Fixed the error shown while click Add Line in Food, Service or any extra Services
+
+#### 03.01.2026
+#### Version 18.0.1.1.3
+#### UPDT
+- Fixed the issue so rooms can now be added as products in the pricelist.
+
+#### 16.02.2026
+#### Version 18.0.1.1.4
+#### UPDT
+- Fixed the hotel.room issue in JS by counting products marked as is_room.
+
+#### 08.06.2026
+#### Version 18.0.1.1.5
+#### UPDT
+- Fixed the issue of reserved room can not be reserved although the reserve date is different.

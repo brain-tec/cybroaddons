@@ -44,3 +44,23 @@
 #### Version 18.0.4.0.6
 #### FIX
 - Updated the generation of asset entry when the compute depreciation button click.
+
+#### 13.10.2025
+#### Version 18.0.5.0.6
+#### UPDT
+- Added Customer Statement feature.
+
+#### 10.11.2025
+#### Version 18.0.5.0.7
+#### FIX
+- Fixed Transactions button redirection for bank and cash journals to display journal-specific transactions, and added reconciliation filter for the To Reconcile action.
+
+#### 03.12.2025
+#### Version 18.0.5.0.8
+#### FIX
+- Fixed the issues in the controller while printing the xlsx report.
+
+#### 04.06.2026
+#### Version 18.0.5.0.9
+#### FIX
+- Fixed the issues in the invoice and payment status on reconciliation

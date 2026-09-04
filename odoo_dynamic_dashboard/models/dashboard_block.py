@@ -79,6 +79,7 @@ class DashboardBlock(models.Model):
     fa_color = fields.Char(string="Icon Color", help='Icon Color of Tile')
     filter = fields.Char(string="Filter", help="Add filter")
     model_id = fields.Many2one('ir.model', string='Model',
+                               domain=[('model', '!=', '_unknown')],
                                help="Select the module name")
     model_name = fields.Char(related='model_id.model', string="Model Name",
                              help="Added model_id model")
@@ -122,6 +123,12 @@ class DashboardBlock(models.Model):
             domain = []
             if rec.filter:
                 domain = expression.AND([literal_eval(rec.filter)])
+            if 'company_id' in self.env[rec.model_name]._fields:
+                domain = expression.AND([[('company_id', '=', self.env.company.id)], domain])
+                # ✅ Add current user domain (if relevant)
+            if 'user_id' in self.env[rec.model_name]._fields:
+                domain = expression.AND([[('user_id', '=', self.env.user.id)], domain])
+            vals.update({'domain': domain})
             if rec.model_name:
                 if rec.type == 'graph':
                     self._cr.execute(self.env[rec.model_name].get_query(domain,

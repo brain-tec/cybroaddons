@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Catch Weight Management: Accounting',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Accounting',
     'summary': """The module helps to manage Catch Weight
                 Management in Accounting.""",

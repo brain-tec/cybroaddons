@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Auto Save Restrict',
-    'version': '18.0.1.1.0',
+    'version': '18.0.1.1.1',
     'category': 'Extra Tools',
     'summary': """Restrict auto save in all models""",
     'description': 'Using this module,we can restrict'
@@ -32,7 +32,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
-    'depends': ['base'],
+    'depends': ['base','sale'],
     'assets': {
         'web.assets_backend': [
             'auto_save_restrict/static/src/js/form_controller.js',

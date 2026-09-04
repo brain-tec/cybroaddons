@@ -21,3 +21,4 @@
 #############################################################################
 from . import mail_compose_message
 from . import mail_activity
+from . import mail_mail

@@ -250,9 +250,7 @@ class TurnoverReport(models.TransientModel):
                 warehouse = quant.location_id.warehouse_id.name
                 last_count_date = quant.last_count_date
             average_stock = (opening_stock + closing_stock) / 2
-            stock_count = sales_count + opening_stock
-            turnover_ratio = 0 if average_stock == 0 or stock_count == 0 else \
-                stock_count / average_stock
+            turnover_ratio = 0 if average_stock == 0 else sales_count / average_stock
             turnover = round(turnover_ratio, 2)
             name = quant.product_id.display_name
             split_name = name.split(']')
@@ -339,13 +337,13 @@ class TurnoverReport(models.TransientModel):
         for record in record_dict.values():
             record_date = record['last_count_date']
             if ((not self.start_date and not self.end_date) or
-                    (self.start_date and self.end_date and
+                    (self.start_date and self.end_date and record_date and
                      self.start_date <= self.end_date and
                      self.start_date <= record_date <= self.end_date) or
-                    (self.start_date and not self.end_date and
+                    (self.start_date and not self.end_date and record_date and
                      record_date >= self.start_date) or
-                    (not self.start_date and self.end_date and
-                     record_date <= self.end_date)):
+                    (not self.start_date and self.end_date and record_date and
+                     record_date <= self.end_date) ):
                 if record['id'] in filtered_records:
                     filtered_record = filtered_records[record['id']]
                     filtered_record['opening_stock'] += record['opening_stock']

@@ -60,7 +60,7 @@ class SaleOrder(models.Model):
                 payment_states = posted_invoices.mapped('payment_state')
                 status_length = len(payment_states)
                 if order.amount_due > 0:
-                    if 'partial' in payment_states or 'not_paid' in payment_states:
+                    if 'partial' in payment_states:
                         order.payment_status = 'Partially Paid'
                     elif 'not_paid' in payment_states and status_length == payment_states.count(
                             'not_paid'):
@@ -105,7 +105,9 @@ class SaleOrder(models.Model):
                     total_invoiced -= invoice.amount_total
                     total_paid -= (
                                 invoice.amount_total - invoice.amount_residual)
+
             rec.amount_due = total_invoiced - total_paid
+
 
     def action_open_business_doc(self):
         """ This method is intended to be used in the context of an
@@ -117,7 +119,10 @@ class SaleOrder(models.Model):
         name = _("Journal Entry")
         move = self.env['account.move'].browse(self.id)
         res_model = 'account.payment'
-        res_id = move.payment_id.id
+        payments = move.payment_ids
+        res_id = payments.id
+
+        # res_id = move.payment_id.id
         return {
             'name': name,
             'type': 'ir.actions.act_window',

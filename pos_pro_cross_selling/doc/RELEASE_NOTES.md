@@ -5,3 +5,9 @@
 #### ADD
 
 - Initial commit for POS Cross-Selling
+
+#### 29.06.2026
+#### Version 18.0.1.0.1
+##### UPDT
+
+- Added test cases
